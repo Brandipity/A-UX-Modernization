@@ -1,0 +1,12 @@
+ 
+Disk Copy 4.2, which is needed to convert the disk image files into two 
+1440K disks, is in the same directory with the name "diskcopy42.hqx". 
+The A/UX command "fcnvt" can be used to convert the ".hqx" files to 
+AppleDouble file format. Here are examples of how to do this:
+ 
+   fcnvt -i hex diskcopy42.hqx 'Disk Copy 4.2'
+   fcnvt -i hex diskimage1.hqx diskimage1
+ 
+ 
+NOTE: The DiskCopy 4.2 application will not run under A/UX. Please
+      move the application to a Macintosh running the Macintosh OS.

@@ -1,0 +1,272 @@
+AWS 95 Tune-Up (2.0)
+
+Copyright 1994 Apple Computer, Inc.
+
+The enclosed file is self-extracting archive contining a Disk Copy 1440K disk
+image.  
+To use, download,  double-click on the file to expand it and use Disk Copy to
+create the disk. 
+
+Disk Copy can be found in the Utilities folder posted here.
+
+ABOUT THE APPLE WORKGROUP SERVER 95 TUNE-UP
+
+To get the maximum performance and minimize problems with your server, it is
+important to install the Apple Workgroup Server 95 Tune-Up. This update tells
+you how to install the tune-up software, lists the files affected by the
+changes to the server software, describes in more detail the improvements
+provided by the tune-up, and lists changes of interest to developers.
+
+
+TUNE-UP INSTALLATION PROCEDURE
+
+The tune-up Installer automatically installs the software that you need to take
+advantage of the enhancements. 
+
+The Apple Workgroup Server 95 Tune-Up updates the A/UX operating system from
+version 3.1 to 3.1.1. The installation process doesn't affect any of the
+current
+kernel parameter settings.
+
+Before You Begin
+
+Before you begin the installation, be sure to back up all files and notify
+users that you will be shutting down the server in order to install the tune-up
+software. During the installation process, the system quits all programs
+running on the server; you must restart the server to complete the
+installation.
+
+To perform the installation, you must be logged in to the server as "root". If
+your server is set up with the default configuration for file and print
+services, and the Autologin feature is enabled, you should be logged in as
+"root" automatically when you start the server. If your server is configured as
+a database server, you must log in as "root" by means of the Login dialog box.
+
+
+Installing the Tune-Up Software
+
+Make sure that you are logged in as "root" and then follow these steps:
+
+1. Insert the disk you have just created.
+
+If the CommandShell application is the active application, the system displays
+this message: "This is a Macintosh disk. What do you want to use it as?" If
+this message appears, click the button labeled "Macintosh."
+
+2. Double-click the Installer icon.
+
+This message appears: "You can only install the AWS 95 Tune-Up on the root
+volume, '/.' Please click Switch Disk to choose this disk."
+
+3. Click Switch Disk until '/' is selected.
+
+4. Click the Install button.
+
+5. Click Continue to automatically quit all other running applications.
+
+The tune-up installation begins, and the system displays a progress bar and
+status messages during the process.
+
+The kernel is reconfigured; this process may take several minutes. After your
+server has loaded all of the appropriate tune-up software, the message
+"Installation successful" appears.
+
+6. Click the Restart button to complete the installation.
+
+NOTE: If you routinely back up the server's system files (for example, to
+tape), you should make a new backup after performing the installation, as the
+system files will have been upgraded.
+    		
+			README for the APPLE
+	   	   WORKGROUP SERVER 95 TUNE-UP 2.0
+							
+This document describes changes made to the latest release of the Apple
+Workgroup Server 95 system software, A/UX 3.1.  You must be running A/UX 3.1 to
+install this software.  If you are running an earlier version, call Apple at
+1-800-769-2775, Ext. 7822, to order the AWS 95 Software Upgrade.  After
+installing A/UX 3.1, then you can install this Tune-Up.
+
+			 NOTES ON INSTALLING THE TUNE-UP
+
+Installation takes approximately 5 minutes. The installer's on-screen messages
+will guide you through the installation process.  You will be required to
+restart your system after the installation has completed, so be sure to prepare
+any clients ahead of time for a service interruption.
+									
+				IMPROVEMENTS
+
+Application support
+% Use of Timbuktu Pro's TCP/IP connection method no longer causes the A/UX
+Macintosh environment to hang.
+% A problem which caused AppleSearch indexing to fail under heavy load has been
+corrected. 
+% Colour Central no longer hangs under heavy load.
+% BeHierarchic and NowMenus no longer cause hangs or crashes of the Mac
+environment.
+
+
+
+AppleTalk
+% Routerless nets where the systems have unique network numbers but identical
+node numbers will no longer experience dropped packets which lead to major
+performance degradation.
+% The ADSP stack now correctly completes a read request when no data is
+available on a half closed session.  Previously, the read request was queued
+which could cause applications utilizing ADSP to hang.
+
+
+
+A/UX File Manager
+% The volume backup time is now correctly maintained for the virtual UNIX
+volume, `/'.
+% The File Manager supports file names beginning with the bullet character,
+`%'.  However, these characters were translated into dot, `.', on the UNIX
+filesystem to avoid a problem with the Finder interpreting files beginning with
+dot as drivers. A new environment variable, TBSEEDOTS, now prevents this
+translation. It is NOT set by default.
+% Remote NFS filesystems having a space in their name no longer cause the File
+Manager to become confused. 
+% Unrecoverable disk read errors no longer cause the entire Mac environment to
+crash.
+% Random failures during Finder copies and saving from applications to the
+server have been eliminated.
+% The performance when extending the resource fork of an AppleSingle file on
+the UNIX filesystem has been improved dramatically.  Currently if this occurred
+during a save of a large file (via an arbitrary application), it could take up
+to 3 times longer to save the file than normal.  There should now be no
+measurable difference between a normal save and one that happens to extend the
+resource fork.
+% A problem that caused save's from applications to fail with the message,
+'File couldn't be saved because it couldn't be found' has been eliminated.
+% The creator of the file /etc/fstab has been changed to TextEditor's
+signature.
+% A 'find' of file or folder names that contain accented vowels (or other
+diacriticals) now works properly.
+
+
+
+A/UX Kernel
+% The A/UX kernel no longer panics if more than four Ethernet interfaces are
+installed.
+% The console emulator no longer hangs if you stop <CTRL-S> the output.
+% A kernel bus error, which could occur under heavy file I/O, has been
+corrected.
+% Certain I/O operations no longer cause the kernel fault handler to panic the
+system.
+% The FIONREAD ioctl no longer causes the system to hang when issued from a
+background process.
+% A problem which caused the kernel's asynchronous I/O data structures to
+become corrupted has been fixed.
+% NFS now maps client user IDs greater than 65533 to the anonymous user,
+"nobody".
+
+
+
+UNIX Printing
+% Lpr(1) now prints correctly via AppleTalk to the LaserWriter 810.
+% The lpr(1) back-end utility for PostScript printing is now enscript(1). 
+Therefore, lpr(1) now supports eight-bit characters and the Grave character, `,
+on all LaserWriters.
+
+
+
+UNIX File Locking
+% A problem which prevented the lock daemon from detecting contention between a
+process running on the server and a process running on the client has been
+corrected.
+% The lock daemon, rpc.lockd, no longer fails after a connection timeout with
+the status monitor on another machine.
+% Previously, on a system with NFS configured, some signals were ignored while
+a process was waiting on a lock.
+% The lock daemon now supports version 3 of the lock protocol for PC-NFS
+clients.
+
+
+
+Other UNIX Utilities
+% The shutdown(1m) command no longer complains about RPC port mapper failures.
+% The default rotational delay set by newfs(1m) is now zero microseconds.
+% Previously, if you aborted an FTP connection to stop a transfer, the A/UX FTP
+server would shut down the control connection and the session would be lost. 
+% The 'cron' daemon no longer crashes after running 17576 jobs.
+% The status daemon, rpc.statd, will now continue to operate when it cannot
+re-establish connections with other servers after a crash.
+
+
+
+Of Interest to Developers
+% The pap_write routine in the PAP server library now functions correctly.
+% A process which blocks SIGALRM and then calls the sleep(3) function, no
+longer sleeps forever.
+% The POSIX library, /lib/libposix.a, now includes versions of the lstat and
+fstat system calls which reference the POSIX-compliant stat structure.
+% The strftime routine no longer hangs when called.
+% For improved security, the gethostbyaddr routine now cross-checks information
+in the host databases.
+
+
+
+Miscellaneous
+% Under A/UX 3.1, if Password Checking is turned on in A/UX Startup,  the
+MacPartition (boot volume) is hidden from all users, including the super-user.
+This has been corrected; the super-user (root) can always see the MacPartition.
+% The new 250MB, 500MB, and 2GB SCSI drives are now listed in /etc/disktab.
+% The system date spontaneously changing to sometime in 2017 has been
+eliminated, along with the problem of Restrospect scripts calculating next
+execution times for a date and time in 2017.
+% A system crash/hang could occur when using a remote client to open a
+FileMaker database that was represented by an 'alias', but that did not exist. 
+This has been eliminated.
+% The 'catsearchd' now uses roughly 15% less memory and finishes the initial
+scan at system startup in approximately 20% less time.
+
+
+
+			 FILES CHANGED OR ADDED BY THE UPGRADE
+
+% Files Changed or Added on the / Volume:
+etc/catsearchd
+etc/config.d/newunix
+etc/cron
+etc/disktab
+etc/fs/ufs/mkfs
+etc/fstab
+etc/in.rlogind
+etc/in.remshd
+etc/install.d/boot.d/adsp
+etc/install.d/boot.d/elap
+etc/install.d/boot.d/nfs
+etc/install.d/boot.d/ufs
+etc/install.d/boot.d/svfs
+etc/macgetty
+etc/mount
+etc/rpc.lockd
+etc/rpc.statd
+etc/RELEASE_ID
+etc/shutdown
+lib/libposix.a
+lib/libc.a:gethostent.o
+lib/libc.a:tempnam.o
+lib/libc.a:tmpnam.o
+lib/libc.a:mntent.o
+lib/libc.a:strftime.o
+lib/libc_s.a:gethostent.o
+lib/libc_s.a:tempnam.o
+lib/libc_s.a:tmpnam.o
+lib/libc_s.a:mntent.o
+lib/libc_s.a:strftime.o
+mac/lib/Patches/Patch.067C
+unix
+usr/bin/atprint
+usr/bin/enscript
+usr/etc/in.ftpd
+usr/etc/in.telnetd 
+usr/lib/libat.a
+usr/lib/libpaps.a
+usr/lib/ps/enscript
+usr/lib/sendmail
+usr/spool/lpd/AppleTalk/ifilter
+usr/spool/lpd/AppleTalk/nfilter
+usr/spool/lpd/AppleTalk/ofilter
+
+

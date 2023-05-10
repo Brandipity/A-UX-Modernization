@@ -1,0 +1,3761 @@
+Last-modified: Mon Dec 13 12:34:40 EST 1999
+
+         This is the Frequently Asked Question (FAQ) list for A/UX 3.x.x
+
+
+\\\\\\\\\\\\\\\\\\\\\\ START OF PART 1 OF 4 //////////////////////
+
+FAQ for A/UX
+============
+
+This FAQ list is intended to cut down on the number of "often asked questions"
+that make the rounds here on comp.unix.aux. Also included you'll find a few
+words of wisdom as well as some general information for the A/UX community.
+This list assumes that you are familiar with Unix (to some extent) but are
+curious about A/UX's eccentricities. The list will concentrate on A/UX 3.x.x
+but may also have info about previous versions. If you don't understand
+something in the FAQ List, and a "Point of Contact" isn't specified, then
+contact me and I'll attempt to help or else point you to someone who can.
+In any case, let me know how I can make the list more clear.
+
+You'll notice jagubox.gsfc.nasa.gov mentioned alot here. You can access files
+on jagubox either using 'ftp' (jagubox runs the WUARCHIVE-FTPD server),
+'gopher' or a WWW-client (jagubox's URL is "http://jagubox.gsfc.nasa.gov").
+<<ED: Note that the gopher-server will be down for awhile >>
+
+This FAQ is written in a format that EasyView (for the Mac) can understand and
+make use of. EasyView provides a very nice front-end for viewing, browsing and
+reading the FAQ. EasyView is available on jagubox.gsfc.nasa.gov.
+
+The list will be posted every other Tuesday on comp.unix.aux as well as on
+news.answers and comp.answers. It is also available on jagubox.gsfc.nasa.gov.
+
+There is a frozen FAQ that deals with A/UX 2.0.1 which is available on jagubox
+(FAQ.aux.201). This FAQ will be posted monthly (or so) on comp.unix.aux.
+
+This FAQ will focus on A/UX 3.1.1, but will also refer to 3.1, 3.0.2 and
+3.0.1. Bugs and things "broken" in 3.0.1 but fixed in 3.0.2 (and later)
+or "broken" in 3.1 but fixed in 3.1.1 won't necessarily be mentioned, since
+the 3.0.1->3.0.2 and 3.1->3.1.1 fixes (the AWS "Tune-Up" disks, v1.0 and v2.0)
+are free and readily available.
+
+This FAQ is "copyrighted" in the same sense that all other FAQs are copy-
+righted: the FAQ may be _freely_ redistributed as long as the author's/editor's
+name and this notice is included. If contents of this FAQ are to be published,
+then you should ask the author's/editor's permission to do so.
+
+Send your additions|modifications to Jim Jagielski (jim@jagubox.gsfc.nasa.gov)
+(editor's notes are included as <<ED: ...>>). I will tend to refer to myself
+in the 3rd person in the Q&A section.
+
+=============================
+**** Significant Changes ****
+-----------------------------
+
+|++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+|Significant changes/additions since last posting:
+|   Changes signified by "|" in 1st column;
+|   Additions by "+" in the 1st column;
+|   Deletions by "-" in the 1st column (the line will be
+|    deleted in the next posting)
+|
++ ssh/sshd suite added
+|++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+============================
+**** TABLE OF CONTENTS: ****
+----------------------------
+
+o List of Contributors to A/UX FAQ List
+o List of anon-ftp archives for A/UX
+o List of security-related issues
+o List of known bugs and patches under A/UX 3.x.x
+o List of ported software
+o Hints and Words Of Wisdom
+o Q&A-
+   GENERAL QUESTIONS:
+   G.01)  What's A/UX? Is it any good?
+   G.02)  What's the minimum system I need (CPU, disk and RAM) to run A/UX?
+   G.03)  What's new about A/UX 3.x.x?
+   G.04)  What's the diff between 3.0.2 and 3.0.2(wgs)?
+   G.05)  How can I order A/UX?
+   G.06)  What's the upgrade path for A/UX 3.0.2?
+   G.07)  What are Right-To-Copy and Right-To-Upgrade licenses?
+   G.08)  How can I report bugs that I find?
+   G.09)  What's the word on A/UX 3.1 and 3.1.1?
+   G.10)  What's the future of A/UX with the PowerMacs?
+   G.11)  I can't use A/UX. What UNIX alternatives are there?
+
+   ADMINISTRATION ISSUES:
+   A.01)  How come my Login screen is gray, not color?
+   A.02)  How come my Login ScreenSaver doesn't see both my monitors?
+   A.03)  Even though I have lot's of swap space and only a little bit is
+          being used, I STILL get a lot of messages saying that my swap
+          space is running low. What's the buzz?
+   A.04)  How can I copy a complete file system from one disk|partition to
+          another?
+   A.05)  What's with UUCP?
+   A.06)  How can I log anonymous ftp entries? in.ftpd has a -l option,
+          but it doesn't work.
+   A.07)  How come when I do a 'df' as a regular user, it shows me a different
+          number of free blocks compared to when I run it as 'root'?
+   A.08)  Does A/UX LocalTalk support IP?
+   A.09)  How do I get MPW 3.1 to work? It hangs my system...
+   A.10)  Can I refer to a file on my Mac system from within A/UX?
+   A.11)  How can I adjust the amount of virtual memory Finder uses?
+!  A.12)  Is there an archive of comp.unix.aux out there somewhere?
+   A.13)  How come I can't use color under X?
+   A.14)  Using the command shell interface, I'm trying to access some Mac
+          files (that have strange names) but I can't; the program returns an
+          error message I can't access the file. What's going on?
+   A.15)  I heard the the Installer for 3.x.x works on "any" 3rd party
+          hard disk. Well, it doesn't on mine!
+   A.16)  Since RetroSpect will no longer be bundled with A/UX 3.0.2,
+          how can I get it?
+   A.17)  How can I configure CAP under A/UX?
+   A.18)  What are some good books about A/UX?
+   A.19)  When booting up, I get a "panic ialloc, dup alloc" (or other)
+          error message and A/UX won't boot. What can I do?
+   A.20)  Is traceroute available for A/UX?
+   A.21)  What is KEEPALIVE and how can I use it?
+   A.22)  What does this 'panic' message mean...?
+   A.23)  How often does A/UX sync the file system?
+   A.24)  What is 'catsearchd'?
+   A.25)  Is there any way to make AppleDouble file formats the default,
+          rather than AppleSingle?
+   A.26)  Is there a way to update the 'whatis' database?
+   A.27)  Does A/UX support Virtual Interfaces?
+
+   MAC-EMULATION QUESTIONS:
+   M.01)  What Mac applications are compatible with A/UX?
+   M.02)  What screen-savers are compatible with A/UX?
+   M.03)  My MacOS partition mounts fine under MacOS but it doesn't show
+          up under A/UX... Why?
+   M.04)  I have MacsBug installed. How can I trigger it?
+   M.05)  Sometimes my MultiFinder environment (and/or CommandShell) freezes
+          up; how can I unfreeze it? Should I hit the Interrupt switch?
+   M.06)  My site is not upgraded to EtherTalk Phase 2 yet... can I use
+          Phase 1 under A/UX?
+   M.07)  I'm having trouble transfering files between A/UX and my MacOS disk.
+          Also, sometimes things get transfered fine, othertimes not. What's
+          going on?
+   M.08)  Do I install CDEVs and Extensions in the System Folder on
+          MacPartition or on the "/" A/UX disk.
+   M.09)  I heard that A/UX requires a special version of System 7 to boot...
+          Is this true?
+   M.10)  After the Mac environment crashes (or when I use MacsBug), the
+          Desktop gets all screwed up... Argg!!
+   M.11)  My MacOS partition(s) only show up on the Desktop when I login
+          as root. Why?
+   M.12)  For some reason, my CommandShell only responds to a keyboard
+          event after it receives a second event. For example, typing "a"
+          won't show until I type something else or click the mouse.
+          What gives?
+   M.13)  Can A/UX 3.x.x run System 7.1?
+   M.14)  What version of AppleTalk does A/UX run?
+   M.15)  I've just installed MacTCP 2.0.2|4|6 on A/UX and nothing works!
+          What's going on?
+   M.16)  Does the LaserWriter Bridge s/w work under A/UX?
+   M.17)  My /etc/fidd processes refused to run and dumps core. Help!
+
+   DEVICES AND PERIPHERALS:
+   D.01)  Can I use my Teac|DAT|etc tape drive under A/UX?
+   D.02)  I have an EtherNet card that works fine under the Macintosh OS
+          but not under A/UX. Why?
+   D.03)  Can I use my scanner under A/UX?
+   D.04)  I'm trying to use a SyQuest drive under A/UX but it refuses to
+          work. I keep on getting a "more data than device expected" error
+          message. What's wrong?
+   D.05)  What 3-button mice work under A/UX (and X)?
+   D.06)  Is it worth getting a cache card for the IIci?
+   D.07)  How can I figure out the /etc/disktab entry for my hard disk?
+   D.08)  Which serial cards work under A/UX?
+   D.09)  I'm using a LaserWriter IIg with A/UX 3.x.x and whenever I print
+          something to it through 'lpr', the first line of the page is cut
+          off. Why?
+   D.10)  I'm trying to access my tape drive using 'tc' (with something like
+          "find . -print | cpio -o > /dev/rmt/tc1") but it doesn't work...
+   D.11)  What CD-ROM drives are compatible with A/UX 3.x.x?
+   D.12)  I've tried to install the CD Remote extension to A/UX so that
+          I can play audio CD's, but it doesn't work...
+   D.13)  What UNIX CD-ROM formats does A/UX support?
+   D.14)  How can I add printers other than those available in Chooser?
+   D.15)  What 3rd party accelerators are compatible with A/UX?
+   D.16)  Will the old serial HP DeskWriter work under A/UX?
+   D.17)  How can I use a HP DeskWriter under A/UX?
+   D.18)  Does A/UX support 24-bit color?
+   D.19)  What's the specifics on the AWS95 PDS Card?
+   D.20)  What are the specifics of SCSI under A/UX?
+   D.21)  I can't get my LaserJet 4M to work reliably. Help!
+   D.22)  Does the Apple Adjustable Keyboard work under A/UX?
+   D.23)  How can I increase the number of inodes when creating a new
+          file system?
+   D.24)  Can I use my Zip Drive under A/UX?
+
+   PORTING AND PROGRAMMING
+   P.01)  How come rn|elm|less|etc... act weird concerning signals?
+   P.02)  Is X11R5 available for A/UX?
+   P.03)  I've noticed that FSF GNU doesn't support A/UX. Does that mean
+          I'll miss out on all the neat Gnu-stuff like gcc?
+   P.04)  I've ported Elm (or other mail reader) and it doesn't seem to
+          work... Why?
+   P.05)  What languages are available for A/UX?
+   P.06)  Is OSF/Motif available for A/UX?
+   P.07)  While trying to port some software, the Makefile looks
+          for a program called 'ranlib' and dies when it can't
+          find it. What is it and where can I get it.
+   P.08)  When compiling, I get the message that 'setlocale' is
+          an "undefined symbol"... what's going on?
+   P.09)  How in the world do I use nlist()?
+
+   COMMUNICATION:
+   C.01)  I'm unable to start a getty process on a built-in serial port. When
+          I use 'setport' to enable the port, I get a "no such device" error.
+          Configuring /etc/inittab to respawn getty on the port has no effect.
+   C.02)  I am using and depending on /etc/hosts to do all my hostname
+          resolving (i.e. not using named or /etc/resolv.conf). How come I
+          can't mail to other hosts, but I can ping|ftp|etc... them?
+   C.03)  When I try to mail something, I get the following error message:
+          "Cannot read frozen config file: not a typewriter". What's wrong?
+   C.04)  How do I set up my Mac and A/UX to enable remote logins via a modem
+          on tty0?
+   C.05)  How come I can't use 'talk' with some of the other Unix boxes out
+          there, and they can't talk to me?
+   C.06)  How can I convince A/UX to forward IP packets?
+   C.07)  Is PPP available for A/UX?
+   C.08)  How can I change the MTU value for CSlip?
+   C.09)  I'm having trouble having Solaris 2.4 NFS clients access my
+          NFS server!
+   C.10)  I'm running a busy web-server and clients are getting lots of
+          'Connection Refused' messages... Why?
+
+   ERRORS EXPLAINED:
+   E.01)  How do I keep command lines that I edit with "backspace" from
+          erasing the prompt?
+   E.02)  Whenever I try to run xinit (or startx) from the CommandShell I get
+          a fatal server error. Why?
+   E.03)  I keep on getting the following error message on the Console:
+          "fcntl: local lock manager not registered". What's going on?
+   E.04)  When I try to startup 'xterm', I get the following error
+          message: "xterm: no available ptys"... What gives?
+   E.05)  'ps' and 'pstat' only seem to work for root. If anyone else tries
+          these commands, they get a "no mem" error message. What's wrong?
+
+
+===============================================
+**** List of Contributors to A/UX FAQ List ****
+-----------------------------------------------
+
+The editor would like to thank all the various people who have contributed
+to the A/UX FAQ List (both those that submitted questions as well as those
+who submitted answers). Also included under the Q&A section are the relevant
+people to contact if you have specific questions about specific A/UX items.
+If I've left you out, PLEASE E-mail me!
+
+  Brian Bechtel           (blob@apple.com)
+  Greg Berryman           (gpb@gpb-mac.sps.mot.com)
+  Nick Beser              (beser@aplcomm.jhuapl.edu)
+  Peter Brewer            (brewer@hamlet.umd.edu)
+  Manuel Bouyssou         (manuel@apple.com)
+  John Coolidge           (coolidge@apple.com)
+  Bob Denny               (denny@alisa.com)
+  Eric Dittman            (dittman@skitzo.dseg.ti.com)
+  John Dundas III         (dundas@salt.jpl.nasa.gov)
+  Thomas Eberhardt
+  Rick Ewing              (ewing@vhp.vanderbilt.edu)
+  Ron Flax                (ron@afsg.apple.com)
+  Marcelo Gallardo        (marcelo@deadzone.princeton.edu)
+  Ben Goren               (ben@tux.fa.asu.edu)
+  James Gritton           (gritton@byu.edu)
+  Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+  Chris Johnson           (cjohnson@brl.mil)
+  Bill Johnston           (johnston@me.udel.edu)
+  Ron Johnston            (johnston@apple.com)
+  Bob Kirby               (kirby@esl.com)
+  Nicolas Lenz            (nlenz@sdcc13.UCSD.EDU)
+  Darrell Pfeifer         (pfeifer@camins.camosun.bc.ca)
+  Phillip Porch           (root@theporch.com)
+  Wes Price               (ww2@bullwinkle.ssc.gov)
+  Alexis Rosen            (alexis@panix.com)
+  Eric Rosen              (eric@cse.ucsc.edu)
+  Craig Ruff              (cruff@ncar.ucar.edu)
+  Jim Ryan                (jryan@adobe.com)
+  Paul Sander             (paul@sander.uucp)
+  Kent Sandvik            (ksand@apple.com)
+  Jon Stevens             (root@dolphin.csudh.edu)
+  Craig Struble           (cstruble@gnu.ai.mit.edu)
+  Richard Todd            (rmtodd@servalan.servalan.com)
+  Chuq Von Rospach        (chuq@apple.com)
+  Jon W{tte               (d88-jwa@nada.kth.se)
+  Earl Wallace            (earlw@macaux.aux.apple.com)
+  Herb Weiner             (herbw@wiskit.com)
+  Bill Woodcock           (woody@zocalo.com)
+
+
+=================================================
+**** List of anonymous ftp archives for A/UX ****
+-------------------------------------------------
+
+The following sites have A/UX related archives and materials available via
+anonymous ftp (see below for more information):
+
+abs.apple.com                      (130.43.1.101)
+    Meant to be the central server for _all_ Apple Business Systems
+    products, including A/UX, AWS, MAE, etc...
+
+afsg.apple.com                     (130.43.50.2)
+    ports and hacks for A/UX
+
+dolphin.csudh.edu                  (155.135.16.1)
+    neat A/UX stuff
+
+dunkin.Princeton.EDU               (128.112.64.39)
+    mirror of jagubox.gsfc.nasa.gov
+
+ftp.amug.org
+    mirror of jagubox and other goodies
+
+ftp.fenk.wau.nl                    (137.224.129.4)
+    mirror of jagubox.gsfc.nasa.gov
+
+ftp.support.apple.com              (130.43.6.3)
+    main FTP server for Apple.
+
+ftp1.jaguNET.com                   (206.156.208.7)
+    various A/UX goodies
+
+jagubox.gsfc.nasa.gov              (128.183.44.1)
+    FAQ List;
+    bunch of ports, utilities, new mini-inews (1.6);
+    Apple fixes (in ~ftp/pub/aux/Apple.fixes)
+    ***       jagubox also runs a gopherd-server as well      ***
+    *** and a WWW-httpd server "http://jagubox.gsfc.nasa.gov" ***
+
+nada.kth.se                        (130.237.222.71)
+    mirror of A/UX items from:
+       afsg.apple.com
+       jagubox.gsfc.nasa.gov
+       wuarchive.wustl.edu
+
+rascal.ics.utexas.edu              (128.83.138.20)
+    misc. ports;
+    Mac applications, CDEVs, etc...;
+
+redstar.dcs.qmw.ac.uk              (192.135.231.4)
+    IIci benchmarking results;
+
+wc208.residence.gatech.edu         (199.77.224.208)
+    copies of various A/UX ports
+
+wuarchive.wustl.edu                (128.252.135.4)
+    ports, GNU stuff; (look in systems/aux)
+
+
+=======================================
+*** List of security-related issues ***
+---------------------------------------
+
+No system is 100% secure. To this end, it makes sense to make each one as
+secure as possible, including A/UX.
+
+~~~~~~~~~~~~~~~~~~~~~~
+Permissive Permissions
+~~~~~~~~~~~~~~~~~~~~~~
+
+  o The default distribution of A/UX has some files with somewhat permissive
+    permissions. These should be changed to avoid problems. These files and
+    the recommended modes, owners and groups are as follows:
+
+      -rwsr-xr-x   1 root     sys        /bin/ps
+      -rwxr-sr-x   1 bin      sys        /bin/pstat
+      -rwxr-xr-x   1 bin      bin        /etc/ncheck
+      -rwxr-sr-x   1 bin      sys        /usr/bin/lav
+      -rwxr-xr-x   1 bin      bin        /usr/bin/X11/xterm
+      -rwxr-sr-x   1 bin      sys        /usr/etc/ncstats
+      -rwxr-sr-x   1 bin      sys        /usr/etc/nfsstat
+      -rwxr-xr-x   1 bin      bin        /usr/etc/rpcinfo
+      -rwxr-x---   1 adm      adm        /usr/lib/acct/diskusg
+      drwxr-xr-x  21 root     sys        /etc 
+
+    (The removal of SUID-to-root from 'diskusg' means that the cron 'adm'
+    accounting package [all the /usr/lib/acct/* stuff] will need to be run by
+    'root' instead)
+
+    To make changing the user, group and permissions of these files a little
+    easier, Jim Jagielski has hacked together an ugly little 'ksh' script
+    that does it for you. The info required is self contained in the script
+    itself and it's easy to add more entries as required. Look for the script
+    on jagubox.gsfc.nasa.gov under "/pub/aux/Security/better.perms".
+
+ o  Also, to close things a little tighter, remove all permissions for
+    "others" ('chmod o-rwx') for all files in:
+
+      /usr/lib/acct
+      /usr/lib/cron
+    
+  o Only trusted users should be allowed to use 'lpr'. Remove execute
+    priviledges for OTHERS and then change '/etc/groups' to make _only_
+    trusted users as members of group 'daemon'. If you want, you can dump
+    'lpr/lpd' and use 'lp/lpsched'.
+
+  o You may want to consider if you really want the 'lp'|'lpr' admini-
+    stration programs (such as 'lpadmin', 'lpmove' etc...) executable by
+    all. If not, then remove that mode from them ('chmod o-rwx').
+
+  o Under 3.x.x, make sure that all files in /dev/scsi are mode 600 with
+    owner 'root' and group 'sys'... Get the new 'devscsi' file (available on
+    jagubox) to replace what's in /etc/install.d/init.d.
+
+  o A/UX also has the 'expreserve' problem. This program (actually called
+    'ex3.9preserve' under A/UX) is used by 'vi'|'ex' to "save" canceled
+    or killed edit sessions. 'expreserve' saves a copy of the buffer in
+    the "/usr/preserve" directory. The program is SUID to root since the
+    directory is owned by root, but any other user would do just fine. There's
+    also no real need for it to be SUID either. To preserve the use of
+    'expreserve' you'll need to create a new user whose sole existance is to
+    own "/usr/preserve" and 'ex3.9preserve'.
+
+      : Create a new user on the system. Make it totally unused. eg:
+
+         /etc/passwd:
+           preserve:* void *:33:33:secure preserve:/usr/preserve:/bin/noshell
+
+         /etc/group
+           preserve:* void *:33:preserve
+    
+      : Now change the owner and group of /usr/lib/ex3.9preserve and
+        /usr/preserve to the above user. Change the mode of 'ex3.9preserve' to
+        2111 and 'preserve' to 775:
+
+          ---x--s--x   1 preserve  preserve  /usr/lib/ex3.9preserve
+          drwxrwxr-x   2 preserve preserve     512 Mar  4 15:46 /usr/preserve
+
+    ...and you're done. Now vi/expreserve can write in /usr/preserve but no
+    root security hole exists! If this is too much work, then you can just
+    remove the SUID bit for 'expreserve'; this will close the hole, but killed
+    editting sessions won't be saved (except for root).
+
+    (***NOTE*** Replacing 'sh' with the "fixed" version described below
+     fixes this hole. Still, having 'expreserve' SUID to root goes against
+     the ideal of running programs with the least priviledges possible.)
+
+  o The '/lib/librmt.a' library has write permissions for all users. You
+    should remove it (the write permissions, that is, not the file ;) ):
+
+      -rw-r--r--   1 root     bin        14734 Mar 23  1993 /lib/librmt.a
+
+  o Why not create a group called 'wheel' and make /bin/su mode 4750 with
+    owner 'root' and group 'wheel'. Then, only make trusted users with
+    the need to use 'su' as members of 'wheel'.
+
+  o Make sure that 'bin' has a void password and '/bin/false' as it's
+    login shell.
+
+  o The shadow-passwd suite has been ported to A/UX. Basically, this package
+    moves the encrypted passwds from world-readble /etc/passwd to root-only-
+    readable /ec/shadow, thus greatly increasing security. Some daemons, such
+    as popper and wu-ftpd will need to be recompiled. Use it!
+
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Other "Gotcha's" and Info
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  o One definate improvement you should make to your A/UX system is to
+    obtain (from jagubox and other A/UX mirror sites) and install the
+    'uwrap' program. 'uwrap' is a wrapper specfically designed to
+    wrap and protect /etc/init from the SIGURG signal. It can also
+    be used to wrap other programs and processes as well if desired.
+    Programs linked with -lbsd or -lposix or those compiled with
+    'set42sig()' do not require SIGURG protection (and since /etc/init
+    exec's all other processes, unless processes use SysV signals
+    _and_ reset SIGURG to SIG_DFL, they will also be protected as
+    well).
+
+  o There is a replacement version of rpc.statd for A/UX 3.1 (3.1.1)
+    available on ftp.support.apple.com, in
+    /pub/apple_sw_updates/US/Unix/A_UX/supported/3.x that addresses and
+    fixes the vulnerability described in CERT Advisory CA-06.09.
+    Get It!
+
+  o A number of holes are due to some "wrong" things that '/bin/sh' does
+    concerning IFS. To fix this, Apple has released a "corrected" version
+    of 'sh' that resets IFS to it's default value before executing a script.
+    This fixes some holes that exist in SUID programs that call 'system()'
+    or 'popen()' to execute some commands. This replacement version of
+    'sh' is available both on aux.support.apple.com and jagubox.gsfc.nasa.gov.
+    To install it, follow these directions (assuming you are located in the
+    directory where the new 'sh' is located):
+
+       $ cp /bin/sh /bin/Osh
+       $ cp sh /bin/sh
+
+    For this to work, /bin/sh shouldn't be busy, so this should be done either
+    in Single-User mode (as long as root's shell isn't 'sh') or while in
+    A/UX Startup.
+
+  o If you are connected to the Internet, it's a Good Idea to either use
+    either tcp_wrappers (on ftp.win.tue.nl and jagubox)) or inetd 1.9
+    (on jagubox), both of which provide host access control (i.e. you can
+    select which hosts can exec which network daemons. While you are at it,
+    the replacement version of 'portmap' (also on jagubox) is very easy to
+    compile and is recommended as well.
+
+  o By all means, remove the Guest account. Check to make sure that there
+    are _no_ users with null-passwords in /etc/passwd.
+
+  o The default distribution of A/UX has 'in.fingerd' SUID to root. Even
+    though it doesn't have the  famous Internet Worm problem, there's no
+    need for that. Much better to have it run as 'nobody'. You can do
+    this by either changing the owner of 'in.fingerd' to 'nobody' and
+    keeping it's SUID bit or you can remove the SUID capability and
+    tell 'inetd' to run it as 'nobody'. To do the later, you'll need to
+    use the new, unofficial replacement of 'inetd' for A/UX (see below:
+    "Performance Patches", "Ported s/w" and Q&A A.06). Jim Jagielski has
+    also ported a version of 'in.fingerd' that logs fingers. It's available
+    via anon-ftp on jagubox.gsfc.nasa.gov. Of course, the most secure option
+    is simply to disable 'in.fingerd' totally in '/etc/servers'.
+
+  o Root should never use the common System Folder... Due to it's very
+    nature it's writable by everyone. Give root a personal System Folder
+    and sleep easier :)
+
+  o A/UX doesn't support the 'sticky-bit' feature for directories. So
+    why not create a directory in your $HOME called '.tmp' with mode 700.
+    Now in /etc/profile add:
+
+        if [ -d "$HOME/.tmp" ]; then
+            EXINIT="set directory=$HOME/.tmp"
+            export EXINIT
+            TMPDIR="$HOME/.tmp"
+            export TMPDIR
+        fi
+
+    and in /etc/cshrc add:
+
+        if ( -d "$HOME/.tmp" ) then
+            setenv EXINIT "set directory=$HOME/.tmp"
+            setenv TMPDIR "$HOME/.tmp"
+        endif
+
+    Now most UNIX programs (like 'vi', 'elm', 'cc', 'gcc', etc...) will use
+    $HOME/tmp as a safer location for temp-files.
+
+
+=========================================================
+**** List of known bugs and patches under A/UX 3.x.x ****
+---------------------------------------------------------
+
+~~~~~~~~~~~~~~~
+AWS Tune-Up 2.0
+~~~~~~~~~~~~~~~
+    By far, this is the most important patch you could apply to A/UX 3.1.
+    It updates it to 3.1.1 and fixes lots of bugs as well as provides better
+    performance. The patch is in the form of 1 DiskCopy Image file which
+    can be found on jagubox.gsfc.nasa.gov and on aux.support.apple.com. You
+    download the files and then use DiskCopy to make the Installer disks.
+    This is a _free_ upgrade to 3.1 and requires 3.1. NOTE: A/UX 3.1.1
+    will _NOT_ run reliably on the MacII, MacIIx, MacIIcx or SE/30.
+
+    On jagubox, look in ~ftp/pub/aux/Apple.fixes/supported
+
+~~~~~~~~~~~~~~~
+AWS Tune-Up 1.0
+~~~~~~~~~~~~~~~
+
+    By far, this is the most important patch you could apply to A/UX 3.0.1.
+    It updates it to 3.0.2 and fixes lots of bugs as well as provides better
+    performance. The patch is in the form of 2 DiskCopy Image files which
+    can be found on jagubox.gsfc.nasa.gov and on aux.support.apple.com. You
+    download the files and then use DiskCopy to make the Installer disks.
+    This is a _free_ upgrade to 3.0.1 and requires 3.0.1.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Performance related patches: 3.x.x
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    BNET:
+        ***         Has an incredibly small listen() queue            ***
+	***      which is a major pain for loaded WebServers          ***
+        ***                                                           ***
+        ***         'adb' shell script that fixes this is             ***
+	***       available on ftp1.jaguNET.com in /pub/aux           ***
+	***                as well as on jagubox                      ***
+        {{{{{                                                       }}}}}
+        {{{{{       Jim Jagielski (jim@jagubox.gsfc.nasa.gov)       }}}}}
+
+    inetd:
+        ***            Unofficial replacement is available            ***
+        ***        on jagubox.gsfc.nasa.gov in pub/aux/Daemons        ***
+        ***      This replacement is based on the BSD-reno inetd      ***
+        ***  and allows such nice features as rereading /etc/servers  ***
+        ***        on receiving SIGHUP, specifying options for        ***
+        ***           called daemons,  logging when daemons           ***
+        ***     are spawned and which host requested the daemon       ***
+        ***            and providing host access control              ***
+        {{{{{                                                       }}}}}
+        {{{{{       Jim Jagielski (jim@jagubox.gsfc.nasa.gov)       }}}}}
+        {{{{{          John Coolidge (coolidge@apple.com)           }}}}}
+
+    tc (tape driver device driver):
+        Reports incorrect file number when 'mt' is used to skip
+        files (fsf and/or bsf).
+        Doesn't allow for additional storage capability of extended
+        length tapes or hardware compression tape drives.
+        Doesn't work with Exabyte 8200s
+        ***                                                           ***
+        ***       An unofficial replacement version of 'tc' has       ***
+        ***     has been written that fixes these bugs as well as     ***
+        ***        providing additional capability and support        ***
+        ***                    for other drives                       ***
+        ***                                                           ***
+        ***               3.x.x replacement is available              ***
+        ***       on jagubox.gsfc.nasa.gov in pub/aux/Sys_stuff       ***
+        {{{{{                                                       }}}}}
+        {{{{{       Jim Jagielski (jim@jagubox.gsfc.nasa.gov)       }}}}}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Bugs and Fixes|Workarounds: 3.x.x
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    ~lp/model/at_interface:
+        Incorrectly prints multiple copies of input. For example,
+        "lp file.1 file.2" would print 2 copies of file.1 and just
+        one of file.2.
+        ***    Due to '>>' being used instead of '>' in certain       ***
+        ***                 places in at_interface.                   ***
+        ***             Unofficial replacement is available           ***
+        ***        on jagubox.gsfc.nasa.gov in pub/aux/Sys_stuff      ***
+        ***       (entries in ~lp/interface based on at_interface     ***
+        ***               should also be changed/patched)             ***
+        {{{{{                                                       }}}}}
+        {{{{{       Jim Jagielski (jim@jagubox.gsfc.nasa.gov)       }}}}}
+
+    atprint:
+        Doesn't correctly connect to the LaserWriter Pro 810.
+        ***              Official replacement is available            ***
+        ***      on ftp.support.apple.com in /pub/aws95/atprint       ***
+
+    syslogd:
+        Doesn't handle some facility (like 'news') logging correctly.
+        ***             Unofficial replacement is available           ***
+        ***         on jagubox.gsfc.nasa.gov in pub/aux/Daemons       ***
+        ***       (contains new /etc/syslogd as well as syslog.h)     ***
+        {{{{{                                                       }}}}}
+        {{{{{       Jim Jagielski (jim@jagubox.gsfc.nasa.gov)       }}}}}
+
+    in.telnetd:
+        Leaves ports open and hanging occasionally. Can cause kernel crashes.
+        ***            Unofficial replacement is available            ***
+        ***                 on jagubox.gsfc.nasa.gov                  ***
+        ***                   in pub/aux/Sys_stuff                    ***
+        {{{{{                                                       }}}}}
+        {{{{{       Jim Jagielski (jim@jagubox.gsfc.nasa.gov)       }}}}}
+        {{{{{          John Coolidge (coolidge@apple.com)           }}}}}
+        ####  Please note that it appears that this new version has  ####
+        ####    some slight bugs in correctly handling Synchs and    ####
+        ####     options negotiation. I have only seen this using    ####
+        #### VersaTerm Pro 3.6.2 and connecting to myself via telnet ####
+
+    /etc/startup.d/ao,as,ae6:
+        Ignores the Broadcast Address value in /etc/NETADDRS.
+        ***      If your broadcast address needs to be different      ***
+        ***   then the default, you'll need to modify these scripts   ***
+        ***     to add 'broadcast "$broadcast"' to the 'ifconfig'     ***
+        ***     lines that _don't_ refer to Loopback. Pretty easy     ***
+        ***           but Email me if you have questions              ***
+
+    /usr/include/dir.h:
+        If entered through dirent.h and _SYSV_SOURCE is defined,
+        rewinddir() is incorrectly "defined". It assumes that you are
+        linking -lposix and will use the "real" rewinddir() function
+        found there, when, in fact, you should #define rewinddir
+        as done with _BSD_SOURCE.
+        ***         A hacked version of dir.h is available on         ***
+        ***    jagubox.gsfc.nasa.gov. It only assumes -lposix will    ***
+        ***      be included (and the real rewinddir() called) if     ***
+        ***             _only_ _POSIX_SOURCE is defined               ***
+
+    /usr/include/sys/file.h:
+        Even though fcntl.h is smart enough to know if sys/file.h has
+        been included, and won't redefine things defined in there, the
+        reverse isn't true. So if you include sys/file.h 1st and fcntl.h
+        next, no warnings will be given, but if you do the reverse, some
+        "redefine" warnings will be printed.
+        ***         A hacked version of file.h is available on        ***
+        ***    jagubox.gsfc.nasa.gov. It checks for __fcntl_h first   ***
+        ***  (if you are using 'gcc', you'll also need to snag it's   ***
+        ***        fixed header-file from jagubox: GNUfile.h)         ***
+
+    /usr/include/sys/param.h:
+        MAXHOSTNAMLEN is defined as a ridiculously low value (32). It should
+        instead be set to what's "normal": 256.
+        ***     Fix is very simple... edit /usr/include/sys/param.h   ***
+        ***            and change the value from 32 to 256            ***
+        ***  (if you are using 'gcc', you'll also need to edit it's   ***
+        ***     include file [gcc/aux/?.?.?/include/sys/param.h]      ***
+
+    /usr/include/sys/types.h:
+        Incorrectly defines size_t as signed int when every other header
+        file defines it as unsigned int.
+        ***     Fix is very simple... edit /usr/include/sys/types.h   ***
+        ***           and change it from signed to unsigned           ***
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Bugs and Fixes|Workarounds: 3.1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    chsh:
+        Resets the uid of nobody to 60001 (the MAXUID under 3.1 is 65534,
+        but 'chsh' thinks it's 60001).
+        ***      Use 'vipw' to change this value back if needed       ***
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Bugs and Fixes|Workarounds: 3.0.2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    elap:
+        A/UX-mac occasionally disappears under Chooser
+        ***            Official 3.0.2 patch is now available          ***
+        ***           on aux.support.apple.com in aws95/elap          ***
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Performance related patches: 3.0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    MacOS System Heap Expansion:
+        Not as robust as the _real_ System 7.0.1 capability, thus pre-
+        venting you from loading lots of memory hungry Extensions and
+        CDEVs.
+        ***             Unofficial replacement is available           ***
+        ***                 on jagubox.gsfc.nasa.gov                  ***
+        ***           in pub/aux/Apple.fixes/unsupported/3.0          ***
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Bugs and Fixes|Workarounds: 3.0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    as, ao, etheraddr:
+        H/W ethernet address is burned in bitwise reverse on Q9?0
+        and Ethernet NB card. Thus, ao, as and etheraddr reports the
+        incorrect address.
+        ***                 3.0 patch is now available                ***
+        ***         on aux.support.apple.com in supported/3.0         ***
+
+    BNU/HDB UUCP (the whole thing):
+        Severe problems as distributed, such as inability to dialout
+        with correctly configured modem, etc...
+        ***                 3.0 patch is now available                ***
+        ***         on aux.support.apple.com in supported/3.0         ***
+        ***     This "patch" is a newer version of HDB (to 1.16)      ***
+        ***         and adds some Mega-enhancements as well.          ***
+        ***                Thanks to Earl Wallace!!!                  ***
+        #### If you snagged version 1.14 from aux.support.apple.com  ####
+        ####       then be _sure_ to update to version 1.16.         ####
+        ####                                                         ####
+        ####     Installing BNU 1.6 causes syslogd to break under    ####
+        ####    new compiles. This is due to the fact that dial.o    ####
+        ####   is replaced in libc.a|libc_s.a when BNU is installed  ####
+        ####         To fix, just get the replacement dial.o         ####
+        ####           on ftp.apple.com in pub/earlw/dial            ####
+
+    csh:
+        Doesn't seem to like filename completion.
+
+    pstat:
+        Depending on the options used, can gobble memory and not release
+        it.
+        ***             Unofficial replacement is available           ***
+        ***                 on jagubox.gsfc.nasa.gov                  ***
+        ***           in pub/aux/Apple.fixes/unsupported/3.0          ***
+
+    rpc.rstatd:
+        Doesn't report correct load averages
+        ***             Unofficial replacement is available           ***
+        ***                 on jagubox.gsfc.nasa.gov                  ***
+        ***           in pub/aux/Apple.fixes/unsupported/3.0          ***
+
+    serial drivers:
+        After some use on all Macs (except IIfx and maybe the Quadras)
+        the kernel will crash.
+        ***  This has been confirmed by Apple but no fix exists yet!! ***
+
+    syslogd:
+        If BNU 1.6 is installed, syslogd won't work on newly compiled
+        programs due to some munging of libc.a|libc_s.a when BNU 1.6
+        is installed. See BNU/HDB UUCP above.
+
+
+=========================================================
+**** List of ported software available via anon-ftp: ****
+---------------------------------------------------------
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Already ported and available:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(Included is the person responsible for the port and the location of the port)
+
+    3270 (v3.6):
+        Eric C Hagberg          (hagberg@mail.med.cornell.edu)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+    Austin KCL (619):
+        Thomas Weigert          (weigert@mcs.anl.gov)
+        wuarchive.wustl.edu     [???]
+
+    apache (v1.0.0 thru v1.1)
+        Jim Jagielski           (jim@jaguNET.com)
+        jagubox.gsfc.nasa.gov   [pub/aux/Web_stuff]
+	ftp.apache.org          [officially supported OS]
+
+    bash (1.12):
+        John Coolidge           (coolidge@apple.com)
+        wuarchive.wustl.edu     [systems/aux/gnu]
+
+    Berkeley make:
+        Phillip P. Porch        (root@theporch.com)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+    Berkeley mandoc:
+        Phillip P. Porch        (root@theporch.com)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+    cut & paste (BSD versions):
+        Ken Whang               (ken@touch.wustl.edu)
+        jagubox.gsfc.nasa.gov   [pub/aux/Sys_stuff]
+
+    EBBS/BBS 2.2 (UNIX based BBS):
+        Jon Stevens             (root@dolphin.csudh.edu)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+    emacs 19.21:
+        Brent Burton            (brentb@tamsun.tamu.edu)
+        isc.tamu.edu            [pub/personal/brentb]
+        (The diffs that Brent used, done by Paul Traina, are available
+        on jagubox in the emacs diffs "collection" tarchive)
+
+    fortune:
+        Phillip P. Porch        (root@theporch.com)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+    freeWAIS (0.3):
+        Jon Stevens             (root@dolphin.csudh.edu)
+        jagubox.gsfc.nasa.gov   [pub/aux/Web_stuff]
+
+    fvwm (1.21z):
+        Renzo Marcanzin         (aire@maya.dei.unipd.it)
+        maya.dei.unipd.it       [pub?]
+
+    gated (2.1.3)
+        Herb Weiner             (herbw@wiskit.com)
+        jagubox.gsfc.nasa.gov   [pub/aux/Patches]
+
+    gcc (2.7.2):
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/GNU_stuff]
+        (See Q&A #P.03)
+
+    gdb (4.12):
+        John Coolidge           (coolidge@apple.com)
+        wuarchive.wustl.edu     [systems/aux/gnu]
+        jagubox.gsfc.nasa.gov   [pub/aux/GNU_stuff]
+
+    GNUplot (3.5):
+        Eric Rosen              (eric@cse.ucsc.edu)
+        jagubox.gsfc.nasa.gov   [pub/aux/GNU_stuff]
+
+    GNUtar (1.11.2):
+        Dennis Govoni           (dennis.govoni@East.Sun.COM)
+        jagubox.gsfc.nasa.gov   [pub/aux/GNU_stuff]
+
+    GNUzip (1.2.4):
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/GNU_stuff]
+
+    httpd (1.4):
+        Jim Jagielski           (jim@jaguNET.com)
+        ftp.ncsa.uiuc.edu       [Web/Unix]
+
+    inetd (BSD/Reno)
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        John Coolidge           (coolidge@apple.com)
+        jagubox.gsfc.nasa.gov   [pub/aux/Daemons]
+
+    last (BSD version):
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        Ken Whang               (ken@touch.wustl.edu)
+        jagubox.gsfc.nasa.gov   [pub/aux/Sys_stuff]
+
+    lemacs (19.6):
+        Thomas Eberhardt
+        labrea.Stanford.EDU     [pub/gnu/lucid]
+        <<ED: I don't think it's there anymore... anybody know
+          where a copy might be?>>
+
+    libg++ (2.5.3):
+        John Coolidge           (coolidge@apple.com)
+        wuarchive.wustl.edu     [systems/aux/gnu]
+        jagubox.gsfc.nasa.gov   [pub/aux/GNU_stuff]
+
+    logging in.ftpd:
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/Daemons]
+        (See Q&A #A.06)
+
+    md5:
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/Security]
+
+    Mosaic (diffs for 2.2):
+        Eric Rosen              (eric@cse.ucsc.edu)
+        jagubox.gsfc.nasa.gov   [pub/aux/Web_stuff]
+
+    Mosaic (2.4 binary):
+        jagubox.gsfc.nasa.gov   [pub/aux/Web_stuff]
+
+    msgs:
+        Phillip P. Porch        (root@theporch.com)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+    mt2 (replacement for 'mt' tape positioner program... not really
+      needed since NEWtc is available that fixes the need for mt2):
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/Sys_stuff]
+
+    mtools (MS DOS floppy access tools):
+        Parag Patel             (parag@netcom.com)
+        jagubox.gsfc.nasa.gov   [pub/aux/GNU_stuff]
+
+    named:
+        Various A/UXers
+	PS: DON'T replace the header files and don't
+	let 'make' install the files... instead, install
+	them by hand. Specifically, copy the 'named' and
+	'named-xfer' files from './named' to the correct
+	location (usually /etc) on your system. _There
+	is NO need to install or use ANY of the header
+	(*.h) or library (*.a) files in the distribution_!!
+	Just replace the binaries, not the include-files!
+	(PS: There is also no need to recompile your programs
+	as well)
+
+    patch:
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+    perl (4.036):
+    perl (5.001e):
+    perl (5.002):
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+    pine 3.90:
+        Phillip P. Porch        (root@theporch.com)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+    popper:
+        Ben Goren               (ben@tux.fa.asu.edu)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+    popper-shadow:
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
++   portmap 4:
++       Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
++       jagubox.gsfc.nasa.gov   [pub/aux/Daemons]
+
+    sendmail 5.65:
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/Daemons]
+        (See Q&A #C.02)
+
+    sendmail.cf:
+        Alexis Rosen            (alexis@panix.com)
+        jagubox.gsfc.nasa.gov   [pub/aux/UUCP-sendmail-cf]
+        (See Q&A #A.06)
+
+    shadow-passwd:
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/Sys_stuff]
+
+    showaudio:
+        Eric Rosen              (eric@cse.ucsc.edu)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+    smail 3.1.28:
+        Bob Denny               (denny@alisa.com)
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/Daemons]
+
++   ssh-1.2.17:
++	<<later versions compile easily out of the box>>
++       Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
++       jagubox.gsfc.nasa.gov   [pub/aux/Daemons]
+
+    talk and talkd (BSD 4.3 versions)
+        Steve Green             (xrsbg@dirac.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/Daemons]
+        (See Q&A #C.05)
+
++   tcp_wrappper 7.4:
++       Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
++       jagubox.gsfc.nasa.gov   [pub/aux/Daemons]
+
+    tcsh (6.03):
+        jagubox.gsfc.nasa.gov   [pub/aux/GNU_stuff]
+
+    texinfo (3.1):
+        Phillip P. Porch        (root@theporch.com)
+        jagubox.gsfc.nasa.gov   [pub/aux/GNU_stuff]
+
+    vim (4.2):
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/unix/vim]
+
+    vtwm (5.1):
+        Dennis Govoni           (dennis.govoni@East.Sun.COM)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+    WUARCHIVE ftpd (2.4):
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/Daemons]
+        (See Q&A #A.06)
+
+    xmeter:
+        Eric Rosen              (eric@cse.ucsc.edu)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilties]
+
+    xntpd (3.3zd):
+        Jim Jagielski           (jim@jagubox.gsfc.nasa.gov)
+        John Dundas III         (dundas@salt.jpl.nasa.gov)
+        jagubox.gsfc.nasa.gov   [pub/aux/Daemons]
+
+    zmodem:
+        Jon Stevens             (root@dolphin.csudh.edu)
+        jagubox.gsfc.nasa.gov   [pub/aux/Utilities]
+
+~~~~~~~~~~~
+Easy to do:
+~~~~~~~~~~~
+
+The following have also been successfully ported to A/UX with minimal trouble.
+Since the ports are pretty straightforward, only a few are actually available
+in their ported form (please see Q&A #P.01).  Please note that most of these
+require or assume using 'gcc.'
+
+<< ED: As a general rule of thumb, most of the ports that I've done use
+       gcc and GNUmake... provided patches may assume or require these >>
+
+    o  Cnews (Ver. ??)
+    o  Deliver (v2.1 pl. 9 or later)
+    #  Elm 2.4.23
+         (use -lbsd and edit config.sh and "undef" d_locale or else
+          follow the advice of P.08, below)
+    o  Ghostscript 2.3
+    #  GNU Stuff (all are pretty much straight-forward and compile
+       "right out of the box"):
+         binutils 1.9
+    #    bison 1.22
+    #    diffutils 2.3
+         emacs 19.[19-22]
+           (diffs on jagubox in the emacs diffs "collection" tarchive)
+    #    fileutils 3.6
+    #    find 3.8
+           (to allow 'find' to recognize user=nobody, compile with 'cc')
+         flex 2.3.7
+         gawk 2.1.5
+           (use '-traditional' with gcc)
+    #    gdbm 1.7.1
+    #    grep 2.0
+    #    gzip 1.2.4
+    #    indent 1.9.1
+    #    make 3.71
+    #    pgp 2.6/2.6.1 (from bitsy.mit.edu)
+    #    ripem 1.2 (from ripem.msu.edu)
+    #    sed 1.1.6
+    #    sed 2.0.3
+         shellutils 1.8
+         Smalltalk 1.1.1
+    #    tar 1.11.2
+           (requires '-lbsd -lposix')
+    #    textutils 1.6
+    #  gopher/gopherd 2.016 [from boombox.micro.umn.edu]
+         (diffs available on jagubox)
+    o  Gwm 1.7h
+    #  httpd 1.4.2/1.5 [from ftp.ncsa.uiuc.edu]
+        (compiles right outta the book. Officially supports A/UX).
+    o  INN 1.4 (get 'INN.config.data' files from jagubox)
+         Please note that INN is an _extreme_ memory hog, esp.
+         when compiled using gcc. If you use it, be _sure_
+         that you have enough memory and swap space. It helps
+         a LOT if you don't run the Finder interface as well.
+    #  less 177
+    #  listproc 6.0c (was: listserv)
+         (compile w/ -DDONT_GO_INTERACTIVE; and use GNUmake)
+    #  lynx 2.3 [from FTP2.cc.ukans.edu]
+         (diffs available on jagubox)
+    #  NetHack
+    #  mush 7.2.5 (Use either 'cc -DAUX' or 'gcc -traditional';
+         make sure SIGRET=int; use INTERNAL_MALLOC; use makefile.sys.v)
+    #  named
+        (compiles right outta the book. Officially supports A/UX;
+	 however, don't let it install itself. instead, install
+	 them by hand. Specifically, copy the 'named' and
+	 'named-xfer' files from './named' to the correct
+	 location (usually /etc) on your system. _There
+	 is NO need to install or use ANY of the header
+	 (*.h) or library (*.a) files in the distribution_!!
+	 Just replace the binaries, not the include-files!
+	 (PS: There is also no need to recompile your programs
+	 as well))
+    #  nn 6.4.18
+         (A/UX configuration file available on jagubox)
+    #  nn 6.5.0(b3)
+         (A/UX configuration file available on jagubox)
+    #  nntp 1.5.11
+    #  perl 4.035
+         (use '-lm -lPW -ldbm -lbsd', get "fixed" dir.h to
+         avoid needing -lposix for rewinddir(), use gcc if
+         possible, make sure d_voidsig is correct ("define" if
+         using ANSI, "undef" if not), and undef d_ndbm while
+         defining d_dbm in config.sh).
+    #  perl 4.036
+         (Don't answer "aux" but instead let the configure script
+         work it's magic -- hints for 4.035 also apply)
+    #  perl 5.003
+    #  portmap ("secure" version on ftp.win.tue.nl).
+    #  rn 4.3.54
+    #  rn 4.4.1
+    o  SB Prolog 3.1
+         (minor changes in the builtin directory)
+    #  sendmail 8.6.12/8.7.?
+        (compiles right outta the book. Officially supports A/UX).
+    #  smail 3.1.28
+         (get the AUXsmail.tar.gz file on jagubox for
+         A/UX diffs and patches)
+    #  tcpd 6.3 [from ftp.win.tue.nl]
+    #  tcsh (compiles out of the box)
+    #  trn 3.0
++   #  vim 4.00 (non-GUI, and add -D_POSIX_SOURCE and -lposix)
+    #  xntpd (see above)
+
+//////////////////////  END OF PART 1 OF 4  \\\\\\\\\\\\\\\\\\\\\\
+
+
+
+\\\\\\\\\\\\\\\\\\\\\\ START OF PART 2 OF 4 //////////////////////
+
+====================================
+**** Hints and Words Of Wisdom: ****
+------------------------------------
+
+o Depending on your setup, A/UX allocates either 10% or 50% of memory for disk
+  buffers (that is, the value of 'NBUF' is either 0 or -1... see kconfig(1M))
+  [The kernel for the AWS95 has, by default, a NBUF value of -1 whereas
+  "everyone else" has NBUF = 0]. If you have a lot of RAM and A/UX is only
+  allocating 10%, you can greatly increase system performance by increasing
+  the allotment. However, you cannot use kconfig to specify "20%" but you must
+  give it an actual number to use. The way to determine the number of buffers
+  being used, run "pstat -m". This will give you the number of buffers that
+  are currently allocated. For example, if the value is 1000, then you know
+  that to increase the number of buffers to 20%, you must use 'kconfig' to set
+  'NBUF' to 2000. Under 3.0.2 (and later), you can use the Memory cdev (as
+  root) to do this as well. In fact, this is the recommended way.
+
+  Please note that if you change the amount of RAM you have, you'll need to
+  change the value of 'NBUF.' I suggest that before you add|remove RAM, you
+  use 'kconfig' to reset 'NBUF' to 0, then do the RAM change and see how your
+  system performance is. If needed, you can then use the above to increase
+  (or decrease) the number of disk buffers.
+
+o You can run A/UX on the original MacII, however the PMMU chip must be
+  installed. You can also use one of the many 68030 upgrades for the MacII,
+  such as the Marathon '030, but the MacII ROMs won't recognize the PMMU
+  capabilities onboard the CPU. You'll need to get the MacII FDHD ROM Upgrade
+  Kit. This kit replaces your ROMs with IIx ROMs, thus enabling you (and
+  A/UX) to use the upgrade. The kit also replaces your SWIM chip (floppy
+  controller) enabling you to use FDHD disks (if such a drive is installed)
+  too... thus the name of the kit. This kit can be had for about $120 although
+  some dealers also include a FDHD drive as well, bumping the price up to
+  about $430.
+
+o You can configure the built-in serial ports for hardware handshaking
+  (RTS & DTS) _or_ dialup security (DTR & CD) but not both, due to the
+  lack of a sufficient number of modem control lines.
+
+o When using ftp, unless you are _sure_ that a file is, in fact, a true
+  Text file, set the ftp mode to Binary. This is especially true when
+  downloading GIFs and "true" Mac files. If it's a BINHEXed file or a
+  uuencoded file, then you can specify Ascii mode (in some cases, it's
+  required). If the file you wish to download has the ".tar" or ".Z" suffix,
+  then you _need_ Binary; if the suffix is ".uu" or ".hqx" then use Ascii.
+  If you are using a MacOS-ftp utility, then using MacBinary may confuse A/UX
+  (well, the Unix side of it). If the file is a tar file (for example),
+  compressed or not, MacBinary attaches some MacOS "information" to the file
+  that tar can't handle. Use 'fcnvt' to change the file to Apple Double to
+  "strip" this extra by separating the forks:
+  
+    $ fcnvt -v -d <input.file> <output.file>
+
+  To avoid having A/UX attempt the CR->NL change when copying the file over to
+  A/UX, change the Creator to "A/UX" and Type to "BIN " before drag-copying
+  the file.
+
+  So, the flow should be as follows:
+
+    o Set the file's Creator and Type to something safe ("A/UX"
+      and "BIN ") to avoid CR->NL translation.
+    o Drag copy over to A/UX.
+    o Use 'fcnvt' to convert file to Apple Double format.
+    o Use UNIX utilties as normal.
+
+o To download GIF files via anon-ftp, be sure to specify Binary mode. Then
+  use 'setfile' to create the correct Type and Creator fields (for, example,
+  for Giffer use 'setfile -t"GIFf" -c"Bozo"'). You can then keep this file
+  on your A/UX disk or transfer it over to your MacOS disk (See Q&A #M.07).
+
+o If you want to rebuild the "/" desktop, be _sure_ to avoid circular
+  symbolic links (links to "." and/or "..") or else you'll be waiting a
+  looooong time. In a similar way, make sure that you don't have NFS volumes
+  mounted because they will add a LOT to the time required to rebuild the
+  Desktop...
+
+o With the newest version of HDB UUCP (1.16 - see above), use the "-u"
+  option on 'getty' to keep /dev/tty?? settings sane. Also use the "-t" option
+  with a value like 60 or so to make getty hang up a hung login attempt.
+
+o If your A/UX setup is a true multi-user system, or, at the least, has
+  Guest as an active account, it is a Very Good Idea to give each user their
+  own personal System Folder (use 'systemfolder'). This is _very_ true for
+  root! As root, you should also avoid using the global System Folder
+  (mac/sys/System Folder) as an alternate Sys. Folder... there's very little
+  need to do so anyway.
+
+  Oh yeah... you can't just copy /mac/sys/System Folder to something like
+  $HOME/System Folder... you must use 'systemfolder' and add/change/delete
+  things as required.
+
+o It's very easy to replace TextEditor as your Finder-double-click text
+  editor. All you need to do is copy the application to /mac/bin (make sure
+  that it's permissions are 755 bin|bin), edit /etc/profile and /etc/cshrc
+  to change FINDER_EDITOR to point to the application. Now, A/UX text files
+  will show up as that application's filetype. An _excellent_ replacement is
+  BBEdit Lite (v 2.31). It is really recommended!
+
+o A/UX's 'login' supports additional dialup security. This is enabled by
+  creating|editing two files: /etc/dialups and /etc/d_passwd. The format of
+  /etc/dialups is a list of ports that you want to have dialup passwds. eg:
+
+    /dev/tty0
+    /dev/tty10
+
+  The format of /etc/d_passwd is a list which associates a password with
+  a login program (which is the last field in /etc/passwd). eg:
+
+    /bin/sh:&nk7h7ak92j3H:
+    /bin/ksh:8hw$jK4ft92jx:
+    /bin/csh::
+    /usr/lib/uucp/uucico::
+
+  In this case, if anyone attempts to login on ports tty0 or tty10 and are
+  using 'ksh' or 'sh', they'll get asked for a secondary (dialup) password.
+  Users using 'csh' or 'uucico' will not. All other logins that use login
+  programs not entered in /etc/d_passwd (like, for example,
+  /usr/local/bin/bash) will _not_ be allowed to login on the "secure" port.
+
+o If you want to install a program that uses a "complex" installation
+  procedure (like for Canvas, Word, Stuffit, etc...) then you should not
+  try to do a fresh install under A/UX. Instead, install under the real MacOS,
+  reboot A/UX and then install needed files to your A/UX System Folder.
+  Programs that, when installed, hack around with the System (beyond things
+  like Fonts) itself, most probably won't work under A/UX, since you really
+  can't patch System (unless you are handy with ResEdit and know exactly
+  what resources to add|change... even then, you are taking a chance...)
+
+o If you get an error message to the effect that you have a bad SuperBlock
+  when doing a 'fsck' on a disk, try having 'fsck' use another SuperBlock.
+  Block #16 is always an alternate SuperBlock block, so you can try:
+
+    $ fsck -b 16 /dev/rdsk/cxxxxxxxx
+
+o A/UX has two versions of the setpgrp() call. The first is the standard
+  SysV version and takes no arguments. The other is the standard BSD version
+  and takes 2 arguments (setpgrp(pid, gpid)). However, if, when porting
+  programs, you have added the 'set42sig()' call, or link with -lbsd, then
+  you _must_ use the 2nd form (actually, the 2nd form is required whenever
+  COMPAT_BSDTTY and COMPAT_BSDSIGNALS are set); the 1st form will usually
+  fail. A non-portable way of handling this is always calling setpgrp() as
+  follows:
+
+    setpgrp(0, getpid());
+
+  Now, no matter what the compatibility flags are, the function will work
+  ('cc' and 'gcc' under A/UX presently ignores the passed arguments when the
+  no-argument version is called).
+
+o It's always a Good Idea to keep "original" stuff separate from locally
+  added or modified stuff. '/usr/local' is a very good place for this.  To
+  add manual pages to this location, create a '/usr/local/man' directory.
+  Now make a symbolic link from '/usr/catman/L_man' to '/usr/local/man'. This
+  does two things: (1) Allows 'man' to search down the '/usr/catman' directory
+  to find your local man pages while keeping the actual data under
+  '/usr/local'; (2) The local man-page set will be searched first (due to
+  the name L_man) as would be desired. If you _really_ want, you can also
+  make '/usr/local/catman' a link to '/usr/local/man'.
+
+o If you've added a number of additional man pages, you may want to snag the
+  'man-utils' package on jagubox.gsfc.nasa.gov. It includes a collection of
+  programs and scripts that make viewing, installing and making man pages
+  easier. Also includes a replacement for '/usr/bin/man'.
+
+o Some 'configure' scripts may fail due to some line-length and symbol-length
+  limitations in /bin/sh (you'll see something like a "symbol too long"
+  error). You can get around this by changing the script type from:
+
+    #!/bin/sh
+
+  to:
+
+    #!/bin/ksh
+
+  to run them as 'ksh' scripts... In fact, I personally think it's better
+  to run _all_ 'sh' scripts as 'ksh' scripts if possible ;)
+
+o IMHO, Courier and Monaco really don't look that nice for CommandShell
+  windows. Monoca is too plain and Courier takes up too much room on the
+  window (and with both, it's hard to see "."s, hard to tell the difference
+  between "O" and "0", etc...). I use a font called CSFont here on jagubox.
+  It's a tweaked version of the old, original Courier bitmaps that Apple
+  used to provide. I really like it. It's available via anon-ftp here on
+  jagubox in /pub/aux/Misc_stuff. I'm currently working on tweaking a
+  Bold version of CSFont... stay tuned :)
+
+o If you are doing any in-depth porting, then do yourself a favor and snag
+  a copy of libUTIL.a from jagubox. libUTIL.a is a collection of many
+  functions that aren't included in the standard A/UX libraries, but are
+  needed (or very useful) when porting (esp. BSD sources or ANSI stuff). Some
+  examples of included functions are memmove(), strerror(), strdup() and
+  more. If you have a suggested function to include, let Jim Jagielski
+  (jim@jagubox.gsfc.nasa.gov) know.
+
+o In order to get the WWW-browser Netscape to work correctly under A/UX,
+  you need to make sure a few things are right. First of all, make sure
+  that your Preferences are setup correctly: your Temp and Cache directory
+  should be set and _must_ be located on a MacOS disk, not under the A/UX
+  file system; your Helper applications must be selected as well. Failure
+  to do this can cause Netscape not to view graphics correctly.
+
+  You should also move the 'Netscape f' folder from the Preferences folder
+  in System Folder to the actual Netscape folder... Having it located in
+  Preferences will prevent Netscape from remembering certain settings, such
+  as Bookmarks.
+
+
+==============
+**** Q&A: ****
+--------------
+
+:::::::::::::::::::::::::::::
+::::: GENERAL QUESTIONS :::::
+:::::::::::::::::::::::::::::
+
+===================================
+G.01)  What's A/UX? Is it any good?
+-----------------------------------
+
+A/UX is Apple's implementation of Unix (it's Apple's UNix) for various
+Macintosh computers. A/UX merges two computing environments, Unix and the
+Macintosh Finder OS, and provides the full functionality of both.
+
+A/UX is based on AT&T Unix System V.2.2 with numerous extensions from V.3, V.4
+(such as streams) and BSD 4.2/4.3 (such as networking, the Fast File System,
+job control, lpr, NFS with Yellow Pages, SCCS and sendmail 5.64).  It also
+provides full POSIX compliance. A/UX provides SYSV, BSD and POSIX compatiblity
+switches and libraries. A/UX is fully compiant with the System V Interface
+Definition (SVID).
+
+A/UX provides all three standard shells: sh, csh and ksh. X-Windows is also
+provided standard.
+
+A/UX 3.x.x incorporates System 7 for the Macintosh allowing for the use of
+the vast majority of Macintosh applications under A/UX. System7 and Unix
+and fully integrated under A/UX 3.x.x with the Unix file system being seen as
+a disk drive by the Finder.
+
+There are quite a few people who feel that A/UX is a near-perfect implemen-
+tation of Unix. Of course, every operating system (even AIX!) has it's share
+of devotees, so that's not a very valid scale of whether the system is any
+good. A/UX _is_ Unix... it's not some form of pseudo-Unix. It insulates the
+user from Unix, if required, but the System Administrator will need to become
+Unix-aware. Furthermore, if you want straight Unix, you can get it... it's
+not a chore to bypass all the "gingerbread." People may also complain that
+A/UX is based on an "obsolete" version of AT&T Unix (V.2.2). In many ways,
+Apple's extensions make A/UX very V.3-like (V.3 is in many ways an enhanced
+V.2... it even uses the V.2 kernel)... The list of extensions to A/UX are
+impressive. Compare what you get standard with other systems and you'll be
+shocked! On some, 'cc', 'f77', NFS, etc... are costly options.
+
+The main consideration (and opposition) to A/UX is the platform it runs on:
+The Macintosh. Some consider this a boon, others a bust. At present, Apple's
+top-level workstation is the Quadra 800, a 33MHz 68040 based system. Some
+consider this obsolete; others consider it overkill; others consider it, like
+Goldilocks, "just right."
+
+If you need super-fast state-of-the-art number crunching capability then A/UX
+may not be for you... the Q800 benchmarks at maybe 10-16 SPECmarks (depending
+on compiler used, external cache size, etc...) and you can get lots faster
+with other platforms. Of course, you'll have to "settle" for their operating
+systems, but if you need it, then that's how you'll get it.  Of course, this
+doesn't mean that A/UX "crawls"...
+
+There are very few people who need this type of performance though. If you
+need (or just _want_ ) a Unix workstation with the speed and power of Unix
+and the user interface and application selection of the Macintosh then A/UX
+is the way to go. In many, many ways, A/UX is the Unix "for the rest of
+us"... even if we are long-time Unix junkies. If you love the Mac, you'll
+love A/UX; if you love Unix, you'll love A/UX... and if you want a near-
+perfect marriage of the two, then you'll love A/UX.
+
+Yes, A/UX is good... very, very good :)
+
+========================================================================
+G.02)  What's the minimum system I need (CPU, disk and RAM) to run A/UX?
+------------------------------------------------------------------------
+
+A/UX 3.0 works on the MacII (with PMMU _or_ 68030 upgrade with FDHD ROM's
+installed), IIx, IIcx, IIci, IIfx, SE/30, IIsi (with 68882 chip) and the
+Quadra 700|900|950 computers. A/UX 3.0.1 (and later) adds support for the
+Q800 and Centris Machines (the Centrises _must_ have the real 68040 w/FPU -
+See Q&A #G.03). A/UX will run on the Quadra 610 and 650s (recall that A/UX
+requires the _real_ 68040 chip!) with a little bit of work:
+
+  You should make a copy of the A/UX Install Boot floppy and then copy the
+  Enabler for the Q610|650 onto this copy. You then boot up from this floppy
+  and install A/UX as usual. Finally, you'll need to copy the Q610|650
+  Enabler onto the A/UX MacPartition (or whatever MacOS disk you will use
+  when starting up your Mac and booting A/UX); do this by first booting off
+  a boot floppy or boot CD and then copy the Enabler over. You do _not_ need
+  to make any changes to the A/UX System Folder (i.e. the System Folder used
+  under A/UX).
+
+A/UX will NOT run on the PowerMacs, any AV machines, any PowerBooks (or
+portables), the LCs, the Duos, the ClassicII, the Q605 or on the Quadra
+630... It is recommended that you NOT run A/UX 3.1.1 on the II, IIx, IIcx or
+SE/30 machines, since their MacOS-compatibility is unreliable under 3.1.1.
+
+Recall that A/UX _is_ UNIX and thus contains some very hardware specific
+drivers. It's for this reason (and not Apple not doing things correctly) that
+A/UX won't work on newly released platforms. To support a new platform, at
+least _some_ work (and possibly extensive work in some cases) must be done.
+
+If you really want to cut it close, 8MB RAM and an ENTIRE 80MB hard disk will
+just make it. You'll have little room for user files (unless you clear out
+some space by removing /games and maybe /catman) and depending on your
+workload, may suffer from low performance (due to swapping... you may even
+encounter the infamous swap messages :)
+
+A much better system would be 16MB of RAM and about 200MB of disk space.
+This would give you much more room to grow as well as sufficient RAM to
+increase your performance (assuming that you tune some kernel parameters).
+All in all, more RAM is prefered: 20MB (or more) is ideal.
+
+===================================
+G.03)  What's new about A/UX 3.x.x?
+-----------------------------------
+
+A/UX 3.x.x incorporates the full functionality of System7. It supports the
+QuickTime multimedia extension and the new Mac Quadra computers (not the AV
+machines, however). A/UX 3.x.x includes X11R4 in it's distribution, as well
+as MacX. Installation of A/UX is much easier that it was before and can be
+installed on any 3rd party hard disk using the "new and improved" HD Setup
+application (see Q&A #A.16 though).
+
+3.0.2 is a later version of A/UX. 3.0.1 added support for the Q800 and
+the Centris machines (650 and 610) as long as they have the _real_ 68040 chip
+(68RC040) installed (Support for the C650 is official; support for the C610,
+which _requires_ the 040 be replaced since none have the required one
+installed, is non-official but known and verified). A/UX 3.0.2 will also run
+on the Quadra 610 and 650; see G.02 to see how. To get 3.0.2, you'll need to
+install 3.0.1 and then apply the AWS Tune-Up 1.0 to upgrade to 3.0.2. This
+upgrade is free.
+
+3.1.1 is the latest version of A/UX. 3.1.1 greatly improves performance and
+reliability as well as fixes some bugs. It does not, however, add support for
+any other Macs. 3.1.1 is "tweaked" for the AWS95, but can be run on other
+non-AWS95 Macs as well (see Q&A G:09). A/UX 3.1.1 is a "tuned-up" version
+of A/UX 3.1, which is, itself, a improvement over 3.0.1/3.0.2 (in fact,
+3.1 contains all the fixes in 3.0.2). However, A/UX 3.1.1 will NOT run
+reliably on the MacII, MacIIx, MacIIcx or SE/30 machines.
+
+3.0.1, in addition to supporting newer Macs, provides performance boosts, bug
+fixes, better Finder emulation and other enhancements over 3.0. 3.0.2 does
+the same for 3.0.1. The upgrade from older versions of A/UX to 3.0.2 really
+_is_ worth the pretty small amount of money required. 3.0.2 is a better and
+more solid performer, both UNIX-wise and Finder-wise, than it's predecessors.
+3.1 requires 3.0.1|3.0.2 and provides much better performance and should be
+seriously considered!
+
+====================================================
+G.04)  What's the diff between 3.0.2 and 3.0.2(wgs)?
+----------------------------------------------------
+
+3.0.2 is an exact binary-copy of 3.0.2(wgs) (which is the version of A/UX
+for the WGS 95 server) except for some minor cosmetics and the exclusion of
+the server-related applications. This includes RetroSpect for A/UX (see Q&A
+#E.03). Some of the major differences between 3.0.2 and 3.0.2(wgs) include:
+
+    o Buffer cacher size (default kconfig parameters)
+    o Packages installed during Easy Install
+    o Swap space size on Easy Install
+    o Autologin enabled in 3.0.2(wgs)
+    o lpr daemon on in 3.0.2, off in 3.0.2(wgs)
+    o Partition choices in HDSC SetUp
+
+As you can see, they are all related to how the system is setup...
+
+============================
+G.05)  How can I order A/UX?
+----------------------------
+
+The latest _shipping_ version of the complete A/UX distribution is 3.0.1.
+Once you get that, you can either decide to upgrade (for free) to 3.0.2 or
+upgrade even further by purchasing the A/UX 3.1 upgrade and then using
+AWS-Tune-Up-2.0 (which is free) to go all the way up to 3.1.1.
+
+A/UX is available preinstalled on Mac systems or on CD-ROM. To find the
+nearest A/UX reseller, call 1-800-538-9696. You'll need access to a compatible
+CD-ROM drive to install A/UX (or a friendly dealer if you go that route).
+Please note that at the present, you can only order 3.0.1; you'll then need
+to apply the AWS Tune-Up 1.0 (available on jagubox and aux.support.apple.com)
+to upgrade up to 3.0.2. You could also, as mentioned above, also decide
+to spend some extra money and get the 3.1 Upgrade CD-ROM, to bring you
+up to 3.1, and then apply the free Tune-Up-2.0 disk to bring you up to
+A/UX 3.1.1.
+
+The part numbers (and suggested retail price) for 3.0.1 are (US and Canada):
+
+    M0598LL/C     A/UX 3.0.1 CD-ROM product                 ($795)
+                  (contains Essential Manuals)
+    M0597LL/B     A/UX 3.0.1 Essential Manuals              ($329)
+    M0430LL/B     A/UX 3.0.1 Programmers Manuals            ($329)
+    M0431LL/B     A/UX 3.0.1 Administrators Manuals         ($329)
+
+    M0599LL/C     A/UX 3.0.1 Update (updates previous       ($250)
+                  versions to 3.0.1)
+    M0489LL/B     A/UX 3.0.1 Programmers Manual Update      ($285)
+    M0490LL/B     A/UX 3.0.1 Admin. Manual Update           ($285)
+
+If you are interested in upgrading your Q950 to the Apple WGS-95 Server
+(which uses A/UX 3.0.1) here are the part numbers (with SRP):
+
+    M6940Z/A      WGS 95 PDS Upgrade Kit                     ($2499)
+    M6945Z/A      WGS 95 PDS + DAT Upgrade Kit               ($4399)
+
+By the way, MacWarehouse is now selling the A/UX 3.0.1 CD-ROM package for
+$619... Their phone number is 1-800-255-6227; ask for part#SYS0009.
+
+To get 3.0.2, you need to snag the AWS Tune-Up 1.0 DiskCopy image files from
+aux.support.apple.com or jagubox and apply the patches. Although the Tune-Up
+is called AWS, it's really for _all_ A/UX users. Note that you need 3.0.1 to
+upgrade to 3.0.2.
+
+If you want to upgrade to 3.1/3.1.1, please see Q&A G.09.
+
+==============================================
+G.06)  What's the upgrade path for A/UX 3.0.2?
+----------------------------------------------
+
+You can upgrade to 3.0.2 (from any other version of A/UX) by purchasing the
+A/UX 3.0.1 CD-ROM Product Upgrade (Apple part # MO599LL/C). The suggested
+price is $250. You then need to snag the AWS Tune-Up 1.0 disks to upgrade
+3.0.1 to 3.0.2.
+
+It's recommended that if you do upgrade, that you completely repartition
+your disk via the Installer for two reasons:
+
+    1. The default (suggested) partition sizes have changed
+
+    2. You install 3.0.1 on a "clean" system.
+
+If you want to upgrade to 3.1/3.1.1, please see Q&A G.09.
+
+============================================================
+G.07)  What are Right-To-Copy and Right-To-Upgrade licenses?
+------------------------------------------------------------
+
+If you have bought at least one copy of A/UX 3.0.x and you have other Mac
+CPUs that you would like to install A/UX on, you don't need to reorder the
+entire product. You can order a Right-To-Copy license for each Mac you want
+to install A/UX on and then copy your A/UX to that Mac. This is cheaper than
+buying a whole new CD-ROM package. It's not right to copy unless you have a
+Right-To-Copy.
+
+If those other Macs are already running A/UX, but an older version, then you
+need to order a Right-To-Upgrade license for each one you want to upgrade.
+As above, you then copy your 3.0.x over to that Mac.
+
+Note that in both cases, you must have purchased at least 1 copy of A/UX
+3.0.x. The Right-To-* licenses just "authorize" you to then copy that over
+to other Macs.
+
+The A/UX Essential Manual Set (that comes with A/UX 3.0.x) is not provided
+with either license. If you need more, you'll need to order them
+
+=========================================
+G.08)  How can I report bugs that I find?
+-----------------------------------------
+
+The official E-mail address is reports@aux.support.apple.com. If you subscribe
+to the A/UX Technical AnswerLine, you can also use that method. The former
+isn't acknowledged although the latter is.
+
+For completeness, also post the report to comp.unix.aux.
+
+There is also a HyperCard stack called "Apple Bug Reporter" that Apple
+recommends using. I have a copy and can make it available via anon-ftp if
+there is a demand.
+
+=============================================
+G.09)  What's the word on A/UX 3.1 and 3.1.1?
+---------------------------------------------
+
+The latest shipping version of A/UX is v3.1.  3.1 offers better performance
+than 3.0.2, fixes for various bugs, better MacOS emulation and some updated
+programs and applications.  3.1 requires 3.0.1|3.0.2 and costs $199 (+ $5 for
+shipping, $10 for FedEx). You can order it directly by calling 1-800-769-2775,
+x7822. Ask for the A/UX 3.1 WGS Upgrade Kit. If that doesn't work, try asking
+for part # M2885Z/A.
+
+Once you get A/UX 3.1, you should then apply the AWS-Tune-Up-2.0 disk which
+upgrades 3.1 to 3.1.1. 3.1.1 offers a bit better performance and better
+MacOS emulation than 3.1 does. It's also very free.
+
+3.1.x has only been _fully_ tested on the AWS95 platform and not on all the
+other platforms that A/UX runs on; however, nothing was done to it to prevent
+it from working on other machines. 3.1.x is "only" for the AWS95s in the same
+way that 3.0.2 was "only" for them ;)
+
+Anyway, here is a short and non-official list of some 3.1.x features:
+
+   o sendmail 8.6.4 now included (8.9 with 3.1.1)
+   o support for new Berkeley NEWDB-NDBM package
+   o Added support for "dynamic" use of removables, such as SyQuests
+   o NEC CD-ROMs now supported !!
+   o StyleWriter II supported
+   o Support for UNIX file systems up to 4GB
+   o Enhanced I/O performance (big improvement for fast machines and/or
+     disks!)
+   o Interupting a NFS server now works
+   o Solaris clients no longer crash A/UX
+   o Heavy UFS and NFS I/O no longer causes 'panic: freeing free inode'
+     errors and deadlocks
+   o I/O no longer causes excessive dropped kernel clock interupts
+   o The size of .fs_cache no longer limited to 32MB
+   o Death of 'catsearchd' now detected and responded to (used to crash
+     the MacOS)
+   o Desktop rebuilds no longer cause the Finder to terminate when the
+     rebuild is done.
+   o ThinkC runs under A/UX
+   o Much better MacOS compatibility
+   o 'Temporary Items' correctly handled
+   o Various "needed" programs (like /bin/sh) recompiled w/o shared
+     libs so that the system is still restorable after /shlib is munged
+   o Various bug fixes and improvements, including:
+      cpio (new option -L to follow sym-links)
+      df (handles longer bus names)
+      fsck (ignores 'noauto' and '-p'&'-y' now work correctly)
+      make (uses SHELL in makefile)
+      passwd (MAXUID now 65534)
+      restore (can now restore named pipes)
+
+*****
+NOTE: A/UX 3.1.1 will NOT run on the MacII, MacIIx, MacIIcx or SE/30 machines.
+*****
+
+====================================================
+G.10)  What's the future of A/UX with the PowerMacs?
+----------------------------------------------------
+
+Don't ask... really, don't ask!
+
+Okay, if you insist. It ain't happy...
+
+There is none. Apple has dropped A/UX totally. Their new PowerMac servers
+runs straight AIX and couldn't be confused with A/UX by a dead halibut.
+
+Apple, however, has provided great support in porting Linux to the
+Nubus-based PowerMacs. This OS, Mklinux, will be available in "golden
+release" form around September 1996 (the first developer's release was
+just announced). You can find out more by checking out:
+
+    http://mklinux.apple.com/
+
+==========================================================
+G.11)  I can't use A/UX. What UNIX alternatives are there?
+----------------------------------------------------------
+
+If you can't or *gasp* won't run A/UX on your Mac, then you should consider
+A/UX's only real contender: MachTen by Tenon.
+
+MachTen approaches UNIX on a Mac from a different viewpoint. Whereas A/UX
+is the MacOS running on-top of UNIX, MachTen is UNIX running on top of the
+MacOS. This means that compatibilty problems aren't an issue, since the
+MacOS isn't being "emulated" ala A/UX. You also avoid needing to create
+separate UNIX file systems since MachTen uses the MacHFS file system.  Also,
+MacOS programs run at "top speed" although UNIX processes are slower than on
+A/UX.  However, since it runs on-top of the MacOS, MachTen is limited to the
+inherent limitations and constraints of the MacOS. For example, MachTen's
+"kernel" isn't truly preemptive multitasking, although the UNIX processes
+are multitasked via MachTen. Also, local users can easily bypass MachTen's
+file-level security. As the MacOS evolves, these "short-comings" will no
+doubt be removed from the lower layer of the OS. Finally, MachTen runs on
+the PowerMacs under emulation, with a native version promised later this
+year.
+
+MachTen is based on the Mach kernel and the BSD-Reno/Net2 version of BSD.
+It's a very good alternative to A/UX for those machines that can't run A/UX
+or for those interested in having UNIX run on their Macs (say for learning
+UNIX or doing some UNIX development) but don't want their Macs to run UNIX :)
+
+%%% For more info, contact info@tenon.com %%%
+
+
+:::::::::::::::::::::::::::::::::
+::::: ADMINISTRATION ISSUES :::::
+:::::::::::::::::::::::::::::::::
+
+==================================================
+A.01) How come my Login screen is gray, not color?
+--------------------------------------------------
+
+Because that's the way Apple wanted it :) Actually, the reason why is because
+the 'scrn' resource is missing from 'System' in /mac/sys/Login System Folder.
+If you're handy, you can copy 'scrn' from some other System and paste it in
+Login's using ResEdit. Make sure the "Is Color" field in 'scrn' is "1".
+
+=================================================================
+A.02) How come my Login ScreenSaver doesn't see both my monitors?
+-----------------------------------------------------------------
+
+This is also due to the fact (see Q&A #A.01) that the System file in
+/mac/sys/Login System Folder lacks a 'scrn' resource. If you copy this
+resource from a System that knows about your monitor setup into Login's System,
+then the screensaver will knows about all your monitors.
+
+======================================================================
+A.03)  Even though I have lot's of swap space and only a little bit is
+       being used, I STILL get a lot of messages saying that my swap
+       space is running low. What's the buzz?
+----------------------------------------------------------------------
+
+Unix is justifyably concerned about having adequate swap space. A system
+crash caused by this beast is a sight to behold. However, A/UX seems EXTREMELY
+nervous about the amount needed before it starts getting fidgety.  If you do
+a "/etc/swap -l" and see that you're only using a small portion of your swap
+space and have a "lot" left, then you can safely ignore the messages (just
+how much is a "lot" is hard to say, but if you have 25000 blocks and are only
+using 1000 or 2000, then I'd say you were fine). If you DO need more swap
+space, then you have a few options:
+
+    a. Using 'kconfig', reduce the number and size of buffers.
+       This isn't really a good idea since it could really degrade
+       performance as well as possibly causing more panics.
+
+    b. Add more swap space.
+       Fine, if you have it. You could either add another disk
+       as swap (nice) or repartition your present disk to create
+       a larger Swap partition (Ack!).
+
+    c. Add more memory.
+       If you have more memory, then this will reduce the need to
+       augment it with swap space... RAM's cheap too! There is an
+       old rule of thumb that the size of Swap should be about
+       2 to 3 times the amount of RAM, which would seem to contradict
+       the above. The thing is that if with the _present_ workload
+       you are swapping like crazy, then adding RAM will reduce
+       tha swapping. If, however, you start increasing the work-
+       load, then swapping will start again, and you better have
+       enough of it! This was the original intent of the Rule-Of-
+       Thumb. At the very least, Swap should always be at least
+       as big as the amount of RAM you have.
+
+====================================================================
+A.04)  How can I copy a complete file system from one disk|partition
+       to another?
+--------------------------------------------------------------------
+
+You have three options: dd, dump.bsd and cpio (pax MAY work but tar won't
+since it won't handle special-type files). If the two partitions are the same
+size, you can use 'dd' (to copy c0d0s0 to c5d0s3, e.g.):
+
+    $ dd < /dev/rdsk/c0d0s0 > /dev/rdsk/c5d0s3
+
+To use dump.bsd, you can use the following command (this assumes that the
+destination disk in mounted on /mnt and you want to copy the root file system
+which is on SCSI 0... of course, you must be root and it would be MUCH better
+to do this in single-user mode):
+
+    $ dump.bsd 0f - /dev/rdsk/c0d0s0 | (cd /mnt; restore xf -)
+
+To use cpio, you must use it in a pipe with find. For example, to copy /usr
+(let's assume it's on it's own file system) to another disk|partition (assume
+it's mounted on /mnt) then you can use (you can add the "-depth" flag to
+'find' if you want):
+
+    $ cd /usr
+    $ find . -print | cpio -pdmuva /mnt
+
+The problem with this is that if the mount point of the destination disk
+falls under the file system's directory you're trying to copy, you'll load
+up your destination disk. For example, the following would NOT work:
+
+    $ cd /
+    $ find . -print | cpio -pdmuva /mnt
+
+because 'find' would see the stuff in /mnt (which you just put in there) and
+try to copy in back to /mnt! To way to avoid this is by adding a little
+filter:
+
+    $ cd /
+    $ find . -print | grep -v '^./mnt*' | cpio -pdmuva /mnt
+
+If you have GNU find, then you can use it with it's '-xdev' option, which
+prevents find from walking through other file systems:
+
+    $ cd /
+    $ find . -xdev -print | cpio -pdmuva /mnt
+
+dump.bsd creates a "truer" copy of your file system (the access and
+modification dates aren't mucked with... with the find/cpio pipe, at the
+least the directory dates are touched) but pre-3.1 versions of restore
+couldn't restore named pipes. These are easy to creat though using
+'mknod'. The only named pipes included in the default A/UX distribution are:
+
+    /usr/lib/cron/FIFO
+        prw-------   1 root     sys            0 Oct 18 16:08
+
+    /usr/spool/lpd/AppleTalk/pipe
+        prw-rw----   1 daemon   daemon         0 Oct 19 06:11
+
+========================
+A.05)  What's with UUCP?
+------------------------
+
+UUCP under 3.x.x is very improved over it's previous "incarnation" under 2.0.1.
+3.x.x uses HDB (for HoneyDanBer) UUCP instead of standard UUCP. Some nice
+things are bidirectional getty (also known as uugetty in other Unixs) which
+allows both incoming and outgoing communication over serial lines as well as
+better performance and reliability. I hear that setting it up is _much_ easier
+as well.
+
+You may seriously consider getting Alexis Rosen's "sendmail.cf" file for use
+under UUCP sendmail. This config file has been modified to allow UUCP and
+sendmail to work beautifully together. You may also want to consider simply
+installing smail to replace sendmail.
+
+Under 3.0., be sure that you are running the latest version: 1.16. It can be
+found on aux.support.apple.com in aux.patches/supported/3.0. Be sure that you
+get the new dial.o on ftp.apple.com (pub/earlw/dial) to avoid breaking syslog.
+Under 3.0.1 (and later) all is OK.
+
+====================================================================
+A.06)  How can I log anonymous ftp entries? in.ftpd has a -l option,
+       but it doesn't work
+--------------------------------------------------------------------
+
+Jim Jagielski (jim@jagubox.gsfc.nasa.gov) has hacked in.ftpd to enable logging
+via the syslogd daemon. It also pays extra close attention to anonymous ftp
+logins. It's available (as well as other ports|hacks) on jagubox. Also
+available on jagubox is a port of the latest version of wuarchive's ftpd
+server for A/UX. wu-ftpd is a super-nice ftp server with lots of extras
+and neat features!
+
+The real reason why '-l' doesn't work with in.ftpd is that there's no real
+way to send this option to the daemon. A/UX 'inetd' doesn't allow you to add
+options to '/etc/servers'. John Coolidge (coolidge@apple.com) has ported the
+BSD-reno version of 'inetd' to overcome this limitation. Jim Jagielski has
+since been updating and maintaining 'inetd'. This version of 'inetd' also has
+some nice features, such as rereading /etc/servers when sent SIGHUP. It's
+available on jagubox. This version of 'inetd' has also been modified to log
+whenever it spawns a background daemon as well as logging which host requested
+the daemon.
+
+%%% For more info, contact Jim %%%
+
+===========================================================================
+A.07)  How come when I do a 'df' as a regular user, it shows me a different
+       number of free blocks compared to when I run it as 'root'?
+---------------------------------------------------------------------------
+
+One of the details about the BSD Fast File System is that it sets aside
+some amount of the available disk space (if the file system was created by
+HD SC Setup, then %5 is set aside; if created by 'newfs' then 10% is set
+aside... this value can be changed by using the 'tunefs' command) and makes
+it unavailable to regular users. This prevents 2 things: filling up a file
+system and destroying performance by having a "too full" file system. 'root',
+however, does have access to this "extra" disk space, hence the difference in
+the numbers reported by df between 'root' and "regular joe".
+
+As mentioned above, if you used HD Setup to create the partitions (or your
+A/UX came preinstalled), then the "set aside" value for these file systems
+is 5%, not the "default" of 10%... This was simply to give users more space.
+Reducing this value beyond 5% is Not A Good Idea.
+
+======================================
+A.08)  Does A/UX LocalTalk support IP?
+--------------------------------------
+
+Nope... not at all.
+
+==========================================================
+A.09)  How do I get MPW 3.1 to work? It hangs my system...
+----------------------------------------------------------
+
+MPW 3.1 doesn't work under A/UX although 3.2 does. In the meantime, you
+can make 3.1 work by breaking into MacsBug when it's hung and entering:
+
+    pc=pc+2;g
+
+See Q&A #M.04 for info about entering MacsBug...
+
+===============================================================
+A.10)  Can I refer to a file on my Mac system from within A/UX?
+---------------------------------------------------------------
+
+A/UX's 'Finder' mode is the only way (currently) to access both file systems.
+You could write a hybrid application that could attach to the Finder world
+(a la, CommandShell and cmdo which can "see" both file systems), but you
+can't access HFS volumes from the A/UX kernel directly.  In a similar vein,
+you can't 'mount' an HFS volume on an A/UX inode.
+
+=================================================================
+A.11)  How can I adjust the amount of virtual memory Finder uses?
+-----------------------------------------------------------------
+
+There are three ways to do this. The first is very easy: you simply use the
+Memory cdev to adjust the "memory" size, logout and then log back in. You
+must be 'root' to do it this way.
+
+The 2nd way is to use the 'TBMEMORY' environment variable. You can set it's
+"value" equal to the amount of memory you wish to use. For example:
+
+    TBMEMORY=10m; export TBMEMORY  (in .profile for ksh or sh or /etc/profile)
+       -or-
+    setenv TBMEMORY 10m            (in .login for csh)
+
+configures Finder for 10M.
+
+You can also edit /mac/bin/mac32|mac24 (or .mac32|.mac24 if you are using
+this method) to call 'startmac' with the memory size you want using the
+"-m" option. For example:
+
+    /mac/bin/startmac -m 8m > $SMLOGFILE 2>&1 &
+                     -------
+
+in (.)mac32|(.)mac24 will configure an 8M environment.
+
+Please note that under the 24-bit mode (mac24), you can only access a maximum
+of 8MB of RAM. It won't complain if you try to setup more, it just won't do
+it. Furthermore, if you actually have more than 8MB (say 12), the "About This
+Macintosh" window will show "Built-in Memory: 12,288 K; Total Memory: 8,192K".
+
+The default behavior of 3.0 (and earlier) was to allocate all the RAM to the
+MacOS. Thus, if you had 20MB, A/UX would, unless told otherwise, allocate
+20MB for the MacOS-emulation. Under 3.0.1 (and later), this is slightly
+changed: A/UX will usually not allocate all RAM to the MacOS but will instead
+impose a 16MB maximum (this can be changed via Memory or TBMEMORY). Whatever
+version of A/UX you are running, it's a Good Idea not to allocate _all_ RAM
+for the Finder. This is because A/UX allocates itself a chunk, so if you give
+the Finder "all" of it, you can cause swapping and paging which can seriously
+degrade performance at times.
+
+If the value set in 'Memory' and TBMEMORY disagree, the value determined by
+TBMEMORY is used.
+
+================================================================
+A.12)  Is there an archive of comp.unix.aux out there somewhere?
+----------------------------------------------------------------
+
+Try:
+    http://www.support.apple.com/pub/usenet/comp.unix.aux/
+
+
+==========================================
+A.13)  How come I can't use color under X?
+------------------------------------------
+
+Apple's X (R4) support color. However, you must start the server with the
+"-screen 0 -depth 8" option (similar command with other screens if you have
+them). You can add these options to the command line or to your server's
+defaults file. You can also create a ".X11" file in your home directory which
+includes the line:
+
+    X -screen 0 -depth 8
+
+to get the same effect. Make sure that ".X11" is executable for this to work
+("chmod 755 .X11").
+
+//////////////////////  END OF PART 2 OF 4  \\\\\\\\\\\\\\\\\\\\\\
+
+\\\\\\\\\\\\\\\\\\\\\\ START OF PART 3 OF 4 //////////////////////
+
+==============================================================================
+A.14)  Using the command shell interface, I'm trying to access some Mac files
+       (that have strange names) but I can't; the program returns an error and
+       I can't access the file. What's going on?
+------------------------------------------------------------------------------
+
+The problem is that sh and csh don't understand the Mac "special" characters
+that are in the filenames. They don't expect filenames with characters that
+are represented by 8-bits. ksh is "8-bit clean" and thus would be able to
+access the file. For example, to remove Moire, just type:
+
+    $ ksh           #this creates a Korn shell child
+    % rm M?ire      #match the weird 'o'
+    % exit          #get back in your old shell
+
+You could also use emacs' DIRED or the Gnu File utilities to do this, but
+ksh is right here on the system so it's a bit easier. Of course, another very
+easy way is to use the MacOS interface and do the deletion|rename|whatever
+the "Mac" way. Please note that if what you are MacOS deleting is a symbolic
+link to a directory, what gets Trashed is actually the contents of the
+directory as well as the link! This is due to the fact that to the Finder,
+the link looks like a folder, and the entire thing gets deleted.
+
+===================================================================
+A.15)  I heard the the Installer for 3.x.x works on "any" 3rd party
+       hard disk. Well, it doesn't on mine!
+-------------------------------------------------------------------
+
+Well, the Installer will work with any 3rd party disk but there are a few
+wrinkles... The HD Setup application in the 3.x.x Installer is unique in that
+not only does it create A/UX partitions but it also creates the actual file
+systems in those partitions (basically it runs 'newfs'). Now if you have used
+some other HD utility program (such as SilverLining or FWB HDT) to create
+the partitions and then attempt to install A/UX on that disk, the Installer
+sees that the partitions are there and then _assumes_ that they were created
+by HD Setup and therefore have the file systems already created.  Of course,
+the file systems don't exist yet, just the partitions, so the installation
+fails.
+
+You have a few options:
+
+ a. Run the Installer on a newly formatted disk. This means that HD Setup
+    will do all the partitioning (etc...) and the installation will proceed.
+    Note that this means you will be "stuck" with the Apple drivers whenever
+    you are in the _real_ MacOS Finder.
+
+ b. If you want to use the drivers on your HD utility (for stuff like,
+    maybe, password protection of partitions) then you have two (maybe three)
+    additional options:
+
+   i. Use 'a' above to install A/UX. Then use your HD utility program to
+      "take over" the disk, disabling (or even removing) the Apple drivers
+      and installing it's own. Note that if there isn't enough space to
+      install it's drivers, most will attempt to "shrink" the MacOS partition
+      to make room. Most can do this with no problem, but why take the risk...
+      when you partition the disk, leave about 64K available as free space.
+
+  ii. Use your HD utility to create the partitions. Then, before you
+      run the Installer, run 'newfs' "by hand" to create the file systems so
+      that the installation can proceed.
+
+ iii. Use your HD utility to format (etc...) your disk and create
+      _only_ the MacOS partition. Now run the Installer. In most cases HD
+      Setup will work fine with the driver installed on the disk.  You can
+      now use it to create the A/UX partitions.
+
+      <<ED: I _know_ this (iii) works with FWB HDT>>
+
+Please note that HD SC Setup will only create the file systems if run under
+A/UX. If you run it under the MacOS, it can only partition...
+
+==================================================================
+A.16)  Since RetroSpect will no longer be bundled with A/UX 3.0.2,
+       how can I get it?
+------------------------------------------------------------------
+
+Very early reports indicated that RetroSpect for A/UX might be bundled with
+A/UX 3.0.2 as it is with the AWS95 version of 3.0.2. This is no longer the
+case (if it ever _was_ ). However, if you are a registered owner of RetroSpect
+2.0, you can order an upgrade to RetroSpect A/UX. The cost is around $200
+and to order (or more info) you can call 1-800-225-4880 (have your
+registration number handy). International customers should call 510-849-0293.
+
+Please note that if you have the Pisces card installed (with the WGS95), then
+_only_ RetroSpect A/UX will work and _only_ under the A/UX environment.  You
+will not be able to access your DAT under the real MacOS!
+
+Finally, reports indicate that RetroSpect 3.0 fully supports A/UX all
+by itself. If true, this is Good News!
+==========================================
+A.17)  How can I configure CAP under A/UX?
+------------------------------------------
+
+For the answer, snag a copy of CAP.txt which is available on jagubox (in
+/pub/aux/Info for anon-ftp).
+
+===========================================
+A.18)  What are some good books about A/UX?
+-------------------------------------------
+
+Except for Apple's complete manual set, there are no books specifically about
+A/UX. (Well, there's one but it's most probably out of print.  It is most
+definately out of date. It's called "The A/UX Handbook" by Jan Harrington
+and it's written for A/UX 2.0).
+
+There are some _very_ good books about UNIX in general however. The best of
+the pack (IHMO) is "UNIX Administration Guide for System V" by Thomas and
+Farrow. Another good book is the "UNIX System Administration Handbook" by
+Nemeth, Snyder and Seebass. Since A/UX is a mix of SystemV and BSD both books
+are worthwhile ("UNIX Sys. Ad. Handbook" deals "mostly" with BSD systems).
+Another must-have is "UNIX Power Tools" from O'Reilly and Associates.
+
+For general information about shells and programming there's no better book
+than "The UNIX Programming Environment" by Kernighan and Pike. For the 'ksh'
+shell, the best book I've encountered is "Learning the Korn Shell" by Bill
+Rosenblatt.
+
+O'Reilly and Associates has a wide selection of UNIX-based books. You're
+bound to find what you're looking for from them. You can contact them either
+via Email (nuts@ora.com) or Phone (1-800-998-9938).
+
+There is also a list (with over 160 entries) of UNIX books (and mini-reviews)
+located on ftp.rahul.net in 'pub/mitch/YABL/yabl'.
+
+====================================================================
+A.19)  When booting up, I get a "panic ialloc, dup alloc" (or other)
+       error message and A/UX won't boot. What can I do?
+--------------------------------------------------------------------
+
+This is due to the fact that some file system damage exists on the Root file
+system. By default, A/UX Startup will only run 'fsck' on the root file system
+if the system is marked as "dirty." So even if damage exists, as long as the
+disk was cleanly 'umount'ed, 'fsck' won't check it out and fix it.
+
+I recommend always having A/UX Startup fully check out the disk before booting
+A/UX. It takes a while, but it's worth it. To do this, choose Booting from
+the Preferences menu. Now change the command under "AutoRecovery" to "fsck
+/dev/default" (it was "fsck -y -p /dev/default").  When you do this, you'll
+notice that the radio button changes from "Check root file system" to "Custom
+command"... that's OK. After that, A/UX will always run 'fsck' on Root. If
+you are doing this, you might as well have A/UX run a full 'fsck' on all
+file-systems too. Check out fsck(1m) and fstab(4) for how to do this... one
+way is to just edit /etc/bcheckrc and remove the options to the "/etc/fsck"
+command.
+
+If you don't want to do this but you do have some damage that prevents A/UX
+from booting, then you can cancel the boot-up process (either select "Exit"
+or hit "Command-."). Then type "fsck /dev/default" and then, when 'fsck' is
+done, type "boot" (or "launch"). Sometimes you must run 'fsck' a coupla times
+to fully fix the file system if there was extensive damage.
+
+========================================
+A.20)  Is traceroute available for A/UX?
+----------------------------------------
+
+Yes it is... A complete 'traceroute' package for A/UX 3.1(.1) can be found
+on jagubox. It includes the updated 'bnet' driver (required for 'traceroute'
+support) as well as 2 versions of traceroute, pre-compiled and with complete
+source.
+
+==============================================
+A.21)  What is KEEPALIVE and how can I use it?
+----------------------------------------------
+
+KEEPALIVE is a method implemented in Berkeley sockets and TCP/IP (and in
+A/UX) that periodically polls a connected socket to determine if it's
+still "alive" or whether the client on the other end has dropped off.
+If the connected client doesn't respond, A/UX will consider the connection
+broken and send SIGPIPE to all connected processes. For this feature to
+be actually used, programs must set the SO_KEEPALIVE option on the
+socket.
+
+One particular of A/UX is that although it supports KEEPALIVE, it doesn't
+send the first probe for _2 hours_! It's been suggested that it would be
+much better to shorten this value to something more realistic to take
+better advantage of this capability. However, to do this, you'll need to
+use 'adb' and adjust the kernel.
+
+You can either patch the kernel itself (which requires that the patch be
+reapplied everytime the kernel is rebuilt) or patch /etc/install.d/boot.d/bnet
+to keep the patches. To patch the kernel to adjust to time to 1st probe, you
+need to use 'adb' to adjust the 'tcp_keepidle' parameter. To get the right
+value, multiply the number of minutes you want A/UX to wait until the 1st
+probe by 120, then change that value to hex. For example, to make A/UX sent
+the 1st probe every 5 minutes (5 x 120 = 600 = 0x258) do:
+
+    adb -w -k /unix  << Foo
+    tcp_keepidle?D
+    tcp_keepidle?W 258
+    tcp_keepidle?D
+    $q
+    Foo
+
+To patch the 'bnet' driver instead, do:
+
+    adb -w /etc/boot.d/bnet << Foo
+    tcp_keepidle?D
+    tcp_keepidle?W 258
+    tcp_keepidle?D
+    $q
+    Foo
+
+Now run 'newconfig -v' and reboot. 
+
+==============================================
+A.22)  What does this 'panic' message mean...?
+----------------------------------------------
+
+In general, most system panics are due to A/UX exhausting some kernel
+resource; to prevent these, you need to know which resource was used up
+and then use 'kconfig' to increase them:
+
+ console panic message                  kernel parameter to increase
+-----------------------                ------------------------------
+ "panic: kmem_alloc"                    MAXCORE
+ "panic: getfreehdr"                    MAXHEADER
+ "timeout table overflow"               NCALL
+ "file: table is full"                  NFILE (NINODE as well, to same value)
+ "inode: table is full"                 NINODE (NFILE as well, to same value)
+ "m_expand returning 0"                 NMBUFS
+ "panic: out of mbufs"                  NMBUFS
+ "proc: table is full"                  NPROC (NREGION as well, 3x NPROC)
+ "Region table overflow"                NREGION (NPROC as well, NREGION/3)
+ "sptreserve: no kernel virtual space"  NSPTMAP
+ "allocbuf"                             SBUFSIZE (and NBUF as well)
+ "cannot allocate buffer cache"         NCLIST (and add RAM)
+ "cannot allocate buffer headers"       NBUF (and add RAM)
+ "getfreehdr"                           NPBUF
+
+You may also run up against the processes-per-user limit as well. This
+can be increased by bumping up the MAXUP. Of course, you'll also need to
+increase NPROC, NREGION, NFILE and NINODE (and maybe others) as well to
+account for the increased number of processes...
+
+================================================
+A.23)  How often does A/UX sync the file system?
+------------------------------------------------
+
+A/UX 3.0 performs a sync every minute. It's done by 'init' and the frequency
+can't be changed.
+
+A/UX 3.0.1/3.0.2 does one every 30 seconds; cached blocks older than 30
+seconds are flushed, therefore a block can be resident for between 30
+and 59 seconds. If you want, you can use 'adb' to change the value of
+'syncdsleep' to the number of seconds to sleep between flushes. Blocks
+older than that will be flushed.
+
+A/UX 3.1/3.1.1 peforms a sync every second and flushes blocks that are
+older than 30 seconds (i.e. a block can be resident for 1 to 31 seconds).
+You can alter this by using 'adb' to change 'syndperiod' to the timeout
+age (how old the block can be before it's flushed) and 'syncdsample'
+to the wakeup period; by default, 'syncdperiod' is 30 and 'syncdsample'
+is 1.
+
+Under A/UX 3.0.1/3.0.2/3.1.x, the kernel process 'syncd' can be seen via
+'ps'.
+
+============================
+A.24)  What is 'catsearchd'?
+----------------------------
+
+Under A/UX, 'catsearchd' is a UNIX process that maintains a cache of
+MacOS File System information. Having this cache available _greatly_
+increases the performance of catalog searches made from the MacOS and
+an AppleShare client.
+
+For each file cached, 'catsearchd' requires 200bytes of memory, so if
+your File Systems are large, 'catsearchd' can be a real memory hog. One
+way to avoid this is to use the 'nocats' option in 'fstab' for mounted
+file systems.
+
+Unless you are running A/UX as an AppleShare server, there's no need to
+run 'catsearchd'; in fact, it's better _not_ to run it due due to it's
+memory and performance hits.
+
+=====================================================================
+A.25)  Is there any way to make AppleDouble file formats the default,
+       rather than AppleSingle?
+---------------------------------------------------------------------
+
+Sure is... All you need to do is set the 'TBFILEFORMAT' environment
+variable to '1'. You can do this either in /etc/profile or /etc/cshrc
+to make it system-wide or have each user add it to their .profile or
+.login file.
+
+For sh/ksh, the commands are:
+
+   TBFILEFORMAT=1
+   export TBFILEFORMAT
+
+and for csh it's:
+
+   setenv TBFILEFORMAT 1
+
+You can also edit /mac/bin/mac32 as well if you want.
+
+======================================================
+A.26)  Is there a way to update the 'whatis' database?
+------------------------------------------------------
+
+Sure is. Check out the 'man-utils.tar.gz' file on jagubox (in Sys_stuff).
+
+============================================
+A.27)  Does A/UX support Virtual Interfaces?
+--------------------------------------------
+
+It does now... Jim Jagielski (jim@jaguNET.com) has created the 'vif' kernel
+module that provides for true Virtual Interface support under A/UX. This
+allows you to, for example, make use of the Virtual Host/Multihoming
+capability of Apache.
+
+'vif' can be found on jagubox.gsfc.nasa.gov in /pub/aux/Sys_stuff.
+'apache' can be found on ftp.apache.org.
+
+:::::::::::::::::::::::::::::::::::
+::::: MAC-EMULATION QUESTIONS :::::
+:::::::::::::::::::::::::::::::::::
+
+======================================================
+M.01)  What Mac applications are compatible with A/UX?
+------------------------------------------------------
+
+It would be much easier to list the applications that aren't compatible.
+The list is much, much shorter...
+
+The _vast_ majority of applications that run under System 7 will run under
+A/UX 3.x.x. In fact, before System 7 was released, A/UX 2.0.x was actually
+a good litmus test whether the application was 32-bit clean and would run
+under System 7. The only applications that are _sure_ to fail are those that
+try to access hardware _directly_, such as HD utilities or backup
+applications. A/UX 3.x.x provides both 24 and 32-bit modes, so if the
+application doesn't run under 32-bit mode, try it under 24-bit.
+
+One key note: if the program uses a "complex" installation procedure (like
+for Canvas, Word, Stuffit, etc...) then you should not try to do a fresh
+install under A/UX. See the above Hints and Words Of Wisdom.
+
+===================================================
+M.02)  What screen-savers are compatible with A/UX?
+---------------------------------------------------
+
+AfterDark (2.0u and later) works well under A/UX but some displays may not
+have enough memory under Login so the "low-memory" display will be used.
+
+Moire and FMbackup seem a bit incompatible. They both function fine together
+but the combination prevents FMbackup's "Finishing up..." window from
+displaying, although FMbackup does, in fact, finish up. Furthermore, Moire
+seems to screw-up Commando (both version 3.22 and 4.01 exhibit this problem)
+so all in all, Moire can't be recommended if you desire using Commando (the
+problem seems to be with all MacOS applications 'launch'ed from the
+CommandShell window). Using Moire for the Login screen works well however,
+since you can't access Commando or 'launch' applications from there.
+
+Darkside is also available. Unlike other screen savers, Darkside is an
+application, not an INIT. This means it won't work under the Login screen.
+The latest version of Darkside is 4.0 and will _not_ work on Pre-System7
+systems, so don't attempt to use this under A/UX 2.0.1 or later.
+
+Moire is available on jagubox.
+
+========================================================================
+M.03)  My MacOS partition mounts fine under MacOS but it doesn't show up
+       under A/UX... Why?
+------------------------------------------------------------------------
+
+Whether or not a Mac partition mounts under A/UX depends on a number of
+factors...  Necessary conditions for a partition to mount are:
+
+    1. The disk MUST be partitioned using the "new" partitioning scheme
+       detailed in Inside Macintosh V. There is still plenty of disk software
+       out there that uses the "old" scheme and this drives will not mount
+       under A/UX. Generic disk formatters that use the "new" scheme include
+       SilverLining and FWB Hard Disk Toolkit. Most major disk vendors supply
+       A/UX compatible formatting s/w.
+
+    2. The partition must mount under MacOS BEFORE A/UX is booted. A/UX
+       only tries to mount partitions that were already when it was booted.
+       So, if you use an application to boot A/UX and this application runs
+       before a partition is mounted, A/UX won't mount it for you. If you
+       have a removable drive (such as SyQuest), you must insert the disk
+       before you boot A/UX... this means you can't swap cartridges under
+       A/UX.
+
+Sometimes, the partition map isn't correct for the MacOS partition; In
+particular, the Logical size may be 0! You can use 'dp' to look at the
+partition map to see if this is the case. Assuming that the disk us SCSI #2,
+then:
+
+    $ dp /dev/dsk/c2d0s31
+    P
+
+Will print out the partition map entries. You can then see if the "Apple_HFS"
+partition type has the correct logical size.
+
+=========================================================================
+M.04)  I have MacsBug installed. How can I trigger it?
+                -- or --
+M.05)  Sometimes my MultiFinder environment (and/or CommandShell) freezes
+       up; how can I unfreeze it? Should I hit the Interrupt switch?
+-------------------------------------------------------------------------
+
+The "Command-Control-e" keypress will kill the current MultiFinder environment
+and "unfreeze" (and kill) your MultiFinder|CommandShell.  Depending on whether
+your session-type is Console Mode or 32|24-Bit, you will either get returned
+to the console or get returned to the Login screen. You should _NOT_ press
+the Interrupt switch since this puts you into A/UX's kernel debugger. If you
+have MacsBug installed (which is recommended) then you can press
+"Command-Control-i" to enter it. This may enable you to clean some things up
+before the MultiFinder environment is blasted (even just using 'rs' under
+MacsBug helps...). If MacsBug is _not_ installed, the "C-C-i" behaves almost
+like a "C-C-e" except that it appears that A/UX doesn't need to "rebuild"
+your icon/Desktop "environment" the next time Mac-mode is entered.
+
+To make sure that MacsBug installs correctly, it's name must be 'MacsBug'.
+A munged Debugger Prefs file can also prevent MacsBug from installing. This
+happened to me when upgrading to 3.0.1... To be safe, make a solid safe
+copy before upgrading.
+
+============================================================================
+M.06)  My site is not upgraded to EtherTalk Phase 2 yet... can I use Phase 1
+       under A/UX?
+----------------------------------------------------------------------------
+
+A/UX only supports EtherTalk Phase 2. Upgrading to Phase 2 is recommended
+for a variety of reasons, but most importantly to ensure compatibility with
+new products from Apple and developers (of course, the added features over
+Phase 1 are nice too :).
+
+===========================================================================
+M.07)  I'm having trouble transfering files between A/UX and my MacOS disk.
+       Also, sometimes things get transfered fine, othertimes not. What's
+       going on?
+---------------------------------------------------------------------------
+
+If a file on the A/UX system has Type "TEXT", then when it is copied over to
+a MacOS disk, all 'newline' characters will be replaced by 'carriage returns'.
+Sometimes this is what you want (that is when the file is, in fact, a TEXT
+file). Othertimes it's not. Say for example you download a GIF file onto your
+A/UX disk. A/UX _might_ think it's a TEXT file. If you then copy it over to
+your MacOS disk and try to use Giffer on it, it won't work.  That's because
+the 'nl's where changed, which is _not_ what you want. The way to stop this
+is to convince A/UX that the file is of non-TEXT type.  There are many
+applications out there (including the A/UX included 'setfile' program) that
+lets you modify this. Do this before you copy the file over to your Mac OS
+disk and all will be Okay. If you aren't sure what the Type and Creator should
+be, you can just specify "BIN " and "A/UX" (note space in BIN) and the file
+won't be massaged during the copy|transfer. You'll still need to eventually
+change them to the correct ones for their particular application, but this
+way they'll be on your MacOS disk "uncorrupted."
+
+Of course, you could also use 'setfile' to set the Type|Creator fields
+_before_ you copy the file to the MacOS disk and avoid an additional step.
+
+Please note that if you downloaded a BINHEX file, you _do_ want to keep it
+as a TEXT file if you transfer it over to the MacOS. Once there, you can
+de-BINHEX it and unStuffIt (if it was a binhexed stuffit archive).
+
+Please note that if you transfer Unix-type files (like tar archives or
+compressed files) between the A/UX file system and a MacOS disk (esp. if
+these files were "created" on a MacOS disk by a MacOS utility), the Unix
+application may no longer work correctly with it. This is because the MacOS
+resource information was attached to the file during the transfer (the file
+is in Apple Single format). To "fix" this, use 'fcnvt' to change the file
+to Apple Double format which will detach the resource fork and place it
+into a "%..." file.
+
+See "Hints and Words Of Wisdom" (above) for hints in using ftp file transfers
+under A/UX.
+
+================================================================
+M.08)  Do I install CDEVs and Extensions in the System Folder on
+       MacPartition or on the "/" A/UX disk.
+----------------------------------------------------------------
+
+To install these additions to A/UX, you will need to drag-copy them over to
+the A/UX System Folder. Usually, this is /mac/sys/System Folder on the "/"
+disk but it will also "appear" in your "home folder" icon. If you have a
+personal System Folder (i.e. $HOME/System Folder) then they should be dragged
+there. To add a screensaver to the Login screen, it must be dragged into the
+correct subfolder in /mac/sys/Login System Folder. That is, if it's an cdev,
+drag it into /mac/sys/Login System Folder/Control Panels.
+
+==========================================================================
+M.09)  I heard that A/UX requires a special version of System 7 to boot...
+       Is this true?
+--------------------------------------------------------------------------
+
+A lot of people believe this but this is not true. There is no difference
+between the s/w on the MacPartition partition and the "real" System 7.  The
+only _real_ need for MacPartition is that the disk where A/UX Startup lives
+is where A/UX Startup looks for the A/UX Root partition. When A/UX Startup
+launches, it looks at "it's" disk and then looks for A/UX partitions on that
+disk. This means that you _don't_ need to boot-up from the MacPartition disk
+to boot A/UX. Start your Mac from your standard Startup disk and just
+double-click on A/UX Startup on the MacPartition icon.
+
+You can even do without the MacPartition disk but telling A/UX Startup the
+exact SCSI number of the A/UX disk. You can do this a couple of ways:
+
+    1. create a ROOT variable in A/UX Startup that points to the
+       root partition in this form: (SCSI-ID, 0, 0)
+
+    2. Under the General Preferences menu, change the Root Directory
+       to (SCSI-ID, 0, 0).
+
+The "device" file /dev/default points to the SCSI-ID of whatever disk is the
+MacPartition disk, so if you don't have one, you need to tell A/UX Startup
+it's "real" name. This is kinda messy since you'll need to preface a lot of
+stuff with this value: e.g.
+
+    #startup cat (6,0,0)/etc/inittab
+
+=====================================================================
+M.10)  After the Mac environment crashes (or when I use MacsBug), the
+       Desktop gets all screwed up... Argg!!
+---------------------------------------------------------------------
+
+Ron Flax of Apple (ron@afsg.apple.com) has written a very useful System
+Extension called FMbackup that creates backup copies of "valuable" Desktop
+files. When the MacOS-mode is entered, FMbackup restores these files. Thus,
+when your MacOS "crashes", you no longer need to rebuild the Desktop or reset
+all your Icons, window "types", etc... Please note that there seems to be
+some incompatibilty between FMbackup and Moire and QuickMail 2.5.1.
+
+FMbackup (1.0.4) is available via anon-ftp on afsg.apple.com as well as
+aux.support.apple.com (in "unsupported").
+
+%%% For more information about "FMbackup", please contact Ron via E-mail %%%
+
+=====================================================================
+M.11)  My MacOS partition(s) only show up on the Desktop when I login
+       as root. Why?
+---------------------------------------------------------------------
+
+Under the Preferences/General Menu of A/UX Startup, there is a radio-box
+called "Password checking". This is intended to provide some security for
+the A/UX Startup application. When enabled, two (default) things happen:
+
+    1. A/UX Startup requires a password to open.
+    2. MacOS partition(s) are only mounted for root login.
+
+Thus, to enable MacOS partition(s) to be available for all users, you must
+disable "Password checking". See auxstartuprc(4) for more info.
+
+======================================================================
+M.12)  For some reason, my CommandShell only responds to a keyboard
+       event after it receives a second event. For example, typing "a"
+       won't show until I type something else or click the mouse.
+       What gives?
+----------------------------------------------------------------------
+
+This is caused almost 99% of the time by an Extension|CDEV conflict. The way
+around this is to selectively disable each one at a time and see which one
+causes the problem... then delete it. "Wild Magic" is prone to do this as
+are older versions of CEToolbox.
+
+=====================================
+M.13)  Can A/UX 3.x.x run System 7.1?
+-------------------------------------
+
+A/UX 3.x.x's MacOS interface is based on System 7.0.1. You cannot install
+Sys 7.1 on A/UX (meaning you can't make A/UX run Sys 7.1) since there are a
+few system files that are fine-tuned and modified to work under A/UX. These
+would get overwritten if you tried to install 7.1 and you'd be out of luck.
+Please recall that this doesn't mean that you can't have 7.1 installed on
+your MacPartition, to be used when in MacOS-only mode. It just means that
+you can't have A/UX run 7.1.
+
+Just to let you all know, if you really want to, you _can_ install 7.1 on
+A/UX 3.x.x and the MacOS-stuff will work pretty well. However, all hybrids,
+such as CommandShell or Commando, will die... not too useful...
+
+===============================================
+M.14)  What version of AppleTalk does A/UX run?
+-----------------------------------------------
+
+This one is tricky. First of all, the version of AppleTalk under A/UX was
+designed specifically for A/UX... Don't try installing the Network Software
+Installer (NSI) disk. Bad Things will happen.
+
+With that out of the way, when polled by InterPol, A/UX will respond that
+AppleTalk v56 is running. However, A/UX's version is really compatible with
+version 58. This will cause trouble with those applications that rely on
+version numbers rather than capability.
+
+=====================================================================
+M.15)  I've just installed MacTCP 2.0.2|4|6 on A/UX and nothing works!
+       What's going on?
+---------------------------------------------------------------------
+
+The copy of MacTCP that ships with A/UX is specifically written for A/UX.  You
+should _not_ replace it with any MacOS version of MacTCP! Doing so will cause
+mucho problems for A/UX. This is because A/UX's MacTCP simply offloads all
+networking functions down to A/UX itself which handles them.
+
+Although it's true that some MacOS programs, such as Mosaic, "require" MacTCP
+2.0.2|4|6, the vast majority work just fine with A/UX's version. In extreme
+cases, with programs that actually _check_ the version number, a little
+ResEdit hacking will fix things up. Basically, all you need to do is COPY the
+'vers' resource of MacTCP 2.0.2|4|6 and PASTE it into MacTCP in your active
+A/UX System Folder (you want to 'Replace' the previous 'vers' resource). This
+will cause MacTCP to appear (via 'Get Info' and similar ways) to be version
+2.0.6.
+
+=======================================================
+M.16)  Does the LaserWriter Bridge s/w work under A/UX?
+-------------------------------------------------------
+
+No it doesn't... The reason is because the LaserWriter Bridge software
+requires AppleTalk version 57 or higher but, due to the way AppleTalk
+is implemented under A/UX, the software thinks and behaves as if A/UX
+is running a version closer to v56.
+
+A/UX, however, _can_ print to a printer connected via the LaserWriter
+Bridge on a different Mac.
+
+==================================================================
+M.17)  My /etc/fidd processes refused to run and dumps core. Help!
+------------------------------------------------------------------
+
+Sounds like the /etc/FileIDs file is mangled. Rename /etc/FileIDs
+to something like /etc/FileIDs.OLD and reboot. fidd will then create
+a new /etc/FileIDs file and all should be well.
+
+:::::::::::::::::::::::::::::::::::
+::::: DEVICES AND PERIPHERALS :::::
+:::::::::::::::::::::::::::::::::::
+
+=======================================================
+D.01)  Can I use my Teac|DAT|etc tape drive under A/UX?
+-------------------------------------------------------
+
+A/UX 3.x.x's 'tc' device driver (version 1.40) officially and "totally"
+supports the following tape drives:
+
+    Qualstar 9 track
+    Archive 4mm DAT
+    Archive QIC
+    Teac DCAS 600
+    Exabyte 8500        <<ED: no go with the 8200s>>
+    DC2000
+
+Please note that all the devices except for the Qualstar 9-tracks require
+8k-blocking when used through 'tc'. This means you will need to use 'tcb' or
+'tbb' as a filter ('dd' will also work during reading). You should also
+specify 8k blocking (or a multiple thereof) when using dump.bsd.
+
+Jim Jagielski has created a replacement for 'tc' called 'NEWtc'. It fixes
+a lot of Apple's 1.4 bugs as well as to provide some nice new features. It
+supports all the above drives in addition to:
+
+    CIPHER drives
+    Exabyte 8200, 8205 and 8505
+    HP DATs
+    SONY SDT line
+    Teac DCAS 150 and 60
+    WangDAT 1300 and 2600 series
+    WankTEK series 6130 (FS/HF), 5525 and 5050ES.
+
+It also has a "Generic" entry that will attempt to drive tapes it doesn't
+know about. If you have a drive that isn't supported, let Jim know and he'll
+try to add it.
+
+NEWtc is up to version 3.34 and is available on jagubox.  Included in the
+package are replacement copies of 'mt', 'tc.7.Z' and 'mt.1.Z'.
+
+Tony Cooper has written a VERY nice double-buffering copier that greatly
+increases the speed of backups; it's called 'tbb.' It works quite nicely with
+'tc' (assuming the correct blocking factors)... It's included with the 'NEWtc'
+package.
+
+Craig Ruff (cruff@ncar.ucar.edu) has written a Teac device driver also, which
+works with both the 150 MB and 60 MB drives. You get the complete source so
+you may "adjust" the driver if you want for other drives.
+
+The Teac driver is available on jagubox.gsfc.nasa.gov.
+
+%%% For more information about 'tc', please contact Jim via E-mail %%%
+%%% For more information about 'teac', please contact Craig via E-mail %%%
+
+=====================================================================
+D.02)  I have an EtherNet card that works fine under the Macintosh OS
+       but not under A/UX. Why?
+---------------------------------------------------------------------
+
+The reason is because to access the card (which is seen as a device by A/UX),
+you need an A/UX device driver for it. This is NOT the same as the stuff you
+had to install under the MacOS for it to work. Now A/UX includes drivers for
+the Apple EtherNet card (they aren't installed by default though), but they
+don't work with most of the 3rd party cards except for the 3Com "EtherLink
+NB", the Asante "MacCon" and the StarNet Networking cards. They are 100%
+register compatible with their Apple counterparts, so you can use Apple's
+'ae' driver with them. Drivers for the EtherPort II cards are available via
+anon-ftp on jagubox. However, the drivers for the "old" EPII cards (full
+length) only support TCP/IP (they were written for A/UX 1.1 but will work
+under 2.0.x). As far as other cards are concerned, you will have to ask the
+vendor for A/UX drivers for it.
+
+Please note that there have been numerous reports about problems with the
+EtherPortII cards, A/UX and the IIfx and IIsi... you are warned :)
+
+=======================================
+D.03)  Can I use my scanner under A/UX?
+---------------------------------------
+
+A/UX 3.x.x fully supports the Apple OneScanner as well as providing better
+support for SCSI devices. A/UX will still use its own SCSI driver, however.
+
+===========================================================================
+D.04)  I'm trying to use a SyQuest drive under A/UX but it refuses to work.
+       I keep on getting a "more data than device expected" error message.
+       What's wrong?
+---------------------------------------------------------------------------
+
+The "problem" is with the generic SCSI disk driver under A/UX. For SCSI
+drives, there are certain parameters that may be adjusted by the user; these
+parameters are grouped in "pages." One such page concerns how the disk
+responds to and recovers from errors: the Error Recovery Page. A/UX expects
+the parameters in this page to have certain values. Now the vast majority of
+SCSI disks have the values set as expected, but this isn't the case with
+SyQuest drives. There is one parameter (PER) which is opposite than expected
+by A/UX. When A/UX trys to set this value to what it wants, however, the
+SyQuest drive reads this "request" wrong (the request is 16 bytes but the
+SyQuest only reads 4, so the SCSI Manager reports the error.
+
+Tony Cooper (tony@marc.cri.nz) has written a Mac application which sets the
+Error Page values correctly: Fix Error Page. This application must be used
+under the MacOS. It can be found on jagubox.gsfc.nasa.gov as well as on
+aux.support.apple.com (aux.patches/unsupported/2.0). You can also use the
+FWB Hard Disk Toolkit - World Control Application to enable the PER bit in
+the recovery page (Page #1).
+
+This program may also be a help in getting some SCSI-2 devices, such as disks
+and opticals, to work under A/UX. If A/UX sees that the Error Page parameters
+are incorrect, it will attempt to send a Mode Select command to fix them,
+however it will use the SCSI-1/CCS page length instead of the SCSI-2 length,
+which, depending on the drive, will not work.
+
+By the by, here is the /etc/disktab entry for SyQuest:
+
+    # SyQuest disk
+    #
+    Syquest|syquest|S45:\
+       :ty=winchester:ns#34:nt#2:nc#1275:
+
+==================================================
+D.05)  What 3-button mice work under A/UX (and X)?
+--------------------------------------------------
+
+The Gravis SuperMouse was a 3-button mechanical mouse that was completely
+configurable and compatible with A/UX and was at the time your best bet.  At
+present, however, the Gravis SuperMouse is no longer manufactured or supported
+at _all_ by Gravis :(
+
+Older versions of LogiTech's MouseMan are fully compatible with A/UX, as some
+people have been using them with no problems. However, newer versions aren't
+as nice, since you can't reconfigure the button binding.
+
+Mouse System's A-3 mouse is "fully" compatible with A/UX, but is hard-wired
+configured for A/UX as: Left Button = Actual Mouse Button; Middle Button =
+Left Arrow; Right Button = Right Arrow. The "A-3" power cdev doesn't work
+under A/UX. The A-3 mouse is an optical unit with a nice feel.
+
+Please note that A/UX 2 & 3 only support a subset of the ADB Manager. Thus
+there are a few ADB devices that may not work under A/UX.
+
+=====================================================
+D.06)  Is it worth getting a cache card for the IIci?
+-----------------------------------------------------
+
+Absolutely! The card makes an amazing difference in performance. However,
+this performance increase is reduced when an external monitor is used. For
+more information about extensive benchmarking with the IIci and cache
+cards, you can snag the benchmarking results via anon-ftp on
+redstar.dcs.qmw.ac.uk in archive/papers.
+
+====================================================================
+D.07)  How can I figure out the /etc/disktab entry for my hard disk?
+--------------------------------------------------------------------
+
+Many hard disk applications will reveal the disk drive geometry for you:
+FWB Hard Disk ToolKit is very good (SilverLining is a bit wrong on the number
+of tracks... it includes spares). What you are really looking for are the
+total number of cylinders ('nc'), the number of sectors per track ('ns') and
+the number of tracks ('nt').
+
+By far, the easiest (and cheapest) way is to use the SCSIProbe utility, by
+Herb Weiner (herbw@wiskit.com), that runs under A/UX. This neat little package
+automatically generates disktab entries for your disks.
+
+Also, I'm maintaining a list of /etc/disktab entries. If you have any, send
+it to me and I'll add them.
+
+The file is available on jagubox.
+<<ED: I need _LOTS_ of entries>>
+
+Just a note: the number of tracks ('nt') is equal to the number of heads.
+
+==========================================
+D.08)  Which serial cards work under A/UX?
+------------------------------------------
+
+There are a number of serial cards that "work" with A/UX. The Apple serial
+card is NOT one of them.
+
+ o There is the Digiboard Nu/Xi, which comes in 4 and 8 port versions.  Brand
+   new drivers for the card have been coded and are available. This version
+   (3.3.0) however, doesn't currently work with CSlip but otherwise works
+   great.  You can snag the drivers via anon-ftp from digibd.com (which is
+   192.83.159.193) in drivers/mac.
+
+   Technical Support for DigiBoard is 612-943-9020. If you'd like to contact
+   the main engineer responsible for the drivers, contact Brian Westley at the
+   following Email addresses:
+
+      merlyn@digibd.com
+      ...uunet!digibd!merlyn
+      AppleLink: merlin
+
+o There is also the Creative Solutions, INC (CSI) HQS/HDS v4.4/4.5 Hurdler
+  Serial Nubus cards. These cards have both pure UNIX _and_ MacOS device
+  drivers (i.e. a 'newconfig' code module and a MacOS INIT/DRVR module). The
+  A/UX drivers support baud rates up to 57.6k and 115.2k using the 'B50' and
+  'B75' flags, true hardware handshaking while monitoring DCD for Dialup
+  security, and full compatibility with CSlip and PPP and their associated
+  daemons. The A/UX-MacOS drivers are fully compatible with all CommToolbox
+  functions and serial drivers. These are very nice cards :)
+
+  The recommended cable-pin out for these cards is:
+
+        Mac          Modem
+    Male Mini-Din-8  DB-25
+    --------------------------------------------
+    1 (HskO)  ---   4   (RTS)
+    2 (HskI)  ---   5   (CTS)
+    3 (TxD-)  ---   2   (TxD)
+    4 (GDN)   ---   7   (SigGnd)
+    5 (RxD-)  ---   3   (RxD)
+    6 (TxD+)  ---   7   (SigGnd)or(NC)
+    7 (GPi)   ---   8   (DCD)
+    8 (RxD+)  ---   7   (SigGnd)
+                    6 -- (DSR)
+                        |
+                   20 -- (DTR)
+
+  Also, for logins, you should be using the FLOW flag in the gettydefs file as
+  for example:
+
+   fl_38400#B38400 # B38400 SANE2 TAB3 # ~MODEM ~DTR FLOW #\r\nlogin: #fl_38400
+
+  For further info about the drivers, or for _any_ help is using this card,
+  please contact Alan M. Friedman at Intelligent Interfaces, Inc:
+
+     alan@kether.intellint.com
+     AppleLink: D5620
+
+  You can contact CSI at csi@applelink.apple.com (AppleLink: CSI).
+
+ o Another is Paul Campell's Taniwha CommCard. This card does indeed work
+   with all versions of A/UX including 3.x.x. It has special support for
+   UUCP.  It has a few mysterious and not very important problems. It's an
+   excellent buy. The only problem is, it's not on the market anymore. If you
+   can get one used, though, it's worth getting. The one downside is that,
+   like Apple's ports, it won't SIMULTANEOUSLY support modem and hardware flow
+   control. It is immune to many of the nasty bugs which affect the built-in
+   serial ports, including the two (at least) which can crash the kernel.
+
+ o Yet another is the Applied Engineering QuadraLink serial card. According
+   to sources, the board was super easy to setup and use. It also appears
+   very solid as far as performance.
+
+   The AE QuadraLink card, like the CommCard and the Apple ports, can't do
+   both hardware handshaking and modem control at the same time. No hardware
+   patch kit will be developed for the AE card...
+
+=============================================================================
+D.09)  I'm using a LaserWriter IIg with A/UX 3.x.x and whenever I print some-
+       thing to it through 'lpr', the first line of the page is cut off. Why?
+-----------------------------------------------------------------------------
+
+This only shows up on versions of the IIg (and IIf) with less than 5MB RAM.
+The reason is because this makes the LW default to PhotoGrade-mode. You can
+do 2 things to fix this:
+
+    1. Using the LaserWriter Utility program, disable PhotoGrade.
+       Since one of the main advantages of these LW's is PhotoGrade,
+       this option is kinda unpalatable.
+
+    2. If you are _only_ using "Letter" mode under 'lpr', then you
+       can edit /usr/lib/ps/pstext.pro to include the following line
+       between "% RCSID:..." and "/StartPage...":
+
+       %!PS-Adobe-1.0
+       % Z%Copyright Apple Computer 1987\tVersion 1.1 of pstext.pro on\
+         87/05/04 19:02:25
+       %%Creator: pstext
+       %%DocumentFonts: Courier
+       % RCSID: $Header: pstext.pro,v 2.1 85/11/24 12:19:55 shore Rel $
+====>>>letter 
+       /StartPage{/sv save def 48 760 moveto}def
+
+This will fix the problem and make it usable again.
+
+=========================================================================
+D.10)  I'm trying to access my tape drive using 'tc' (with something like
+       "find . -print | cpio -o > /dev/rmt/tc1") but it doesn't work...
+-------------------------------------------------------------------------
+
+Except for 9-track magtapes, all I/O to tape drives associated with the 'tc'
+device files _must_ be blocked at 8k. The 'tcb' program does just that so
+that should be included. For example, to write:
+
+    $ find . -print | cpio -o | tcb > /dev/rmt/tc1
+
+And to read:
+
+    $ tcb < /dev/rmt/tc1 | cpio -i
+
+You can get better performance if you increase the buffer size (just make
+sure that it's a multiple of 8k). For example, you could use 'dd' as your
+blocking filter with a 'bs=10x8k'.
+
+Jim Jagielski's replacement for 'tc' allows for 'tc' to use the tape drive's
+own physical block size as the logical block size for I/O. Doing so results
+in a bit of a performance hit so it isn't recommended for normal use. You
+should use the "mode" only if you need to read tapes written by 'st' or by
+another platform. Please note you are still limited to an I/O block size of
+at least the physical block size, which can be anything for 512 to 1024 to
+8192 bytes.
+
+%%% For more information about 'tc', please contact Jim via E-mail %%%
+
+=========================================================
+D.11)  What CD-ROM drives are compatible with A/UX 3.x.x?
+---------------------------------------------------------
+
+The original Apple CD-ROM drive (CD SC) is 100% compatible with A/UX as is
+the newer CD-150. Older versions of the CD-300 (those with pre 1.8f ROMS)
+would cause problems with A/UX and would do little more than allow you to
+install A/UX, making it almost useless for day-to-day use. One of the fixes
+of 3.0.2 is _much_ better support for all versions of the CD-300, although
+Apple does suggest that you update the CD-ROM drive's ROMs with the latest
+version if you have problems. I've heard that you can get the latest ROMs by
+calling 1-800-SOS-APPL or seeing your Apple dealer. The following are also
+known to be 100% compatible (meaning you can use them to install A/UX as well
+as when running A/UX):
+
+    The Toshiba XM3201, XM3301B XM3401B, XM3501
+    DEC RRD42, RRD40 (LMSI CM-212)
+    Denon DRD 253
+    Sun CD-ROM (Sony CDU-8012?)
+    CD-Technologies Porta-Drive CD-ROM
+    Chinon CDA-431
+
+3.1 adds support for NEC CD-ROMs; previous versions of A/UX weren't able to
+work with these units due to their physical block size.
+
+====================================================================
+D.12)  I've tried to install the CD Remote extension to A/UX so that
+       I can play audio CD's, but it doesn't work...
+--------------------------------------------------------------------
+
+By itself, A/UX doesn't support audio CDs. However, there are 2 software
+packages that add this capability:
+
+The first package is xmcd/cda, which provides both a X-Motif (xmcd) and
+generic command-line (cda) interface for playing audio CDs under A/UX.
+The package requires that the 'devscsi' kernel package be installed, so
+it will work under 3.x.x. xmcd/cda was written by Ti Kan (ti@bazooka.amb.org).
+and can be found on ftp.x.org:/contrib/applications/xmcd.
+
+The second package is a MacOS-patch to enable you to use the CD Remote
+application. Kelly King and Andrew Kass (at Apple), however, have written the
+"AUX SCSI Toolbox" extensions that emulates the Mac SCSI Manager. With this
+extension installed, you can run applications and drivers that talk to the
+Mac SCSI Manager, including the Apple CD-ROM driver! With this extension, you
+can listen to your audio CDs under A/UX! This is the latest version of the
+extension: 1.0b4.
+
+"AUX SCSI Toolbox" is available via ftp on jagubox under:
+
+   /pub/aux/Apple.fixes/unsupported/3.0.x/SCSItlbx.tar.gz
+
+Please read the included ReadMe before installing and using it.
+
+==================================================
+D.13)  What UNIX CD-ROM formats does A/UX support?
+--------------------------------------------------
+
+Other than the "normal" A/UX SysV and UFS file system type, A/UX supports
+ISO-9660 file system format CD-ROMs. However, you can only access these CDs
+from the MacOS environment; you can't "mount" them in the normal UNIX-way. As
+distributed, A/UX doesn't include the needed Extensions that allow the MacOS
+Environment from recognizing these CDs. To fix this, you need to copy the
+following Extensions from the Apple CD-ROM Software disks (version 3.2 or
+later) to the System Folder of the user(s) that need access to these CDs:
+
+   o Foreign File Access
+   o High Sierra File Access
+   o ISO 9660 File Access
+
+The docs are a little blurry on this (even though it's specifically mentioned
+in Chapter 5 of the "Setting Up Accounts and Peripherals for A/UX") since they
+say that you don't need to add any _kernel_ resources...
+
+One of A/UX's quirks is that all files on ISO-9660 CDs are "seen" as TEXT
+type files. This causes troubles with binary files since when you try to
+drag them over to the "/" disk, A/UX will perform it's \r->\n translation.
+To avoid this from happening, you can:
+
+   1 Drag the file(s) over to a MacOS HFS disk. Then use ResEdit (or something
+     similar) to change the file Creator to "A/UX" and Type to "BIN " (note the
+     space!). Now you can drag the file over to "/".
+
+   2 Use ResEdit to look at the NCOD resource in the "ISO 9660 File Access"
+     extension. Open the "Main" resource in NCOD. Now change the string
+     "TEXT" to "BIN " and "hscd" to "A/UX". Save, logout and login. This
+     changes things so that _all_ files on the CD-ROM appear as non-Text,
+     CommandShell files, so that A/UX will _not_ perform any translation.
+
+Again, please note that A/UX will not recognize _any_ of the audio capability
+of CD-ROMs unless you add the "AUX SCSI Toolbox" extension described in Q&A
+#D.12.
+
+====================================================================
+D.14)  How can I add printers other than those available in Chooser?
+--------------------------------------------------------------------
+
+<<ED: From a post by Antonio Ordonez (antonio@apple.com)>>
+
+If the printer is in another zone, it is necessary to define the zone in
+which the printer is located with a full path name.  You can then "hardwire"
+a printer name including the zone for a particular printer queue.
+
+The best way to do this is to make a copy the /usr/spool/lpd/AppleTalk
+directory and give it a name related to the printer we want to use. Modify
+the file ifilter/ofilter/nfilter  (it is the same file with 3 hard links) in
+this directory. Also modyfy the /etc/printcap file to create a new printer
+queue.
+
+I will use my system as an example so please modify to reflect your
+situation.
+
+The first thing to do is to create the new directory and put the correct
+files in it. NOTE that I am using mknod to create the pipe file.
+
+mkdir Idaho
+chown daemon Idaho
+chgrp daemon Idaho
+cp AppleTalk/ifilter Idaho/ifilter
+cd Idaho
+ln ifilter ofilter
+ln ofilter nfilter
+mknod pipe p
+chown daemon *
+chgrp daemon *
+
+In my case I have a printer called "Idaho Spooler" in the zone "SCV CAM2
+2nd W"  while my system is on the zone "SCV CAM2 2nd E", so all I do is to
+modify the /usr/spool/lpd/Idaho/ifilter file (you can use vi or
+TextEditor)
+and change the line that defines the value for Printer from
+
+Printer=`basename "cwd"`
+        -to-
+Printer="Idaho Spooler:LaserWriter@SCV CAM2 2nd W"
+
+In the /etc/printcap file I copy the entry for AppleTalk (all six lines) and
+change any reference to AppleTalk to the name I used for my new directory.
+Again, in my case I used "Idaho" as the directory name so my /etc/printcap
+file looks like:
+
+  #
+  # pragma ident "@(#)lpr:printcap        5.4 90/03/27 "
+  #
+  # Copyright 1990 Apple Computer, Inc.
+  # All Rights Reserved.
+  ##
+  # Remote AppleTalk printer (selected by Chooser)
+  # For an AppleTalk printer which doesn't support PostScript remove last 2
+  names.
+  lp|at|AppleTalk|postscript|PostScript:\
+          :lp=/dev/null:\
+          :if=/usr/spool/lpd/AppleTalk/ifilter:\
+          :of=/usr/spool/lpd/AppleTalk/ofilter:\
+          :nf=/usr/spool/lpd/AppleTalk/nfilter:\
+          :sd=/usr/spool/lpd/AppleTalk:
+  lp2|Idaho:\
+          :lp=/dev/null:\
+          :if=/usr/spool/lpd/Idaho/ifilter:\
+          :of=/usr/spool/lpd/Idaho/ofilter:\
+          :nf=/usr/spool/lpd/Idaho/nfilter:\
+          :sd=/usr/spool/lpd/Idaho:
+
+After all these steps are completed restart the printer queue with the command
+
+    lpc restart all
+
+Now you should be able to send a print job to the printer in the other zone
+with the command
+
+    lpr -Plp2 /etc/passwd
+
+or
+
+    lpr -PIdaho /etc/passwd
+
+Hope this helps
+
+//////////////////////  END OF PART 3 OF 4  \\\\\\\\\\\\\\\\\\\\\\
+
+\\\\\\\\\\\\\\\\\\\\\\ START OF PART 4 OF 4 //////////////////////
+
+============================================================
+D.15)  What 3rd party accelerators are compatible with A/UX?
+------------------------------------------------------------
+
+For the most part, all DayStar Digital accelerators are compatible with A/UX
+3.0 even if their controlling CDEVs don't work under A/UX (the accelerator
+must be enabled with the CDEV before booting A/UX). However, their 040
+accelerators do NOT work under A/UX. In fact, except for Apple's own Quadra
+700 Logic Board Upgrade, there are no 040 accelerators that work (i.e. don't
+crash) under A/UX.
+
+There has been at least 1 report of the DayStar-accelerated MacII not working
+under 3.0.2... it's possible that 3.0.2 is more sensitive to timing than 3.0
+was... If in doubt, be _sure_ that you can return the accelerator if you
+can't run it under A/UX.
+
+According to Daystar Digital, the DayStar QuadraCache is _not_ compatible
+with A/UX. DayStar is working on a fix... Nonetheless, there are a number of
+people (including people at Apple) who are using these cache cards with no
+problems at all and with very nice (~25%) performance boosts.
+
+<< ED: This is kinda skimpy, but I'd thought I'd start it up. EMail me
+       your list >>
+
+==============================================================
+D.16)  Will the old serial HP DeskWriter work under A/UX?
+--------------------------------------------------------------
+
+No, it won't... You need to use AppleTalk to use it under A/UX.
+
+================================================
+D.17)  How can I use a HP DeskWriter under A/UX?
+------------------------------------------------
+
+For the answer, snag a copy of DeskWriter.txt which is available via anon-
+ftp on jagubox in /pub/aux/Info.
+
+======================================
+D.18)  Does A/UX support 24-bit color?
+--------------------------------------
+
+Yes.
+
+There is one major caveat, that will hopefully be addressed in future
+versions. On startup, A/UX reinitializes all hardware drivers, including
+the video-drivers; as a result, most accelerated 24-bit cards (all third-
+party cards known to date, as well as Apple's old 8*24 GC card) will be
+reinitialized to run in non-accelerated mode. You'll still get 24-bit video,
+but depending on your hardware, it may be painfully slow.
+
+This could be solved by better driver support from the vendors of accelerated
+video cards. Certain vendors have been promising such support for awhile now.
+
+The best hardware to run A/UX with 24-bit video enabled are currently
+the Quadra 700, 900, and 950, whose internal video can be populated with
+enough VRAM to support 24-bit color (note that the Q800 cannot do this !).
+Performance is considered good under A/UX by many users.
+
+The following is a list of 24-bit cards that readers have reported work with
+A/UX from personal experience. It is NOT a complete list; there have been no
+reports of cards that work under MacOS but not A/UX (excepting the caveat
+detailed above):
+
+    Apple 8*24, 8*24GC
+    Quadra 700, 900, 950 internal video
+    PrecisionColor PRO 24xp
+    RasterOps 24STV, Paintboard li
+    Radius 24XP, 24XK
+
+=================================================
+D.19)  What's the specifics on the AWS95 PDS Card?
+-------------------------------------------------
+
+The AWS95 PDS Card (known as "Pisces") has two main functional additions to
+the Q950. The first is that it includes an external level-2 cache for the
+Quadra's 68040. The cache size is 128K, but this can be increased with Apple
+provided SRAM upgrade kits. The use of a L2 cache increases the base perfor-
+mance of the Q950.
+
+The second capability that Pisces includes is the addition of two additional
+upgraded SCSI buses. Pisces fully supports Direct Memory Access (DMA) on these
+SCSI buses. This can greatly increase SCSI throughput by offloading SCSI
+operations to the PDS card. The card supports active termination and negation
+on the 2 SCSI DMA buses, improving signal quality and integrity.
+
+=================================================
+D.20)  What are the specifics of SCSI under A/UX?
+-------------------------------------------------
+
+SCSI under A/UX is SCSI-1/CCS and not SCSI-2. However, A/UX can use most
+SCSI-2 devices. Problems will arise on some SCSI-2 disks if their Error
+Correction Mode Pages are incorrect (See Q&A D.04). A/UX supports SCSI
+connect/disconnect which results in more efficient use of the SCSI bus.
+Finally, A/UX provides asynchronous I/O as well.
+
+=========================================================
+D.21)  I can't get my LaserJet 4M to work reliably. Help!
+---------------------------------------------------------
+
+Bad news... for some reason, if the LaserJet is connected _directly_ to a
+Q700 running A/UX via AppleTalk then it won't work. If you have a router or
+something similar between the two it'll work like a hose. It looks like it's
+most probably a 4M ROM bug and I hear that HP is "working" on a fix.
+
+==========================================================
+D.22)  Does the Apple Adjustable Keyboard work under A/UX?
+----------------------------------------------------------
+
+No it doesn't... This is due to the way the Adjustable keyboard actually
+works and the fact that A/UX doesn't fully support the ADB Manager. :(
+
+===============================================================================
+D.23)  How can I increase the number of inodes when creating a new file system?
+-------------------------------------------------------------------------------
+
+There is a limit on the number of inodes per cylinder group (2048). Large
+disks (2-4GB) are setup so that each cylinder group is quite large (>5MB)
+so that when 'newfs' creates the file system, it hits the limit quickly
+and you end up with a disk with a "small" amount of inodes.
+
+The trick is to use the '-c' option to 'newfs' to make each cylinder
+smaller by reducing the number of cylinders per group. In many cases,
+'newfs -c 8' works well. Of course, you should use this in combination
+with the '-i' option as well.
+
+=========================================
+D.24)  Can I use my Zip Drive under A/UX?
+-----------------------------------------
+
+You certainly can. There are some tricks in getting it to work and be
+usable under the MacOS environment, but they are pretty easy.
+
+First of all, the device-files (slice31) for the Zip drive needs to be readable
+and writable by the person using the MacOS. If you are the sole user of the
+A/UX machine, then it's easy:
+
+	% chown <yourname> /dev/rdsk/cXd0s31 /dev/dsk/cXd0s31
+
+where 'X' is the SCSI ID of the Zip. If your system is multi-user, then you'll
+need to:
+
+	% chmod 666 /dev/rdsk/cXd0s31 /dev/dsk/cXd0s31
+
+You need to have the Zip catridge in the drive while the MacOS-A/UX environ-
+ment is booting for the disk to be mounted.
+
+If you will be using the Zip only as a UNIX file system, here are some hints:
+
+    o Use HD SC Setup (the A/UX version) to create the Partition and
+      file system. Don't bother with 'newfs' unless you need to alter
+      the number of inodes created; Use the 'Generic|other' entry in
+      /etc/disktab
+
+    o You'll need to manually eject the disk when done with it and after
+      it's 'umount'ed
+
+    o DON'T eject the disk if it's still mounted !!
+
+
+:::::::::::::::::::::::::::::::::::
+::::: PORTING AND PROGRAMMING :::::
+:::::::::::::::::::::::::::::::::::
+
+================================================================
+P.01)  How come rn|elm|less|etc... act weird concerning signals?
+----------------------------------------------------------------
+
+Well, it's not really them at all. Many people have found that more than a
+few ports require the addition of the 'set42sig()' call to enable BSD 4.2
+signal delivery. The best place to add this is as the 1st executable statement
+under
+
+    "main() {"
+
+Another point about porting applications: A/UX's 'cc' does provide "strict"
+BSD, SystemV and Posix libraries. If you are porting a BSD program, you can
+enable BSD "emulation" by adding the "-ZB -lbsd" options to your 'cc' command
+line. In fact, using just the '-lbsd' option alleviates the need for adding
+the 'set42sig()' call mentioned above and is, in many cases, the suggested
+option. Compiling with gcc also helps out a great deal.
+
+===================================
+P.02)  Is X11R5 available for A/UX?
+-----------------------------------
+
+Not anymore :-(
+
+=====================================================================
+P.03)  I've noticed that FSF GNU doesn't support A/UX. Does that mean
+       I'll miss out on all the neat Gnu-stuff like gcc?
+---------------------------------------------------------------------
+
+Although it's true that FSF is "boycotting" Apple and A/UX (FSF doesn't like
+Apple's predisposition of suing to protect "look and feel"), ports of most Gnu
+applications are available. Of particular interest is gcc version 2.7.2 which
+has been ported by Jim Jagielski (based on previous ports by John Coolidge
+and is available via anon-ftp on wuarchive.wustl.edu in systems/aux/gnu. The
+binaries, sources and diffs are all available.
+
+GCC version 2.7.2 for A/UX has been ported and is available... Highly
+recommended!
+
+As a nice compliment to using GCC, gdb (4.9) is also available.
+
+%%% For more info about gcc for A/UX, please contact Jim via E-mail %%%
+
+==========================================================================
+P.04)  I've ported Elm (or other mail reader) and it doesn't seem to work.
+       Why?
+--------------------------------------------------------------------------
+
+It seems most likely that the reason is because they attempt to use a
+different file locking scheme that /bin/mail does. Pre-3.0 versions of mail
+used 'flock' style file locking. 3.x.x now uses the '.lock' scheme for mail
+file locking. Elm 2.4.X requires that both flock and .lock be enabled. Elm
+2.3.X requires _only_ .lock locking.
+
+=============================================
+P.05)  What languages are available for A/UX?
+---------------------------------------------
+
+A/UX comes with a C compiler ('cc'), a FORTRAN-77 compiler ('f77') as well
+as an assembler ('as'), SNOBOL ('sno') and a kinda-basic interpreter ('bs').
+'cc' is a nice, stable, if not-too-quick compiler. 'f77' is a true FORTRAN-77
+compiler and appears quite workable. I've not used 'sno' (I couldn't recall
+how to program in SNOBOL if my life depended on it :) or 'bs'.
+
+If you are doing any work in C, then it would be well worth it to get a copy
+of the GNU C compiler ('gcc') (see Q&A #P.03). gcc is K&R and ANSI compatible
+so if you are doing ANSI work you'll need it. Apple also has an ANSI C
+compiler ('c89') that you can buy. It's available on the "A/UX Developer's
+Toolkit CD" from APDA. There is also at least one other 3rd-party C compiler
+out there, but I can't recall it's name right now. gcc is free; c89 runs
+about $800. Both include C++ capabilities.
+
+There are also 2 very good 3rd-party FORTRAN compilers: NKR FORTRAN and Absoft
+MacFORTRAN II. In my opinion, MacFORTRAN II is the better product...  it has
+finer compiler control, a wide number of compatibility options (such as VAX
+FORTRAN) and excellent speed. If you do order MFII, be _sure_ to get the A/UX
+version. They also sell an MPW version that will work under A/UX but it's
+run under, you guessed it, MPW. The A/UX version is a true "Unix" compiler
+and it's optimized for A/UX. Both MFII and NKR FORTRAN run about $500-$600.
+
+Oasys sells 3 compiler packages: C, C++ and FORTRAN. All the compilers are
+based on the GreenHills compilers which are known to be robust and fast.
+However, the Oasys packages are expensive, running about $2000 per language
+(although you do get assemblers and linker/loaders with the package).  Unisoft
+used to distribute their "Optimizing Compilers" (FORTRAN and C) for A/UX,
+but they are no longer available... Pity, because they also were based on
+GreenHills and were quite nice.
+
+At present, I know of no true Pascal compilers for A/UX.
+
+Finally, if you are doing program development, then you'll need a good
+debugger. As described above in "List of ports...", gdb has been ported if
+you would prefer using something other than sdb or dbx, which are included
+with A/UX. If you are using FORTRAN, then Absoft also makes an excellent
+debugger which has been fine-tuned to work with MFII (it also does quite well
+with C); it's called FX. It has two interfaces, character and Motif, and is
+quite powerful.
+
+=======================================
+P.06)  Is OSF/Motif available for A/UX?
+---------------------------------------
+
+The only source for OSF/Motif (1.1.4) for A/UX that I know of is:
+
+   Integrated Computer Solutions
+   201 Broadway
+   Cambridge, MA 02139
+   617-547-0510
+
+However, they have stopped producing this and have since stopped support for
+A/UX OSF/Motif. They may still have a few copies of it available, so if you
+don't mind using unsupported software, give them a call.
+
+If you have, or can get, the actual source code for Motif then the following
+will be of some help: 1.1.4 compiles with minimal changes to the source using
+'cc' and works "great." However, the source for 1.2.2 makes calls to various
+XIM multi-character routines, leaving many unresolved externals when linking.
+Now, if someone ported X11R5 and left the XIM routines intact, then maybe
+compiling and linking 1.2.2 would go off without a hitch... Any takers??
+
+=============================================================
+P.07)  While trying to port some software, the Makefile looks
+       for a program called 'ranlib' and dies when it can't
+       find it. What is it and where can I get it.
+-------------------------------------------------------------
+
+'ranlib' is a program that increases the efficiency of accessing and using
+archives (*.a files). A/UX's 'ar' already does this, so it isn't needed.
+To get around this, do something like:
+
+    ln /bin/true /bin/ranlib
+
+You could also use '/bin/touch' but the above will (hopefully) take care of
+cases when ranlib is called with options. If you want to put 'ranlib'
+somewhere else, then that's OK. If the location is a different file system,
+then you'll need to use a symbolic link:
+
+    ln -s /bin/true /usr2/local/bin/ranlib
+
+============================================================
+P.08)  When compiling, I get the message that 'setlocale' is
+       an "undefined symbol"... what's going on?
+------------------------------------------------------------
+
+The 'locale' suite can be found in /lib/libposix.a. To avoid linking to
+libposix.a you can do the following to create a separate locale library:
+
+   $ ar xv /lib/libposix.a locale.o
+   $ ar rv /usr/lib/liblocale.a locale.o
+
+Now you can simply link to '-llocale' to add it in.
+
+A better fix would be to grab and use libUTIL, a collection of useful and
+needed functions for any serious porting effort (see Hints&WOW, above).
+libUTIL is maintained by Jim Jagielski and can be found on jagubox.
+
+=========================================
+P.09)  How in the world do I use nlist()?
+-----------------------------------------
+
+The nlist structure used by nlist() is a very weird beast. The structure
+itself contains a union, which can cause problems with automatic initialization
+of nlist. In particular, there are specific times when you need to use
+"n_name" and other times when you must use "n_nptr".
+
+Here's the deal:
+
+   o If the variable name is less than 8 characters in length (as defined
+     by strlen()), then the NULL-terminated string should be copied into
+     'n_name'.
+
+     EG: var = "timbuf"; strcpy(nl.n_name, var);
+
+   o If the variable name is exactly 8 characters in length, _only_
+     those 8 characters should be copied into the 'n_name' field; The
+     '/0' character should _NOT_ be copied as well.
+
+     EG: var = "longlook"; strncpy(nl.n_name, var, 8);
+
+   o If the variable name is greater than 8 characters in length, 'n_ptr'
+     should be set to the pointer to that string and 'n_zeroes' be set to
+     0.
+
+     EG: var = "clock_offset"; nl.n_ptr = var;
+
+
+
+:::::::::::::::::::::::::
+::::: COMMUNICATION :::::
+:::::::::::::::::::::::::
+
+===========================================================================
+C.01)  I'm unable to start a getty process on a built-in serial port. When
+       I use 'setport' to enable the port, I get a "no such device" error.
+       Configuring /etc/inittab to respawn getty on the port has no effect.
+---------------------------------------------------------------------------
+
+AppleTalk is probably enabled for the port. The getty process can be started
+temporarily by turning off AppleTalk via A/UX's Finder Chooser and THEN
+using the 'setport' command.
+
+You can permanently disable AppleTalk by reconfiguring the kernel with
+"newconfig noappletalk". If you wish to keep the drivers installed in the
+kernel but still want to "permanently" disable AppleTalk, you can edit
+/etc/startup to prevent AppleTalk from initializing and /etc/inittab can be
+editted to start getty. (NOTE: /etc/startup is regenerated by newconfig so
+you'll have to redo this if you reconfigure the kernel).
+
+If you don't have an EtherTalk card installed, then you can also modify
+/etc/appletalkrc to point to "ethertalk0" instead of "localtalk0". Doing
+this stops AppleTalk from bothering the serial port because it tries to use
+the non-existant card.
+
+=============================================================================
+C.02)  I am using and depending on /etc/hosts to do all my hostname resolving
+       (i.e. not using named or /etc/resolv.conf). How come I can't mail
+       to other hosts, but I can ping|ftp|etc... them?
+-----------------------------------------------------------------------------
+
+Well, the problem is actually with sendmail (in /usr/lib). sendmail (under
+A/UX 2.0 and later) assumes the use of a nameserver. Pre-2.0 versions were
+"adjusted" to look in /etc/hosts if any nameserver call failed (which it
+would if it wasn't running, of course :).
+
+Jim Jagielski (jim@jagubox.gsfc.nasa.gov) has hacked sendmail 5.65 for A/UX
+to have it also check /etc/hosts. The source code is available on jagubox.
+
+You may also want to upgrade to smail 3.1.28. smail is a very powerful yet
+easy to configure (and maintain) replacement for sendmail. It can both query
+the NameServer as well as look in /etc/hosts to "interpret" hostnames. The
+required A/UX-related diffs and patches, which were written by Bob Denny
+(denny@alisa.com) are available on jagubox.
+
+%%% For more info, contact Jim %%%
+
+========================================================================
+C.03)  When I try to mail something, I get the following error message:
+       "Cannot read frozen config file: not a typewriter". What's wrong?
+------------------------------------------------------------------------
+
+This message is produced by sendmail (/usr/lib/sendmail) when it's frozen
+configuration file (/usr/lib/sendmail.fc) is unusable (as it is in the A/UX
+distribution which has it as a 0-byte file). To create a "new" frozen file
+of your present sendmail.cf file (assuming that it's good), type:
+
+    $ /usr/lib/sendmail -bz
+
+(the sendmail daemon, if it exists, must be killed 1st).
+
+==========================================================================
+C.04)  How do I set up my Mac and A/UX to enable remote logins via a modem
+       on tty0?
+--------------------------------------------------------------------------
+
+First of all, you must edit /etc/inittab to start getty on tty0 using mo_2400
+(or whatever speed you want, such as mo_9600):
+
+    00:2:respawn:/etc/getty -u -t 60 tty0 mo_2400
+
+Make sure that your modem is set to be quiet, to not return result codes and
+to not echo back. It must also reset on DTR being dropped ("atq1e0&d3" will
+achieve this for most Hayes-compatible modems except certain (all) USR
+modems). Your modem must also raise DCD on connection ("at&c1") in order to
+have Dialup security (i.e. when the line is closed, HangUp the process.  This
+means that MODEM flow control must be specified in gettydefs). You then save
+these changes using the "at&w" sequence. Finally, to make it autoanswer, be
+sure to add "ats0=1&w".
+
+Make sure that the modem cable is correctly configured (NOTE: This is for
+Dialup Security!):
+
+    Mac       Modem
+    --------------------
+    1 (HskO)  20 (DTR)
+              4  (RTS)  <- yep... it gets sent to Pin 20 & 4
+    2 (HskI)  8  (DCD)
+    3 (TxD-)  2  (TxD)
+    4 (GDN)   7  (Sgnd)
+    5 (RxD-)  3  (RxD)
+    6 NO CONNECT
+    7 NO CONNECT
+    8 (RxD+)  7  (Sgnd)  <- this is right, it gets tied to Mac pin 4 too.
+
+If you mess up pin 8 things can get so flaky that you'll never figure out
+what's going on. You see, by grounding pin 8, you make the modem port truly
+RS-232 compatible. If not grounded, the port will use the RS-422 standard,
+which can cause lots of problems. For more info about pinouts and cable
+pinouts, check out "/usr/lib/uucp/README".
+
+Please note that getty is the bidirectional version of getty, which is
+sometimes known as uugetty. Thus, you can have dial in and dial out at the
+same time on the same port. You should be using at least version 1.16 of HDB
+(see above: "known bugs" and Q&A #A.16)
+
+As mentioned above, the cable described provides for Dialup Security and
+prevents the use of hardware flow control... If, however, the exact same
+baudrate is used throughout the phone link, the need for hardware flow
+control is greatly reduced.
+
+========================================================================
+C.05)  How come I can't use 'talk' with some of the other Unix boxes out
+       there, and they can't talk to me?
+------------------------------------------------------------------------
+
+The reason why is because there are two versions of talk (and it's daemon
+talkd) out there. A/UX uses the BSD 4.2 version. Others use the 4.3 version.
+The two aren't compatible and don't even talk on the same port. If you try
+to talk to someone and all you get is a "Checking for invitation..." message
+then it's because the machine you're trying to access is using 4.3.
+
+Steve Green (xrsbg@dirac.gsfc.nasa.gov) has ported the 4.3 versions of talk
+and talkd (now renamed ntalk and ntalkd for A/UX) to overcome this snag. You
+can have both versions available and running with no problems. The port is
+available on jagubox.gsfc.nasa.gov.
+
+=====================================================
+C.06)  How can I convince A/UX to forward IP packets?
+-----------------------------------------------------
+
+You will need to use 'adb' to adjust the A/UX kernel to enable IP forwarding.
+This is done by changing the value of the 'ipforwarding' "variable" from
+0 (no forwarding) to 1 (enable forwarding).
+
+As root, and in single-user mode, apply this patch:
+
+    # Enable fowarding: just the kernel
+    adb -w -k /unix << Foo
+    ipforwarding?D
+    ipforwarding?W 1
+    $w
+    $q
+    Foo
+
+And reboot.
+
+You'll need to redo this whenever the kernel is rebuilt (like via 'newunix')
+unless you apply the patch to /etc/install.d/boot.d/bnet as follows:
+
+    # Enable fowarding: keep it that way
+    adb -w /etc/install.d/boot.d/bnet << Foo
+    ipforwarding?D
+    ipforwarding?W 1
+    $w
+    $q
+    Foo
+
+=================================
+C.07)  Is PPP available for A/UX?
+---------------------------------
+
+Unfortunately, I know of no port of PPP for A/UX :(
+
+================================================
+C.08)  How can I change the MTU value for CSlip?
+------------------------------------------------
+
+You will need to use 'adb' to adjust either the kernel or the CSlip driver to
+change this value (slip_mtu).  As root, and in single-user mode, apply this
+patch (please replace $THE_VALUE with the actual HEX value you want MTU to be):
+
+    # Change SLIP MTU value to $THE_VALUE: just the kernel
+    adb -w -k /unix << Foo
+    slip_mtu?d
+    slip_mtu?w $THE_VALUE
+    $w
+    $q
+    Foo
+
+And reboot.
+
+You'll need to redo this whenever the kernel is rebuilt (like via 'newunix')
+unless you apply the patch to /etc/install.d/boot.d/cslip as follows:
+
+    # Change SLIP MTU value to $THE_VALUE: keep it that way
+    adb -w /etc/install.d/boot.d/cslip << Foo
+    slip_mtu?d
+    slip_mtu?w $THE_VALUE
+    $w
+    $q
+    Foo
+
+Now run 'newconfig -v' and reboot.
+
+==================================================================
+C.09)  I'm having trouble having Solaris 2.4 NFS clients access my
+       NFS server!
+------------------------------------------------------------------
+
+On your Solaris client, you need to add the 'rsize=1024 wsize=1024' parameters
+to your mount option.
+
+====================================================================
+C.10)  I'm running a busy web-server and clients are getting lots of
+       'Connection Refused' messages... Why?
+--------------------------------------------------------------------
+
+This may be due, most probably, by the small size of A/UX's listen()
+backlog queue. This queue is basically the number of pending connections
+listen will allow. Under A/UX, this value (known as SOMAXCONN) is a measly
+5. Since Netscape, for example, send 4 connection-requests per connect, you
+can see how you would over-reach the queue quickly if your server is busy.
+
+Jim Jagielski (jim@jaguNET.com) has written a small shell-script that uses
+'adb' to patch the kernel 'bnet' module to increase the queue limit from
+5 to 32. It's available on jagubox.gsfc.nasa.gov in /pub/aux/Sys_stuff
+
+
+::::::::::::::::::::::::::::
+::::: ERRORS EXPLAINED :::::
+::::::::::::::::::::::::::::
+
+============================================================================
+E.01)  How do I keep command lines that I edit with "backspace" from erasing
+       the prompt?
+----------------------------------------------------------------------------
+
+This behavior is due to the tty driver under A/UX. The BSD tty driver (which
+A/UX doesn't use) handles this, whereas the SysV driver doesn't. If you are
+running 'ksh' then you can "set -o viraw" to prevent this from happening.
+As far as I know, there are no work-arounds for 'sh' or 'csh'. ('tcsh' and
+'bash' do not suffer from this problem... )
+
+
+==========================================================================
+E.02)  Whenever I try to run xinit (or startx) from the CommandShell I get
+       a fatal server error. Why?
+--------------------------------------------------------------------------
+
+The reason why is because both X and the CommandShell want _complete_ control
+over your Mac (display, keyboard and mouse). So, when you try to start one
+while running the other, you'll get into trouble. You need to start X either
+from the Console Emulator Mode or by choosing it as your "session type" from
+the Login screen (This session type will be available only if your installed
+Apple's X).
+
+====================================================================
+E.03)  I keep on getting the following error message on the Console:
+       "fcntl: local lock manager not registered". What's going on?
+--------------------------------------------------------------------
+
+This is printed out whenever your kernel is configured for NFS and a file-
+lock is attempted (as when sending Email) but the NFS lock daemon (rpc.lockd)
+isn't running. This is most probably due to the fact that it wasn't started
+in /etc/inittab. The fix is simple: enable rpc.lockd (and it's companion
+rpc.statd) in /etc/inittab as follows:
+
+   nfs5:2:wait:/etc/rpc.statd   # set to "wait" for NFS status monitor
+   nfs6:2:once:/etc/rpc.lockd   # set to "once" for NFS lock manager
+
+and either Restart A/UX or simply type 'init q'.
+
+===============================================================
+E.04)  When I try to startup 'xterm', I get the following error
+       message: "xterm: no available ptys"... What gives?
+---------------------------------------------------------------
+
+There are three possible solutions:
+
+    1. Make sure that there are ptys configured into the
+       kernel... Use 'kconfig' to check that NPTY is non-0
+    2. For at least one user, copying the /usr/lib/X11/xterm*.tic files
+       to /usr/lib/terminfo/x/xterm(s) worked...
+    3. One final possible solution is to start 'xterm' from 'sh'.
+
+========================================================================
+E.05)  'ps' and 'pstat' only seem to work for root. If anyone else tries
+       these commands, they get a "no mem" error message. What's wrong?
+-------------------------------------------------------------------------
+
+Both these commands require read access to /dev/kmem, which is not allowed
+for regular users. Thus, the programs require that they be suid or sgid to
+the user or group that can read /dev/kmem. See if this is true and fix if
+not.
+
+//////////////////////  END OF PART 4 OF 4  \\\\\\\\\\\\\\\\\\\\\\
+
+=====================================
+**** Author's/Editor's Signature ****
+-------------------------------------
+--
+#include <std/disclaimer.h>
+  Jim Jagielski
+  NASA/GSFC

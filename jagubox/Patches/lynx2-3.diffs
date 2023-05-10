@@ -1,0 +1,109 @@
+*** /dev/null	Wed Jun  1 09:26:38 1994
+--- AUX.README	Wed Jun  1 09:31:44 1994
+***************
+*** 0 ****
+--- 1,29 ----
++ This is a short README file for lynx 2.3 and A/UX... To compile, you need
++ 'gcc'.
++ 
++ Hopefully, you have applied this "patch" in the same directory as the original
++ sources for Lynx 2.3. If so, then Makefile and src/LYBookmark.c will have been
++ adjusted to compile for A/UX. Also, patch should have created this file,
++ AUX.README and the aux.Makefile file.
++ 
++ Before you can compile lynx, you will need to:
++ 
++     $ mkdir WWW/Library/aux
++     $ mv aux.Makefile WWW/Library/aux/Makefile
++ 
++ To correctly place the WWW Makefile for A/UX.
++ 
++ At this point, you should be able to:
++ 
++     $ make aux3
++ 
++ for all to proceed.
++ 
++ Enjoy!
++ 
++ --
++ #include <std/disclaimer.h>
++     Jim Jagielski               |  "It's the end, the end of the 70's,
++     jim@jagubox.gsfc.nasa.gov   |   it's the end, the end of the century."
++     NASA/GSFC, Code 734.4       |                   The Ramones
++     Greenbelt, MD 20771         |
+*** /dev/null	Wed Jun  1 09:26:38 1994
+--- aux.Makefile	Wed Jun  1 09:32:29 1994
+***************
+*** 0 ****
+--- 1,30 ----
++ #  Make WWW under unix for a.n.other unix system (bsd)
++ #   Use this as a template
++ 
++ # For W3 distribution, machine type for subdirectories
++ WWW_MACH = aux
++ 
++ # The ASIS repository's name for the machine we are on
++ ASIS_MACH = generic/aux
++ 
++ 
++ CFLAGS =  -DDEBUG -O2
++ LFLAGS = -lbsd
++ CC = gcc
++ 
++ # Directory for installed binary:
++ BINDIR = /usr2/bin
++ 
++ # Where is the W3 object library to be installed (not normally done)?
++ LIBDIR = $(WWW)/Library/Implementation/$(WWW_MACH)
++ 
++ #_________________ OK if normal W3 distribution
++ # Where is the WWW source root?
++ WWW = ../..
++ 
++ #  Where should temporary (object) files go?
++ WTMP = ../..
++ 
++ 
++ include $(WWW)/Library/Implementation/CommonMakefile
++ 
+*** OMakefile	Tue May 31 23:14:46 1994
+--- Makefile	Tue May 31 23:13:22 1994
+***************
+*** 111,116 ****
+--- 111,126 ----
+  		LIBS="-lcurses -ltermcap $(WAISLIB)" \
+  		WWWLIB="../WWW/Library/unix/libwww.a"
+  
++ #
++ # A/UX 3.1
++ #
++ aux3:  
++ 	@echo "You must first compile the WWW library in WWW/Library"
++ 	cd WWW/Library/aux; make
++ 	cd src; make all CC="gcc" MCFLAGS="-O2 -DFANCY_CURSES -DUNIX -DAUX3 \
++ 		-I../$(WWWINC)" LIBS="-lbsd -lcurses -ltermcap $(WAISLIB)" \
++ 		WWWLIB="../WWW/Library/aux/libwww.a"
++ 
+  # Tested on C3 series under ConvexOS 10.1, CC V5.0;
+  # Should work on other C-series
+  convex:
+*** src/OLYBookmark.c	Tue May 31 23:14:25 1994
+--- src/LYBookmark.c	Tue May 31 23:13:51 1994
+***************
+*** 4,10 ****
+  #include "LYBookmark.h"
+  #include "LYGlobalDefs.h"
+  
+! #if defined(VMS) || defined(SCO)
+  #include <time.h>
+  #else /* UNIX */
+  #include <sys/time.h>
+--- 4,10 ----
+  #include "LYBookmark.h"
+  #include "LYGlobalDefs.h"
+  
+! #if defined(VMS) || defined(SCO) || defined(AUX3)
+  #include <time.h>
+  #else /* UNIX */
+  #include <sys/time.h>

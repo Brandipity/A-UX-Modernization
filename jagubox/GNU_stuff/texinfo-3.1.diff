@@ -1,0 +1,59 @@
+Jim, here is a patch for texinfo-3.1 for A/UX. The only problem with the
+autoconfig stuff was that in the makeinfo directory, makeinfo wouldn't
+link because it stated that clear was defined in makeinfo.o and lc_s. I
+edited the makeinfo.c file to change references to clear to gclear and all
+seems to work fine.
+
+I only tried this with the gcc 2.4.5 compiler.
+
+Phillip P. Porch <root@theporch.raider.net> (PP1573)
+
+--0-13398-741216397:#2013
+Content-Type: APPLICATION/octet-stream; name="/aux.diff"
+Content-ID: <Pine.3.07.9306271637.B2013@theporch.raider.net>
+Content-Description: 
+
+Phillip Porch <root@theporch.raider.net>
+This is the patch to texinfo-3.1 for aux
+Please change into the makeinfo directory and
+patch -p0 < thisfile
+*** makeinfo.c.orig	Sun Jun 27 16:20:19 1993
+--- makeinfo.c	Sun Jun 27 16:04:49 1993
+***************
+*** 5171,5177 ****
+  }
+  
+  /* Remove NAME from the list of `set' defines. */
+! clear (name)
+       char *name;
+  {
+    register DEFINE *temp, *last;
+--- 5171,5177 ----
+  }
+  
+  /* Remove NAME from the list of `set' defines. */
+! gclear (name)
+       char *name;
+  {
+    register DEFINE *temp, *last;
+***************
+*** 5354,5360 ****
+  	  break;
+  
+  	case CLEAR:
+! 	  clear (name);
+  	  break;
+  
+  	case IFSET:
+--- 5354,5360 ----
+  	  break;
+  
+  	case CLEAR:
+! 	  gclear (name);
+  	  break;
+  
+  	case IFSET:
+
+--0-13398-741216397:#2013--
+
+

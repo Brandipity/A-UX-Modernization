@@ -1,0 +1,237 @@
+#
+# @(#)disktab jmj/1.00 (version number ain't gonna get updated :) )
+#
+# Copyright (c) 1983,1986 Regents of the University of California.
+# All rights reserved.  The Berkeley software License Agreement
+# specifies the terms and conditions for redistribution.
+#
+#	@(#)disktab	4.11 (Berkeley) 5/31/86
+#
+# Disk geometry and partition layout tables. 
+# Key:
+#	ty	type of disk
+#	ns	#sectors/track
+#	nt	#tracks/cylinder
+#	nc	#cylinders/disk
+#
+# Entries may also be used for other compatible drives
+# with the same geometry.
+
+#
+# HD 160 SC (CDC Wren V 5.25" HH)
+#
+WV190|wv190|HD160SC|Hammer188:\
+	:ty=winchester:ns#45:nt#5:nc#1544:
+#
+# HD 160 SC ("Falcon" 3.5" drive)
+#
+HD160SChh|Falcon160|Falcon:\
+	:ty=winchester:ns#39:nt#8:nc#1058:
+#
+# HD 80 SC (80 MB Quantum Q280)
+#
+Q280|q280|HD80SC:\
+	:ty=winchester:ns#32:nt#6:nc#823:
+#
+# HD 40 SC (Quantum Q250)
+#
+Q250|q250|HD40SC:\
+	:ty=winchester:ns#32:nt#4:nc#823:
+#
+# HD 20 SC (Seagate ST225N)
+#
+ST225N|st225n|HD20SC:\
+	:ty=winchester:ns#17:nt#4:nc#613:
+#
+# MicroNet SBX330 Hammer 300FMF, CDC Wrenrunner
+#
+MN330|mn330|SBX330|Hammer300FMF|WrenRunner:\
+	:ty=winchester:ns#46:nt#9:nc#1409:
+#
+# MicroNet SBX644NP
+#
+MN644|mn644|SBX644:\
+	:ty=winchester:ns#64:nt#15:nc#1356:
+#
+# 1.44MB floppy disk (Super-drive)
+#
+FDHD|1440k|1440K|1.4MB|1.44MB|1.4mb|1.44mb:\
+	:ty=floppy:ns#18:nt#2:nc#80:
+
+#
+# Fujitsu 90MB, 136MB, 182 MB (M2612S,13S,14S)
+#
+F90|F90|F2612SA|M2612SA:\
+	:ty=winchester:ns#34:nt#4:nc#1334:
+
+F136|F136|F2613SA|M2613SA:\
+	:ty=winchester:ns#34:nt#6:nc#1334:
+
+F182|F180|F2614SA|M2614SA:\
+	:ty=winchester:ns#34:nt#8:nc#1334:
+
+#
+# 800k floppy disk
+#
+800k|800K:\
+	:ty=floppy:ns#10:nt#2:nc#80:
+#
+# 720k floppy disk
+#
+720k|720K:\
+	:ty=floppy:ns#9:nt#2:nc#80:
+#
+# 400k floppy disk
+#
+400k|400K:\
+	:ty=winchester:ns#10:nt#16:nc#80:
+#
+# Generic Disk Entry
+#
+Other|other|Generic:\
+	:ty=winchester:ns#32:nt#16:
+#
+# Quantum 105,Hammer 100is
+#
+Q105|QLP105S|Hammer100is|Hammer100:\
+	:ty=winchester:ns#35:nt#6:nc#1019:
+#
+# CDC Wren IIIHH,Hammer 91i
+#
+CDCW3HH|CDCWrenIIIHH|Hammer91i|Hammer91:\
+	:ty=winchester:ns#36:nt#5:nc#1022:
+#
+# Quantum Pro170S,Hammer 170is
+#
+Q170|Qpro170s|Hammer170is|Hammer170:\
+	:ty=winchester:ns#48:nt#7:nc#1123:
+#
+# Seagate ST2383NM, Hammer 300 (Seagate)
+#
+ST2383NM|ST2383|Hammer300s:\
+	:ty=winchester:ns#75:nt#7:nc#1261:
+#
+# CDC Wren IV, Hammer 300 (CDC)
+#
+CDCW4|Wren4|Hammer300c:\
+	:ty=winchester:ns#47:nt#9:nc#1409:
+#
+# CDC Wren V, Hammer 600
+#
+CDCW5|Wren5|Hammer600:\
+	:ty=winchester:ns#52:nt#15:nc#1546:
+#
+# Seagate 41200NM, Hammer 1000
+#
+S41200NM|Hammer1000:\
+	:ty=winchester:ns#71:nt#15:nc#1931:
+#
+# Sony SMO-E501, Hammer 600S
+#
+SMOE501|SonyE501|Hammer600S:\
+	:ty=winchester:ns#46:nt#9:nc#1391:
+#
+# SyQuest disk
+#
+Syquest|syquest|S45:\
+	:ty=winchester:ns#34:nt#2:nc#1275:
+#
+# Wren Runner 4385 (330MB)
+#
+WR385|Runner|ST4385:\
+	:ty=winchester:ns#56:nt#15:nc#791:
+#
+# Maxtor LXT-340S
+#
+Max340:\
+	:ty=winchester:ns#42:nt#7:nc#1546:
+#
+# Conner CP3500-540MB-3.5
+#
+CP3500|cp3500|Conner520:\
+	:ty=winchester:ns#49:nt#12:nc#1807:
+#
+# Fujitsu 2624SA/FA (520MB)
+#
+F2624|Fuj-2624|2624FA:\
+	:ty=winchester:ns#63:nt#11:nc#1429:rm#4400:
+#
+# Seagate/Wren Elite-1
+#
+Elite-1:\
+	:ty=winchester:ns#75:nt#17:nc#2048:rm#5400:rg#0:
+#
+# Quantum PD425S
+#
+QPD425S:\
+	:ty=winchester:ns#78:nt#9:nc#1520:
+#
+# Sony Magneto Optical drive Model NWP-559:
+#
+MODD:\
+	:ty=winchester:ns#31:nt#1:nc#18751:
+#
+# HP C2247 (3.5" 1GB drive)
+#
+HPC2247:\
+	:ty=winchester:ns#77:nt#13:nc#2051:rm#5400:
+#
+# Maxtor MXT-540S
+#
+MXT540|MXT-540|MXT-540S:\
+	:ty=winchester:ns#68:nt#7:nc#2234:rm#6300:
+#
+# Quantum ProDrive LP240S
+#
+LP240S|LP240|ProDriveLPS240|Quantum240|HD230SC:\
+	:ty=winchester:ns#65:nt#4:nc#1818:rm#4306:
+#
+# Seagate ST1480N
+#
+ST1480N|ST1480|Seagate400|HD400SC:\
+	:ty=winchester:ns#62:nt#9:nc#1476:rm#4412:
+#
+# Seagate ST3600N
+#
+ST3600N|ST3600|Seagate500|HD500SC:\
+	:ty=winchester:ns#92:nt#7:nc#1872:rm#4535:
+#
+# Seagate ST11200N
+#
+ST11200N|ST11200|Seagate1000|HD1000SC:\
+	:ty=winchester:ns#81:nt#15:nc#1872:rm#5411:
+#
+# Maxtor LXT-213S
+#
+LXT-213|LXT-213S:\
+	:ty=winchester:ns#42:nt#8:nc#1315:
+#
+# DEC DSP5200 2GB 5.25" FH
+#
+DECDSP5200:\
+	:ty=winchester:ns#71:nt#21:nc#2620:rm#3600:
+#
+# Seagate ST3390N
+#
+ST3390N|HD330SC:\
+	:ty=winchester:ns#82:nt#3:nc#2676:rm#4500:
+#
+# Seagate ST11950N/Barracuda 1 drive
+#
+ST11950N|Barracuda1:\
+	:ty=winchester:ns#81:nt#15:nc#2707:rm#7200:
+#
+# Quantum ProDrive LP270S
+#
+LP270S|LP270|ProDriveLPS270|Quantum270|QUANTUM LPS270S|HD250SC:\
+	:ty=winchester:ns#95:nt#2:nc#2740:rm#4500:
+#
+# Quantum ProDrive LP540S
+#
+LP540S|LP540|ProDriveLPS540|Quantum540|QUANTUM LPS540S|HD500SC:\
+	:ty=winchester:ns#95:nt#4:nc#2740:rm#4500:
+#
+# Seagate ST12550N
+#
+ST12550N|ST12550|Seagate2000|SEAGATE ST12550N|HD2000SC:\
+	:ty=winchester:ns#98:nt#19:nc#2707:rm#7200:

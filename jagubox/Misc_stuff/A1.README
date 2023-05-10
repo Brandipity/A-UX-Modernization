@@ -1,0 +1,51 @@
+This file contains the most recent listing of available files in Misc_stuff
+as well as a short description of each. Most are GNUzipped (.gz) tar files.
+You will need the '../GNU_stuff/gzip_*.bin.tar.Z' file (which contains the
+GNUzip utility 'gzip|gunzip') to decompress these.
+
+Diff-files can be applied by using 'patch' which is available precompiled
+as '../Utilities/patch.bin.tar.gz'
+
+A1.README::
+	A text file description of all files in this directory.
+
+CSFont.sit.hqx::
+	This is a BinHexed stuffit file of the CSFont font. Basically, it's
+	a hacked up version of Courier that looks quite a bit better than
+	either Courier or Monaco under A/UX's CommandShell.
+
+Dart.sit.hqx::
+	DART v1.5.3... A DiskCopy "replacement" that works well under A/UX...
+	Allows you to create actual floppies from DiskCopy image files.
+
+FMbackup.tar.gz::
+	A nice little Extension package, from Ron Flax (ron@afsg.apple.com),
+	that creates backups of required Desktop file. Prevents the need
+	for a Desktop rebuild when the MacOS-environment crashes under
+	A/UX.
+
+FixErrorPage.sea.hqx::
+	A nice little MacOS application that sets the Mode Select Error
+	Page of SCSI disks to A/UX-required values. Needed for SyQuests
+	and writable Opticals.
+
+HFSmount.tar.gz::
+	Application written by Tony Cooper that searches all your online SCSI
+	disks and attempts to mount _all_ your HFS partitions. It _may_
+	work but don't count on it :)
+
+Notify.tar.gz::
+	A very elegant Mac-A/UX hybrid application that uses the
+	Notification Manager to tell you if you've received mail.
+	By Paul Davidson @ UK Mac. Dev. Tech Support. Recommended!
+--
+===========================================================================
+#include <std/disclaimer.h>
+                                 =:^)
+           Jim Jagielski                    NASA/GSFC, Code 734.4
+     jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+        Voice: 301-286-5964                   FAX: 301-286-1719
+
+"If we increase the size of the penguin until it is the same height as a man
+ and then compare the relative brain size, we now find that the penguin's
+ brain is still smaller. But, and this is the point, it is larger than it WAS!"

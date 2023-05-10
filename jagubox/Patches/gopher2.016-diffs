@@ -1,0 +1,151 @@
+*** ./gopherd/gopherd.conf	Wed May 25 16:58:12 1994
+--- /usr2/src/gopher2.016/./gopherd/gopherd.conf	Sat Jun 18 11:37:47 1994
+***************
+*** 56,63
+  # extension.
+  #
+  
+! decoder: .Z /usr/ucb/zcat
+! decoder: .gz /usr/gnu/bin/zcat
+  #decoder: .adpcm /usr/openwin/bin/adpcm_dec
+  #decoder: .z /usr/gnu/bin/zcat
+  
+
+--- 56,63 -----
+  # extension.
+  #
+  
+! #decoder: .Z /usr/ucb/zcat
+! #decoder: .gz /usr/gnu/bin/zcat
+  #decoder: .adpcm /usr/openwin/bin/adpcm_dec
+  #decoder: .z /usr/gnu/bin/zcat
+  
+***************
+*** 119,124
+  
+  viewext: .tar.Z 9 9 application/x-tarZ
+  viewext: .tar 9 9 application/x-tar
+  viewext: .exe 5 9 application/x-pcexe
+  viewext: .bck 9 9 application/x-bck
+  viewext: .sav 9 9 application/x-saveset
+
+--- 119,127 -----
+  
+  viewext: .tar.Z 9 9 application/x-tarZ
+  viewext: .tar 9 9 application/x-tar
++ viewext: .tar.gz 9 9 application/x-targz
++ viewext: .gz 9 9 application/x-gz
++ viewext: .Z 9 9 application/x-Z
+  viewext: .exe 5 9 application/x-pcexe
+  viewext: .bck 9 9 application/x-bck
+  viewext: .sav 9 9 application/x-saveset
+*** ./Makefile.config	Sun Jun 12 02:03:22 1994
+--- /usr2/src/gopher2.016/./Makefile.config	Sat Jun 18 11:37:47 1994
+***************
+*** 98,104
+  # note that if you use gcc, you'll also need -lintl in SCOLIBS
+  #
+  
+! CC = cc
+  
+  #------------------------------------------------
+  # Optimization level.
+
+--- 98,104 -----
+  # note that if you use gcc, you'll also need -lintl in SCOLIBS
+  #
+  
+! CC = gcc
+  
+  #------------------------------------------------
+  # Optimization level.
+***************
+*** 105,111
+  #
+  
+  #OPT=-g
+! OPT=-O
+  
+  #------------------------------------------------
+  # System Selection,  note that you won't have to edit
+
+--- 105,111 -----
+  #
+  
+  #OPT=-g
+! OPT=-O2
+  
+  #------------------------------------------------
+  # System Selection,  note that you won't have to edit
+***************
+*** 156,162
+  # 
+  # Comment this to make a slimmer executable...
+  
+! DEBUGGING = -DDEBUGGING
+  
+  #-----------------------------------------------------------------
+  # Optional server features.
+
+--- 156,162 -----
+  # 
+  # Comment this to make a slimmer executable...
+  
+! DEBUGGING = #-DDEBUGGING
+  
+  #-----------------------------------------------------------------
+  # Optional server features.
+***************
+*** 195,201
+  #                    by the 'ps' command (only works on bsdish systems...)
+  #
+  
+! SERVEROPTS	= -DSETPROCTITLE -DCAPFILES #-DUMNDES -DBIO -DDL -DLOADRESTRICT
+  DLPATH		= /home/mudhoney/lindner/src/describe
+  #DLOBJS		= $(DLPATH)/getdesc.o $(DLPATH)/enddesc.o
+  
+
+--- 195,201 -----
+  #                    by the 'ps' command (only works on bsdish systems...)
+  #
+  
+! SERVEROPTS	= -DCAPFILES #-DUMNDES -DBIO -DDL -DLOADRESTRICT
+  DLPATH		= /home/mudhoney/lindner/src/describe
+  #DLOBJS		= $(DLPATH)/getdesc.o $(DLPATH)/enddesc.o
+  
+***************
+*** 230,236
+  #PTXLIBS        = -lseq -lsocket -linet -lnsl
+  #SCOLIBS        = -lsocket -lintl
+  #SVR4LIBS	= -lsocket -lnsl
+! #AUXLIBS	= -lmalloc
+  #INTERACTIVELIBS= -linet
+  #DGUXLIBS       = -lnsl
+  
+
+--- 230,236 -----
+  #PTXLIBS        = -lseq -lsocket -linet -lnsl
+  #SCOLIBS        = -lsocket -lintl
+  #SVR4LIBS	= -lsocket -lnsl
+! AUXLIBS	= -lbsd -s
+  #INTERACTIVELIBS= -linet
+  #DGUXLIBS       = -lnsl
+  
+***************
+*** 265,271
+  # overridden on the command line.
+  # 
+  
+! SERVERDATA	= /home/mudhoney/gopher-data
+  SERVERPORT	= 70
+  
+  
+
+--- 265,271 -----
+  # overridden on the command line.
+  # 
+  
+! SERVERDATA	= /usr/spool/ftp/pub
+  SERVERPORT	= 70
+  
+  

@@ -1,0 +1,222 @@
+This directory contains links to all the newest and latest files available
+here on jagubox. You will always find the FAQ for A/UX here.
+
+FAQ.aux::
+	The Frequently Asked Questions list for A/UX.
+
+AUXFAQ.pkg.sit::
+	The A/UX FAQ in Newton package format.
+
+AUX_Installation_Boot_Disk.img:
+AUX_Installation_Boot_Disk.img.bin:
+	The A/UX 3.0.1 Installation boot disk images. These are
+	in Apple's DiskCopy format. Use these if you have the
+	A/UX Installation CD but not the floppies!
+
+BNET-somax.tar.gz::
+	A short shell script that uses 'adb' to change the value
+	of SOMAXCONN, the size of listen()s backlog queue limit, from
+	5 to 32.
+
+GNUman.tar.gz::
+	Port of GNUman for A/UX... I don't use it, but you may find it
+	useful.
+
+NEWtc3.34.tar.gz::
+	A replacement for A/UX 3.x.x's 'tc' tape device driver. Fixes some
+	bugs, adds some capabilities and support for other tape drives
+	(such as WangDAT, WangTEK, HP and TEACs). Included is a replacement
+	for 'mt' to support new 'tc' as well as 'tbb' to speed up backups.
+	Version 3.34.
+
+README.gcc-2.6.3::
+	Short little README file for gcc 2.6.3 for A/UX.
+
+README.inetd::
+	Short little README file for the latest replacement version
+	of inetd for A/UX.
+
+Tune-Up2.0.hqx::
+	DiskCopy image of the AWS-Tune-Up-2.0 disk. This free Tune-Up
+	upgrades A/UX 3.1 to 3.1.1. RECOMMENDED!!!
+
+X11R6-AUX-shlib-patches.tar.gz::
+	Provided by Martin Friedrich, here are the patches for X11R6
+	shared libs for A/UX. If you use X at _all_, get this!!
+
+apache_1.0.0.aux.tar.gz::
+	Port of Apache 1.0.0 for A/UX. Complete with binary and sources!
+
+bash-aux.bin.tar.gz::
+	A tarchive that contains not only the diffs required for bash-1.14.2
+	(and later?) to compile under A/UX, but also a precompiled version
+	that was created under A/UX 3.1.1.
+
+berk-make.tar.gz::
+	Port of the Berkeley make package as well as the additional
+	'tmac' macros needed by it. Provided by Phillip P. Porch
+	(root@theporch.com).
+
+berk-man.tar.gz::
+	The Berkeley 'mandoc' package. Works very well with the above
+	Berkeley 'make' package. Ported and provided by Phillip Porch
+	(root@theporch.theporch.com)
+
+bind-4.9.5-aux.tar.gz::
+	Complete source and binary package for BIND/Named-4.9.5
+	for A/UX 3.1.1
+
+emacs19.28.aux.tar.gz::
+	Port of emacs 19.28 for A/UX 3.1(.1).
+
+gcc-2.6.3v2.bin.tar.gz::
+	Complete binary package of gcc 2.6.3 for A/UX. It requires that
+	it be installed in /usr/local/Gnu for it to work. Based on the
+	work done by John Coolidge.
+
+gcc-2.6.3.aux.diffs.tar.gz::
+	Diffs required to get gcc 2.6.3 to compile, run and work under
+	A/UX. You need gcc to compile gcc, so snag one of the binaries
+	if you want to recompile it.
+
+gcc-2.7.2.bin.tar.gz::
+	Complete binary package of gcc 2.7.2 for A/UX. It requires that
+	it be installed in /usr/local/Gnu for it to work. Based on the
+	work done by John Coolidge.
+
+gcc-2.7.2.aux.diffs.gz::
+	Diffs required to get gcc 2.7.2 to compile, run and work under
+	A/UX. You need gcc to compile gcc, so snag one of the binaries
+	if you want to recompile it.
+
+gmake-3.74.tar.gz::
+	Complete source and executable binary for GNUmake-3.74 for
+	A/UX. Many packages require/expect either GNUmake or Berkmake.
+
+httpd-1.4.1-aux.bin.tar.gz::
+	Port of the latest WWW server, httpd v1.4.1, for A/UX. Precompiled
+	and with all needed files to run it "right away" on your system.
+	Be sure to read the included AUX_README file though...
+
+inetd-1.9.tar.gz::
+	BSD/Reno version of 'inetd' ported for A/UX 3.x.x. Includes some
+	very nice features such as running daemons as any user, passing
+	arguments to daemons and rereading of /etc/servers upon receiving
+	a SIGHUP signal. Newer version will also try to read inetd.conf if
+	servers doesn't exist and provides host access control a.la. tcpd
+	(tcp_wrappers). Ported|maintained by Jim Jagielski.
+
+libUTIL-2.1.tar.gz::
+	Doing some porting but having trouble because you lack some
+	needed functions (like memmove(), strstr() or strerror())? Worry
+	no more! libUTIL.a is a collection of these "missing" functions,
+	available in one easy to use archive. Included are two additional
+	header (.h files), the archive itself, a README file, and various
+	man-pages.
+	(NOTE: libUTIL.a is included with the gcc-2.7.2 package also)
+
+libdb-1.85.tar.gz::
+	Port of the latest version, 1.85, of the Berkeley DB database
+	package. Fixes some bugs (and improves performance) over
+	the one distributed with A/UX 3.1.x.
+
+libgmalloc.a.gz::
+	Ported GNUmalloc library for A/UX.
+
+nethack-3.1.3-aux.tar.gz::
+	Ahhh... the port of NetHack (very nice!) for A/UX. Includes a nice
+	README that you really should read :). Thanks to Rich Ewing
+	(ewing@vhp.vanderbilt.edu) for providing this.
+
+netlist.tar.gz::
+	A neat little utility from John Dundas (dundas@salt.jpl.nasa.gov)
+	that is useful for looking at AppleTalk networks. Check it out!
+
+perl5.00401-aux.tar.gz::
+	Complete binary package of perl 5.00401 for A/UX 3.1(.1). Includes
+	binaries, libraries and man-pages. This compile of Perl5 contains
+	ALL Perl extensions.
+
+pine*:
+	The Pine suite :)
+
+popper-aux-shadow.tar.gz::
+	The 'popper' package changed to support shadow-passwords under
+	A/UX.
+
+poppassd.tar.gz::
+	Allows you to change your password from Eudora or other POP3
+	clients. Ported by Fred Condo (fred@lightside.net).
+
+port-tools.tar.gz::
+	A collection of useful porting tools for A/UX.
+
+portmap-aux.tar.gz::
+	Replacement of /etc/portmap for A/UX 3.1(.1). Secure version
+	uses tcp_wrapper access control. Port of Wietse Venema
+	(wietse@wzv.win.tue.nl) portmapper 4.
+
+procmail-aux.tar.gz::
+	Procmail 3.10 compiled for A/UX. Full source.
+
+scsiprobe.tar.gz::
+	Neat little program that prints out useful info (like vendor,
+	product, etc...)about your attached SCSI devices.
+
+shadow-aux-1.4.tar.gz::
+	Port of the shadow-password suite for A/UX. Using these programs,
+	A/UX can now use shadow passwords for increased security!!
+	Requires gcc and libUTIL to compile. Recommended!
+
+ssh-1.2.17-aux.tar.gz::
+	Port of ssh-1.2.17 for A/UX. ssh is a secure replacement
+	for the rsh/rlogin/rcp family (and more!)
+
+sudo.tar.gz::
+	Source for the famous 'sudo' utility that allows other users to
+	perform 'root' functions while limiting what they can do.
+
+syslogd-1.2.tar.gz::
+	Replacement of syslogd (and syslog.h) for A/UX. Needed since
+	A/UX's syslogd doesn't handle 'news' facility very well :)
+	Based on BSD/Reno version - ported by Jim Jagielski.
+
+tcp_wrappers_7.4-aux.tar.gz::
+	Port of Wietse Venema (wietse@wzv.win.tue.nl) tcp_wrappers for
+	A/UX 3.1(.1)
+
+telnet-aux.tar.gz::
+	Replacement versions (and source) for telnet and in.telnetd for
+	A/UX. Original ports by John Coolidge, updated by Jim Jagielski.
+
+traceroute-aux.tar.gz::
+	Complete 'traceroute' package for A/UX 3.1(.1). Includes the
+	updated 'bnet' driver to support traceroute, as well as _2_
+	versions of 'traceroute', pre-compiled to run under A/UX.
+
+uwrap.c::
+	A wrapper for /etc/init that protects it (and all other processes)
+	from SIGURG signals... A MUST GET !!!
+
+vif-1.3.tar.gz::
+	Just the ticket for multihomed/Virtual Web Servers: the Virtual
+	Interface kernel module for A/UX. With this module, you can
+	add virtual interfaces to your real Ethernet interface and have
+	your A/UX box answer to multiple IP addresses.
+
+wu-ftpd-2.4.aux.tar.gz::
+	Port of the latest version (2.4) of the wuarchive ftp-server daemon
+	(wu-ftpd) for A/UX. Lots of neat extras: recommended! Requires 'gcc'
+	to compile.
+
+--
+===========================================================================
+#include <std/disclaimer.h>
+                                 =:^)
+           Jim Jagielski                    NASA/GSFC, Code 734.4
+     jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+        Voice: 301-286-5964                   FAX: 301-286-1719
+
+"If we increase the size of the penguin until it is the same height as a man
+ and then compare the relative brain size, we now find that the penguin's
+ brain is still smaller. But, and this is the point, it is larger than it WAS!"

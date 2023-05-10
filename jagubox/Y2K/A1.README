@@ -1,0 +1,15 @@
+This directory contains links to various files, programs and utilities
+which patch some Y2K issues with A/UX 3.1.1. 
+
+
+--
+===========================================================================
+#include <std/disclaimer.h>
+                                 =:^)
+           Jim Jagielski                    NASA/GSFC, Code 734.4
+     jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+        Voice: 301-286-5964                   FAX: 301-286-1719
+
+"If we increase the size of the penguin until it is the same height as a man
+ and then compare the relative brain size, we now find that the penguin's
+ brain is still smaller. But, and this is the point, it is larger than it WAS!"

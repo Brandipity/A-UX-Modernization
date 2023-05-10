@@ -1,0 +1,85 @@
+
+A/UX SCSI Manager Extension
+by kelly king and andrew kass
+
+What is it?
+
+A/UX does not support the Macintosh SCSI Manager for Mac applications or 
+drivers, for many reasons, primarily security.  It would be unwise to allow 
+arbitrary user-level processes, of which the Mac environment is one under A/UX,
+to read and write to SCSI devices at the block level, or format the active root
+filesystem's hard drive.
+
+This extension implements the Macintosh SCSI Manager under A/UX 3.0.x.  This 
+allows you to run most Macintosh applications and drivers that talk to the 
+Macintosh SCSI manager under A/UX.
+
+This software was originally written to support audio CD access under A/UX, 
+and this is still its most useful feature.  With this extension installed, 
+you can use the standard Apple CD-ROM driver, version 4.0.x, and any audio 
+software, such as CD Remote, the CD Remote Init and the Audio access and 
+foreign file access extensions.
+
+Installation…
+
+Simply drop it onto any A/UX System Folders, shared or private, that you wish 
+to use it with.  Be sure not to rename the extension, or make sure that it 
+retains a name that causes it to load before any extensions that might use 
+the SCSI manager.
+
+Then be sure to change the permissions or ownership of the “/dev/scsi/#” 
+nodes that correspond to the scsi devices you wish to allow access to.  For 
+example, if you have a SCSI CD-ROM drive at SCSI id 3, and you want everyone 
+to have access to this device from Mac applications and drivers, you would 
+type this command at the UNIX prompt:
+$ chmod oug+rw /dev/scsi/3
+This allows everyone access to the device at scsi id 3.  Note that this 
+assumes that you have not configured the devscsi module out of the kernel, 
+since A/UX 3.0 ships with it already installed.
+
+Now simply logout of the Mac environment, and log back in.  The SCSI Manager 
+will show it's icon during startup.  If it is unable to install for some 
+reason (usually permissions or low memory conditions) it will display 
+its icon with an “X” through it.  This extension takes up about 36k in the 
+system heap.
+
+How does it work?
+
+The Macintosh SCSI manager is not currently asynchronous, and in fact 
+“babysits” the scsi communication through all of its phases.  One cannot own 
+a system resource, like the SCSI bus, from a user-level process under UNIX, 
+without causing headaches for the main UNIX kernel.  In particular, the code 
+that is issuing a SCSI transaction could cause a page fault in between phases, 
+which would be problematic, to say the least.
+
+This software is essentially a SCSI manager state emulator.  It builds a 
+single atomic SCSI request, based on the SCSI calls that the caller makes, 
+and issues that call during the completion or data phase, depending on 
+whether data is being transferred.
+
+Caveats…
+
+This software is provided “as is” for non-commercial use.  It should not be 
+redistributed without this file, and it must not be sold or included in a 
+commercial product without written consent from the authors.  The authors do 
+not take any responsibility, whatsoever, for any data loss or compromise of 
+system integrity that should result in the use, or misuse, of this software.  
+The authors do not offer any support for this product.
+
+Version history:
+
+1.0b4 ak
+Upgraded to handle complex TIBs and preallocate buffer memory used in data
+transfers. Now supports Double Speed, Photo CD, Audio CD, data CD and foreign
+file access.
+
+1.0b3 ak
+Internal release only. Known bugs.
+
+1.0b2 ak
+Upgraded to support audio CDs with 4.0.x CD-ROM drivers. Unfortunately, I broke
+the data CD support in the process.
+
+1.0b1 kk
+Initial release, only supported very simple TIBs and 3.2 CD drivers.
+

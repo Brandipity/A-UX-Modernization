@@ -1,0 +1,1345 @@
+*** ./gdb/config/m68k/aux.mh.orig	Fri Feb 11 11:09:39 1994
+--- ./gdb/config/m68k/aux.mh	Fri Feb 11 11:13:07 1994
+***************
+*** 0 ****
+--- 1,8 ----
++ # Host: Apple Macintosh running A/UX version 3.0.
++ XM_FILE= xm-aux.h
++ NAT_FILE= nm-aux.h
++ NATDEPFILES= exec.o inftarg.o fork-child.o corelow.o
++ XDEPFILES= aux-xdep.o exec.o inftarg.o fork-child.o
++ REGEX= regex.o
++ REGEX1= regex.o
++ XM_CLIBS= -static # -lposix # -lposix seems to cause trouble with ctrl-z
+*** ./gdb/config/m68k/aux.mt.orig	Fri Feb 11 11:09:39 1994
+--- ./gdb/config/m68k/aux.mt	Fri Feb 11 11:09:39 1994
+***************
+*** 0 ****
+--- 1,3 ----
++ # Target: Apple Macintosh running A/UX version 3.0.
++ TDEPFILES= m68k-pinsn.o exec.o m68k-tdep.o remote-aux.o
++ TM_FILE= tm-aux.h
+*** ./gdb/config/m68k/tm-aux.h.orig	Fri Feb 11 11:09:39 1994
+--- ./gdb/config/m68k/tm-aux.h	Fri Feb 11 11:43:09 1994
+***************
+*** 0 ****
+--- 1,100 ----
++ /* Parameters for execution on Apple A/UX, for GDB, the GNU debugger.
++    Copyright (C) 1992 Thomas Eberhardt (thomas@mathematik.uni-Bremen.de)
++ 
++ This program is free software; you can redistribute it and/or modify
++ it under the terms of the GNU General Public License as published by
++ the Free Software Foundation; either version 2 of the License, or
++ (at your option) any later version.
++ 
++ This program is distributed in the hope that it will be useful,
++ but WITHOUT ANY WARRANTY; without even the implied warranty of
++ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ GNU General Public License for more details.
++ 
++ You should have received a copy of the GNU General Public License
++ along with this program; if not, write to the Free Software
++ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
++ 
++ /* Define HAVE_68881 if that is the case.  */
++ 
++ #define HAVE_68881
++ 
++ /* Define BPT_VECTOR if it is different than the default.
++    This is the vector number used by traps to indicate a breakpoint. */
++ 
++ #define BPT_VECTOR 0x1
++ 
++ /* Are we currently handling a signal */
++ 
++ #define IN_SIGTRAMP(pc, name) \
++  name && *name == '_' && !strcmp ("_sigcode", name)
++ 
++ /* If your kernel resets the pc after the trap happens you may need to
++    define this before including this file.  */
++ 
++ #define DECR_PC_AFTER_BREAK 0
++ 
++ /* Extract from an array REGBUF containing the (raw) register state
++    a function return value of type TYPE, and copy that, in virtual format,
++    into VALBUF.  This is assuming that floating point values are returned
++    as doubles in fp0.  */
++ 
++ #define EXTRACT_RETURN_VALUE(TYPE,REGBUF,VALBUF) \
++   { if (TYPE_CODE (TYPE) == TYPE_CODE_FLT) \
++       { \
++ 	REGISTER_CONVERT_TO_VIRTUAL (FP0_REGNUM, \
++ 				REGISTER_VIRTUAL_TYPE (FP0_REGNUM), \
++ 				&REGBUF[REGISTER_BYTE (FP0_REGNUM)], \
++ 				VALBUF); \
++       } \
++     else \
++       memcpy (VALBUF, REGBUF, TYPE_LENGTH (TYPE)); }
++ 
++ /* Write into appropriate registers a function return value
++    of type TYPE, given in virtual format.  Assumes floats are passed
++    in fp0.  */
++ 
++ #define STORE_RETURN_VALUE(TYPE,VALBUF) \
++   { if (TYPE_CODE (TYPE) == TYPE_CODE_FLT) \
++       { \
++ 	char raw_buf[REGISTER_RAW_SIZE (FP0_REGNUM)]; \
++ 	REGISTER_CONVERT_TO_RAW (REGISTER_VIRTUAL_TYPE (FP0_REGNUM), \
++ 				 FP0_REGNUM, VALBUF, raw_buf); \
++ 	write_register_bytes (FP0_REGNUM, \
++ 			      raw_buf, REGISTER_RAW_SIZE (FP0_REGNUM)); \
++       } \
++     else \
++       write_register_bytes (0, VALBUF, TYPE_LENGTH (TYPE)); }
++ 
++ /* Needed for child_xfer_memory in aux-xdep.c */
++ 
++ #define NEED_TEXT_START_END
++ 
++ /* We don't have this */
++ #define NO_PTRACE_H
++ 
++ #define JB_ELEMENT_SIZE 4
++ 
++ #define JB_D2 0
++ #define JB_D3 1
++ #define JB_D4 2
++ #define JB_D5 3
++ #define JB_D6 4
++ #define JB_D7 5
++ #define JB_PC 6
++ #define JB_A2 7
++ #define JB_A3 8
++ #define JB_A4 9
++ #define JB_A5 10
++ #define JB_A6 11
++ #define JB_A7 12
++ #define JB_SIGMASK 13
++ 
++ /* Figure out where the longjmp will land.  Slurp the args out of the stack.
++    We expect the first arg to be a pointer to the jmp_buf structure from which
++    we extract the pc (JB_PC) that we will land at.  The pc is copied into ADDR.
++    This routine returns true on success */
++ 
++ #define GET_LONGJMP_TARGET(ADDR) get_longjmp_target(ADDR)
++ 
++ #include "m68k/tm-m68k.h"
+*** ./gdb/config/m68k/xm-aux.h.orig	Fri Feb 11 11:09:39 1994
+--- ./gdb/config/m68k/xm-aux.h	Fri Feb 11 11:09:40 1994
+***************
+*** 0 ****
+--- 1,97 ----
++ /* Parameters for execution on Apple A/UX, for GDB, the GNU debugger.
++    Copyright (C) 1992 Thomas Eberhardt (thomas@mathematik.uni-Bremen.de)
++ 
++ This program is free software; you can redistribute it and/or modify
++ it under the terms of the GNU General Public License as published by
++ the Free Software Foundation; either version 2 of the License, or
++ (at your option) any later version.
++ 
++ This program is distributed in the hope that it will be useful,
++ but WITHOUT ANY WARRANTY; without even the implied warranty of
++ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ GNU General Public License for more details.
++ 
++ You should have received a copy of the GNU General Public License
++ along with this program; if not, write to the Free Software
++ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
++ 
++ #define USG
++ 
++ #define NEED_POSIX_SETPGID
++ 
++ #define NO_SYS_FILE
++ 
++ #define HOST_BYTE_ORDER BIG_ENDIAN
++ 
++ #define HAVE_TERMIO
++ 
++ #define HAVE_SIGSETMASK 1
++ 
++ #define SYS_SIGLIST_MISSING 1
++ 
++ extern char *strdup();
++ 
++ #define REGISTER_ADDR(u_ar0, regno)					\
++   (unsigned)								\
++   ((regno) < PS_REGNUM							\
++    ? &((int *)(u_ar0))[(regno) + R0]					\
++    : ((regno) == PS_REGNUM						\
++       ? &((int *)(u_ar0))[RPS]						\
++       : &((int *)(u_ar0))[PC]))
++ 
++ #define FP_REGISTER_ADDR(regno)						\
++   ((regno) < FPC_REGNUM							\
++    ? offsetof(struct user, u_fpdreg[(regno) - FP0_REGNUM])		\
++    : offsetof(struct user, u_fpsysreg[(regno) - FPC_REGNUM]))
++ 
++ /* Interface definitions for kernel debugger KDB.  */
++ 
++ /* Map machine fault codes into signal numbers.
++    First subtract 0, divide by 4, then index in a table.
++    Faults for which the entry in this table is 0
++    are not handled by KDB; the program's own trap handler
++    gets to handle then.  */
++ 
++ #define FAULT_CODE_ORIGIN 0
++ #define FAULT_CODE_UNITS 4
++ #define FAULT_TABLE    \
++ { 0, 0, 0, 0, SIGTRAP, 0, 0, 0, \
++   0, SIGTRAP, 0, 0, 0, 0, 0, SIGKILL, \
++   0, 0, 0, 0, 0, 0, 0, 0, \
++   SIGILL }
++ 
++ /* Start running with a stack stretching from BEG to END.
++    BEG and END should be symbols meaningful to the assembler.
++    This is used only for kdb.  */
++ 
++ #define INIT_STACK(beg, end)  \
++ { asm (".globl end");         \
++   asm ("movel #end, %sp");      \
++   asm ("movel #0,%a6"); }
++ 
++ /* Push the frame pointer register on the stack.  */
++ #define PUSH_FRAME_PTR        \
++   asm ("movel %a6,%sp@-");
++ 
++ /* Copy the top-of-stack to the frame pointer register.  */
++ #define POP_FRAME_PTR  \
++   asm ("movl %sp@,%a6");
++ 
++ /* After KDB is entered by a fault, push all registers
++    that GDB thinks about (all NUM_REGS of them),
++    so that they appear in order of ascending GDB register number.
++    The fault code will be on the stack beyond the last register.  */
++ 
++ #define PUSH_REGISTERS        \
++ { asm ("clrw @%sp-");	      \
++   asm ("pea %sp@(10)");	      \
++   asm ("movem #0xfffe,%sp@-"); }
++ 
++ /* Assuming the registers (including processor status) have been
++    pushed on the stack in order of ascending GDB register number,
++    restore them and return to the address in the saved PC register.  */
++ 
++ #define POP_REGISTERS          \
++ { asm ("subil #8,%sp@(28)");     \
++   asm ("movem %sp@,#0xffff"); \
++   asm ("rte"); }
+*** ./gdb/config/m68k/nm-aux.h.orig	Fri Feb 11 11:09:40 1994
+--- ./gdb/config/m68k/nm-aux.h	Fri Feb 11 11:09:40 1994
+***************
+*** 0 ****
+--- 1,23 ----
++ /* Parameters for native support on A/UX, for GDB, the GNU debugger.
++    Copyright (C) 1986, 1987, 1989, 1992 Free Software Foundation, Inc.
++ 
++ This file is part of GDB.
++ 
++ This program is free software; you can redistribute it and/or modify
++ it under the terms of the GNU General Public License as published by
++ the Free Software Foundation; either version 2 of the License, or
++ (at your option) any later version.
++ 
++ This program is distributed in the hope that it will be useful,
++ but WITHOUT ANY WARRANTY; without even the implied warranty of
++ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ GNU General Public License for more details.
++ 
++ You should have received a copy of the GNU General Public License
++ along with this program; if not, write to the Free Software
++ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
++ 
++ /* Do implement the attach and detach commands. EXPERIMENTAL HACK */
++ 
++ #define ATTACH_DETACH
++ 
+*** ./gdb/config/m68k/tm-m68k.h.orig	Thu Feb  3 08:43:18 1994
+--- ./gdb/config/m68k/tm-m68k.h	Fri Feb 11 12:22:33 1994
+***************
+*** 162,170 ****
+  
+  #define REGISTER_CONVERT_TO_VIRTUAL(REGNUM,TYPE,FROM,TO) \
+  { \
+!   double val; \
+!   ieee_extended_to_double (&ext_format_68881, (FROM), &val); \
+!   store_floating ((TO), TYPE_LENGTH (TYPE), val); \
+  }
+  
+  /* Convert data from virtual format with type TYPE in buffer FROM
+--- 162,170 ----
+  
+  #define REGISTER_CONVERT_TO_VIRTUAL(REGNUM,TYPE,FROM,TO) \
+  { \
+!   double RCtVval; \
+!   ieee_extended_to_double (&ext_format_68881, (FROM), &RCtVval); \
+!   store_floating ((TO), TYPE_LENGTH (TYPE), RCtVval); \
+  }
+  
+  /* Convert data from virtual format with type TYPE in buffer FROM
+***************
+*** 172,179 ****
+  
+  #define REGISTER_CONVERT_TO_RAW(TYPE,REGNUM,FROM,TO)	\
+  { \
+!   double val = extract_floating ((FROM), TYPE_LENGTH (TYPE)); \
+!   double_to_ieee_extended (&ext_format_68881, &val, (TO)); \
+  }
+  
+  /* Return the GDB type object for the "standard" data type
+--- 172,179 ----
+  
+  #define REGISTER_CONVERT_TO_RAW(TYPE,REGNUM,FROM,TO)	\
+  { \
+!   double RCtRval = extract_floating ((FROM), TYPE_LENGTH (TYPE)); \
+!   double_to_ieee_extended (&ext_format_68881, &RCtRval, (TO)); \
+  }
+  
+  /* Return the GDB type object for the "standard" data type
+*** ./gdb/aux-xdep.c.orig	Fri Feb 11 11:09:40 1994
+--- ./gdb/aux-xdep.c	Fri Feb 11 12:30:48 1994
+***************
+*** 0 ****
+--- 1,376 ----
++ /* Host-dependent code for Apple A/UX for GDB, the GNU debugger.
++    Copyright (C) 1992 Thomas Eberhardt (thomas@mathematik.uni-Bremen.de)
++ 
++ This program is free software; you can redistribute it and/or modify
++ it under the terms of the GNU General Public License as published by
++ the Free Software Foundation; either version 2 of the License, or
++ (at your option) any later version.
++ 
++ This program is distributed in the hope that it will be useful,
++ but WITHOUT ANY WARRANTY; without even the implied warranty of
++ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ GNU General Public License for more details.
++ 
++ You should have received a copy of the GNU General Public License
++ along with this program; if not, write to the Free Software
++ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
++ 
++ #include <stdio.h>
++ #include "defs.h"
++ #include "inferior.h"
++ #include "gdbcore.h"
++ #include "target.h"
++ 
++ #include <sys/types.h>
++ #include <sys/reg.h>
++ #include <sys/param.h>
++ #include <sys/time.h>
++ #include <sys/user.h>
++ 
++ extern int errno;
++ 
++ #define PT_READ_I	1
++ #define	PT_READ_D	2
++ #define PT_READ_U	3
++ #define PT_WRITE_I	4
++ #define PT_WRITE_D	5
++ #define PT_WRITE_U	6
++ #define PT_CONTINUE	7
++ #define PT_KILL		8
++ #define PT_STEP		9
++ #define PT_READ_R	10
++ #define PT_WRITE_R	11
++ #ifdef ATTACH_DETACH
++ #define PT_ATTACH	12
++ #define PT_DETACH	13
++ #endif
++ 
++ #ifndef PT_ATTACH
++ #define PT_ATTACH PTRACE_ATTACH
++ #endif
++ #ifndef PT_DETACH
++ #define PT_DETACH PTRACE_DETACH
++ #endif
++ 
++ 
++ /* This function simply calls ptrace with the given arguments.  
++    It exists so that all calls to ptrace are isolated in this 
++    machine-dependent file. */
++ int
++ call_ptrace (request, pid, addr, data)
++      int request, pid;
++      PTRACE_ARG3_TYPE addr;
++      int data;
++ {
++   return ptrace (request, pid, addr, data);
++ }
++ 
++ #ifdef DEBUG_PTRACE
++ /* For the rest of the file, use an extra level of indirection */
++ /* This lets us breakpoint usefully on call_ptrace. */
++ #define ptrace call_ptrace
++ #endif
++ 
++ /* This is used when GDB is exiting.  It gives less chance of error.*/
++ 
++ void
++ kill_inferior_fast ()
++ {
++   if (inferior_pid == 0)
++     return;
++   ptrace (PT_KILL, inferior_pid, (PTRACE_ARG3_TYPE) 0, 0);
++   wait ((int *)0);
++ }
++ 
++ void
++ kill_inferior ()
++ {
++   kill_inferior_fast ();
++   target_mourn_inferior ();
++ }
++ 
++ /* Resume execution of the inferior process.
++    If STEP is nonzero, single-step it.
++    If SIGNAL is nonzero, give it that signal.  */
++ 
++ void
++ child_resume (pid, step, signal)
++      int pid;
++      int step;
++      enum target_signal signal;
++ {
++   errno = 0;
++ 
++   if (pid == -1)
++     pid = inferior_pid;
++ 
++   /* An address of (PTRACE_ARG3_TYPE) 1 tells ptrace to continue from where
++      it was. (If GDB wanted it to start some other way, we have already
++      written a new PC value to the child.)  */
++ 
++   if (step)
++     ptrace (PT_STEP, pid, (PTRACE_ARG3_TYPE) 1,
++ 	    target_signal_to_host(signal));
++   else
++     ptrace (PT_CONTINUE, pid, (PTRACE_ARG3_TYPE) 1,
++ 	    target_signal_to_host(signal));
++ 
++   if (errno)
++     perror_with_name ("ptrace");
++ }
++ 
++ #ifdef ATTACH_DETACH
++ /* Start debugging the process whose number is PID.  */
++ int
++ attach (pid)
++      int pid;
++ {
++   errno = 0;
++   ptrace (PT_ATTACH, pid, (PTRACE_ARG3_TYPE) 0, 0);
++   if (errno)
++     perror_with_name ("ptrace");
++   attach_flag = 1;
++   return pid;
++ }
++ 
++ /* Stop debugging the process whose number is PID
++    and continue it with signal number SIGNAL.
++    SIGNAL = 0 means just continue it.  */
++ 
++ void
++ detach (signal)
++      int signal;
++ {
++   errno = 0;
++   ptrace (PT_DETACH, inferior_pid, (PTRACE_ARG3_TYPE) 1, signal);
++   if (errno)
++     perror_with_name ("ptrace");
++   attach_flag = 0;
++ }
++ #endif /* ATTACH_DETACH */
++            
++ void
++ fetch_register (int regno)
++ {
++   register unsigned int regaddr;
++   char buf[MAX_REGISTER_RAW_SIZE];
++   register int i;
++ 
++   if (regno < FP0_REGNUM)
++     *(int *) &buf[0] =
++       ptrace (PT_READ_R, inferior_pid,
++ 	      (PTRACE_ARG3_TYPE) (regno < PS_REGNUM ? regno
++ 				  : (regno == PS_REGNUM ? 17 : 16)), 0);
++   else
++     {
++       regaddr = FP_REGISTER_ADDR (regno);
++       for (i = 0; i < REGISTER_RAW_SIZE (regno); i += sizeof (int))
++ 	{
++ 	  *(int *) &buf[i] = ptrace (PT_READ_U, inferior_pid,
++ 				     (PTRACE_ARG3_TYPE) regaddr, 0);
++ 	  regaddr += sizeof (int);
++ 	}
++     }
++   supply_register (regno, buf);
++ }
++ 
++ void
++ fetch_inferior_registers (regno)
++      int regno;
++ {
++   if (regno == -1)
++     for (regno = 0; regno < NUM_REGS; regno++)
++       fetch_register (regno);
++   else
++     fetch_register (regno);
++ }
++ 
++ void
++ store_inferior_registers (regno)
++      int regno;
++ {
++   register unsigned int regaddr;
++   char buf[80];
++ 
++   if (regno >= 0)
++     {
++       errno = 0;
++       if (regno < FP0_REGNUM)
++         ptrace (PT_WRITE_R, inferior_pid,
++ 		(PTRACE_ARG3_TYPE) (regno < PS_REGNUM ? regno
++ 				    : (regno == PS_REGNUM ? 17 : 16)),
++ 		read_register (regno));
++       else
++ 	{
++ 	  int i;
++           regaddr = FP_REGISTER_ADDR (regno);
++ 	  for (i = 0; i < REGISTER_RAW_SIZE(regno); i += sizeof(int))
++ 	    {
++ 	      errno = 0;
++               ptrace (PT_WRITE_U, inferior_pid,
++ 		  (PTRACE_ARG3_TYPE) regaddr, *(int *)
++ 			&registers[REGISTER_BYTE (regno) + i]);
++ 	      if (errno != 0)
++ 	        {
++ 		  sprintf (buf, "writing register number %d(%d)", regno, i);
++ 		  perror_with_name (buf);
++ 		}
++               regaddr += sizeof(int);
++             }
++ 	}
++       if (errno != 0)
++ 	{
++ 	  sprintf (buf, "writing register number %d", regno);
++ 	  perror_with_name (buf);
++ 	}
++     }
++   else
++     {
++       for (regno = 0; regno < NUM_REGS; regno++)
++ 	{
++ 	  errno = 0;
++ 
++ 	  if (regno < FP0_REGNUM)
++ 	    ptrace (PT_WRITE_R, inferior_pid,
++ 		    (PTRACE_ARG3_TYPE) (regno < PS_REGNUM ? regno
++ 					: (regno == PS_REGNUM ? 17 : 16)),
++ 		    read_register (regno));
++ 	  else
++ 	    {
++ 	      int i;
++               regaddr = FP_REGISTER_ADDR (regno);
++ 	      for (i = 0; i < REGISTER_RAW_SIZE(regno); i += sizeof(int))
++ 	        {
++ 	          errno = 0;
++                   ptrace (PT_WRITE_U, inferior_pid,
++ 		      (PTRACE_ARG3_TYPE) regaddr, *(int *)
++ 			    &registers[REGISTER_BYTE (regno) + i]);
++ 	          if (errno != 0)
++ 	            {
++ 		      sprintf (buf, "writing register number %d(%d)", regno, i);
++ 		      perror_with_name (buf);
++ 		    }
++                   regaddr += sizeof(int);
++                 }
++             }
++ 	  if (errno != 0)
++ 	    {
++ 	      sprintf (buf, "writing all regs, number %d", regno);
++ 	      perror_with_name (buf);
++ 	    }
++ 	}
++     }
++ }
++ 
++ int
++ child_xfer_memory (memaddr, myaddr, len, write, target)
++      CORE_ADDR memaddr;
++      char *myaddr;
++      int len;
++      int write;
++      struct target_ops *target;		/* ignored */
++ {
++   register int i;
++   /* Round starting address down to longword boundary.  */
++   register CORE_ADDR addr = memaddr & - sizeof (int);
++   /* Round ending address up; get number of longwords that makes.  */
++   register int count
++     = (((memaddr + len) - addr) + sizeof (int) - 1) / sizeof (int);
++   /* Allocate buffer of that many longwords.  */
++   register int *buffer = (int *) alloca (count * sizeof (int));
++   int pt_read, pt_write;
++   extern CORE_ADDR text_start, text_end;
++ 
++   /* A/UX distinguishes between text and data space accesses */
++   pt_read = addr >= text_start && addr < text_end ? PT_READ_I : PT_READ_D;
++   pt_write = addr >= text_start && addr < text_end ? PT_WRITE_I : PT_WRITE_D;
++ 
++   if (write)
++     {
++       /* Fill start and end extra bytes of buffer with existing memory data.  */
++ 
++       if (addr != memaddr || len < (int)sizeof (int)) {
++ 	/* Need part of initial word -- fetch it.  */
++         buffer[0] = ptrace (pt_read, inferior_pid, (PTRACE_ARG3_TYPE) addr,
++ 			    0);
++       }
++ 
++       if (count > 1)		/* FIXME, avoid if even boundary */
++ 	{
++ 	  buffer[count - 1]
++ 	    = ptrace (pt_read, inferior_pid,
++ 		      (PTRACE_ARG3_TYPE) (addr + (count - 1) * sizeof (int)),
++ 		      0);
++ 	}
++ 
++       /* Copy data to be written over corresponding part of buffer */
++ 
++       memcpy ((char *) buffer + (memaddr & (sizeof (int) - 1)), myaddr, len);
++ 
++       /* Write the entire buffer.  */
++ 
++       for (i = 0; i < count; i++, addr += sizeof (int))
++ 	{
++ 	  errno = 0;
++ 	  ptrace (pt_write, inferior_pid, (PTRACE_ARG3_TYPE) addr,
++ 		  buffer[i]);
++ 	  if (errno)
++ 	    return 0;
++ 	}
++     }
++   else
++     {
++       /* Read all the longwords */
++       for (i = 0; i < count; i++, addr += sizeof (int))
++ 	{
++ 	  errno = 0;
++ 	  buffer[i] = ptrace (pt_read, inferior_pid,
++ 			      (PTRACE_ARG3_TYPE) addr, 0);
++ 	  if (errno)
++ 	    return 0;
++ 	  QUIT;
++ 	}
++ 
++       /* Copy appropriate bytes out of the buffer.  */
++       memcpy (myaddr, (char *) buffer + (memaddr & (sizeof (int) - 1)), len);
++     }
++   return len;
++ }
++ 
++ void
++ fetch_core_registers (core_reg_sect, core_reg_size, which, reg_addr)
++      char *core_reg_sect;
++      unsigned core_reg_size;
++      int which;
++      unsigned reg_addr;
++ {
++   register int regno;
++   register unsigned int addr;
++   int bad_reg = -1;
++   register reg_ptr = -reg_addr;		/* Original u.u_ar0 is -reg_addr. */
++ 
++   for (regno = 0; regno < FP0_REGNUM; regno++)
++     {
++       addr = REGISTER_ADDR (reg_ptr, regno);
++       if (addr >= core_reg_size)
++ 	{
++ 	  if (bad_reg < 0)
++ 	    bad_reg = regno;
++ 	}
++       else
++ 	supply_register (regno, core_reg_sect + addr);
++     }
++   for (; regno < NUM_REGS; regno++)
++     {
++       addr = FP_REGISTER_ADDR (regno);
++       if (addr >= core_reg_size)
++ 	{
++ 	  if (bad_reg < 0)
++ 	    bad_reg = regno;
++ 	}
++       else
++ 	supply_register (regno, core_reg_sect + addr);
++     }
++   if (bad_reg >= 0)
++     error ("Register %s not found in core file.", reg_names[bad_reg]);
++ }
+*** ./gdb/configure.in.orig	Thu Feb  3 09:05:09 1994
+--- ./gdb/configure.in	Fri Feb 11 11:17:03 1994
+***************
+*** 66,71 ****
+--- 66,72 ----
+  m68*-altos-*)		gdb_host=altos ;;
+  m68*-apollo*-sysv*)	gdb_host=apollo68v ;;
+  m68*-apollo*-bsd*)	gdb_host=apollo68b ;;
++ m68*-apple*-aux*)	gdb_host=aux ;;
+  m68*-att-*)		gdb_host=3b1 ;;
+  m68*-bull*-sysv*)	gdb_host=dpx2 ;;
+  m68*-cbm-sysv4*)	gdb_host=amix ;;
+***************
+*** 227,232 ****
+--- 228,234 ----
+  m68*-hp-hpux*)		gdb_target=hp300hpux ;;
+  
+  m68*-altos-*)		gdb_target=altos ;;
++ m68*-apple-*)		gdb_target=aux ;;
+  m68*-apollo*-bsd*)	gdb_target=apollo68b ;;
+  m68*-att-*)		gdb_target=3b1 ;;
+  m68*-ericsson-*)	gdb_target=es1800 ;;
+*** ./gdb/remote-aux.c.orig	Fri Feb 11 11:09:40 1994
+--- ./gdb/remote-aux.c	Fri Feb 11 11:09:41 1994
+***************
+*** 0 ****
+--- 1,232 ----
++ /* Remote target communications for an A/UX kernel in modified GDB protocol *
++ 
++ This program is a derivative work of remote.c, and as such is copyright by
++ John L. Coolidge and the FSF. It is covered by the GPL.
++ 
++ This file is part of GDB.
++ 
++ This program is free software; you can redistribute it and/or modify
++ it under the terms of the GNU General Public License as published by
++ the Free Software Foundation; either version 2 of the License, or
++ (at your option) any later version.
++ 
++ This program is distributed in the hope that it will be useful,
++ but WITHOUT ANY WARRANTY; without even the implied warranty of
++ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ GNU General Public License for more details.
++ 
++ You should have received a copy of the GNU General Public License
++ along with this program; if not, write to the Free Software
++ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
++ 
++ /* The remote communication protocol is as documented in remote.c except
++    for the following additions.
++ 
++    All values are encoded in ascii hex digits.
++ 
++ 	Request		Packet
++ 	breakpoint	BAA..AA[,DDDD]
++ 					AA..AA is address,
++ 					DDDD is the old contents of the
++ 					address. If DDDD is omitted, the
++ 					address is set to a breakpoint
++ 	reply		XXXX		the former contents of the address,
++ 					if DDDD is omitted.
++ 			OK		if DDDD was specified and the breakpoint
++ 					was successfully set
++ 			ENN		for an error
++ 
++ 	extended cmd	Xcmd[,ARGS...]
++ 					cmd is an extended command
++ 	reply		XX..XX		XX.XX and so forth are strings
++ 			YY..YY		giving the output of the extended
++ 			...		command. Output is terminated by
++ 			OK		an 'OK' value
++ 			ENN		for an error
++ 
++ */
++ 
++ #include "defs.h"
++ #include <string.h>
++ #include <fcntl.h>
++ #include "frame.h"
++ #include "inferior.h"
++ #include "target.h"
++ #include "wait.h"
++ #include "terminal.h"
++ #include "gdbcmd.h"
++ 
++ #if !defined(DONT_USE_REMOTE)
++ #ifdef USG
++ #include <sys/types.h>
++ #endif
++ 
++ #include <signal.h>
++ 
++ #ifndef HAVE_TERMIO
++ extern int alarm ();			/* Many systems don't declare it */
++ #endif
++ 
++ /* Prototypes for local functions */
++ 
++ static int
++ remote_aux_insert_breakpoint PARAMS ((CORE_ADDR, char *));
++ 
++ static int
++ remote_aux_remove_breakpoint PARAMS ((CORE_ADDR, char *));
++ 
++ extern struct target_ops remote_aux_ops;	/* Forward decl */
++ extern struct target_ops remote_ops;
++ 
++ static void        (*remote_open_fn) PARAMS ((char *, int));
++ 
++ #define PBUFSIZ 1024
++ 
++ remote_aux_open (name, from_tty)
++      char *name;
++      int from_tty;
++ {
++ 	(*remote_open_fn)(name, from_tty);
++ 
++ 	if (current_target == &remote_ops)
++ 	{
++ 		current_target = current_target->to_next;
++ 		push_target (&remote_aux_ops);
++ 	}
++ }
++ 
++ static void
++ remote_aux_mourn ()
++ {
++   unpush_target (&remote_aux_ops);
++   generic_mourn_inferior ();
++ }
++ 
++ /* install a breakpoint on the remote machine */
++ 
++ static int
++ remote_aux_insert_breakpoint(addr, contents_cache)
++      CORE_ADDR addr;
++      char *contents_cache;
++ {
++   char buf[PBUFSIZ];
++   int i;
++   char *p;
++ 
++   sprintf (buf, "B%x", addr);
++ 
++   remote_send (buf);
++ 
++   /* reply indicates the old value */
++ 
++   p = buf;
++   for (i = 0; i < 2; i++)
++     {
++       if (p[0] == 0 || p[1] == 0)
++ 	error ("Remote reply is too short: %s", buf);
++       contents_cache[i] = fromhex (p[0]) * 16 + fromhex (p[1]);
++       p += 2;
++     }
++   return 0;
++ }
++ 
++ /* remove a breakpoint */
++ 
++ static int
++ remote_aux_remove_breakpoint(addr, contents_cache)
++      CORE_ADDR addr;
++      char *contents_cache;
++ {
++   char buf[PBUFSIZ];
++   int i;
++   char *p;
++ 
++   sprintf (buf, "B%x,%04x", addr, *(unsigned short*)contents_cache);
++   remote_send (buf);
++   return 0;
++ }
++ 
++ /* Send an extended command to the target system. Prints out the results. */
++ static int
++ remote_aux_extended(command)
++ char * command;
++ {
++    char buf[PBUFSIZ];
++ 
++    sprintf (buf, "X%s", command);
++    remote_send (buf);
++ 
++    if (*buf == 'E')
++        error ("extended command %s got an error %s\n", command, buf);
++ 
++    while (*buf && strncmp(buf, "OK", 2)) {
++        puts_filtered(buf);
++        puts_filtered("\n");
++        getpkt(buf,0);
++    }
++ }
++ struct target_ops remote_aux_ops = {
++   "aux-kernel",			/* to_shortname */
++   "Remote serial target in A/UX kernel gdb protocol",	/* to_longname */
++   "Debug an A/UX kernel via a serial line, using modified gdb protocol.\n\
++ Specify the serial device it is connected to (e.g. /dev/ttya).",  /* to_doc */
++   remote_aux_open,		/* to_open */
++   NULL,				/* to_close */
++   NULL,				/* to_attach */
++   NULL,				/* to_detach */
++   NULL,				/* to_resume */
++   NULL,				/* to_wait */
++   NULL,				/* to_fetch_registers */
++   NULL,				/* to_store_registers */
++   NULL,				/* to_prepare_to_store */
++   NULL,				/* to_xfer_memory */
++   NULL,				/* to_files_info */
++   remote_aux_insert_breakpoint,	/* to_insert_breakpoint */
++   remote_aux_remove_breakpoint,	/* to_remove_breakpoint */
++   NULL,				/* to_terminal_init */
++   NULL,				/* to_terminal_inferior */
++   NULL,				/* to_terminal_ours_for_output */
++   NULL,				/* to_terminal_ours */
++   NULL,				/* to_terminal_info */
++   NULL,				/* to_kill */
++   NULL,				/* to_load */
++   NULL,				/* to_lookup_symbol */
++   NULL,				/* to_create_inferior */
++   remote_aux_mourn,		/* to_mourn_inferior */
++   0,				/* to_can_run */
++   0,				/* to_notice_signals */
++   process_stratum,		/* to_stratum */
++   NULL,				/* to_next */
++   1,				/* to_has_all_memory */
++   1,				/* to_has_memory */
++   1,				/* to_has_stack */
++   1,				/* to_has_registers */
++   1,				/* to_has_execution */
++   NULL,				/* sections */
++   NULL,				/* sections_end */
++   OPS_MAGIC			/* to_magic */
++ };
++ 
++ void
++ _initialize_remote_aux ()
++ {
++   /* This function depends on _initialize_remote being called first */
++   remote_aux_ops.to_close = remote_ops.to_close;
++   remote_aux_ops.to_detach = remote_ops.to_detach;
++   remote_aux_ops.to_resume = remote_ops.to_resume;
++   remote_aux_ops.to_wait = remote_ops.to_wait;
++   remote_aux_ops.to_fetch_registers = remote_ops.to_fetch_registers;
++   remote_aux_ops.to_store_registers = remote_ops.to_store_registers;
++   remote_aux_ops.to_prepare_to_store = remote_ops.to_prepare_to_store;
++   remote_aux_ops.to_xfer_memory = remote_ops.to_xfer_memory;
++   remote_aux_ops.to_files_info = remote_ops.to_files_info;
++   remote_aux_ops.to_kill = remote_ops.to_kill;
++ 
++   add_target (&remote_aux_ops);
++ 
++   add_com ("extended", no_class, remote_aux_extended,
++   	"Send an extended command to the remote host.\n");
++ 
++   remote_open_fn = remote_ops.to_open;
++ }
++ #endif /* DONT_USE_REMOTE */
+*** ./gdb/coffread.c.orig	Thu Feb  3 08:41:04 1994
+--- ./gdb/coffread.c	Fri Feb 11 11:09:41 1994
+***************
+*** 913,918 ****
+--- 913,923 ----
+    	 	could see if the flags indicate SEC_CODE.  If so, then
+  	 	record this symbol as a function in the minimal symbol table.
+  		But why are absolute syms recorded as functions, anyway?  */
++ #ifdef AUX
++ 		    if (cs->c_secnum == N_DEBUG)
++ 			/* bogus DEBUG segment sym left behind by A/UX linker */
++ 			    continue;
++ #endif
+  		    if (cs->c_secnum <= text_bfd_scnum+1) {/* text or abs */
+  			    record_minimal_symbol (cs->c_name, cs->c_value,
+  						   mst_text, objfile);
+*** ./gdb/remote.c.orig	Thu Feb  3 08:41:56 1994
+--- ./gdb/remote.c	Fri Feb 11 11:09:42 1994
+***************
+*** 181,193 ****
+  static void
+  remote_store_registers PARAMS ((int regno));
+  
+! static void
+  getpkt PARAMS ((char *buf, int forever));
+  
+  static void
+  putpkt PARAMS ((char *buf));
+  
+! static void
+  remote_send PARAMS ((char *buf));
+  
+  static int
+--- 181,199 ----
+  static void
+  remote_store_registers PARAMS ((int regno));
+  
+! #ifndef AUX
+! static
+! #endif
+! void
+  getpkt PARAMS ((char *buf, int forever));
+  
+  static void
+  putpkt PARAMS ((char *buf));
+  
+! #ifndef AUX
+! static
+! #endif
+! void
+  remote_send PARAMS ((char *buf));
+  
+  static int
+***************
+*** 198,204 ****
+  static int
+  tohex PARAMS ((int nib));
+  
+! static int
+  fromhex PARAMS ((int a));
+  
+  static void
+--- 204,213 ----
+  static int
+  tohex PARAMS ((int nib));
+  
+! #ifndef AUX
+! static
+! #endif
+! int
+  fromhex PARAMS ((int a));
+  
+  static void
+***************
+*** 354,360 ****
+  
+  /* Convert hex digit A to a number.  */
+  
+! static int
+  fromhex (a)
+       int a;
+  {
+--- 363,372 ----
+  
+  /* Convert hex digit A to a number.  */
+  
+! #ifndef AUX
+! static
+! #endif
+! int
+  fromhex (a)
+       int a;
+  {
+***************
+*** 1023,1029 ****
+     and read the reply into BUF.
+     Report an error if we get an error reply.  */
+  
+! static void
+  remote_send (buf)
+       char *buf;
+  {
+--- 1035,1044 ----
+     and read the reply into BUF.
+     Report an error if we get an error reply.  */
+  
+! #ifndef AUX
+! static
+! #endif
+! void
+  remote_send (buf)
+       char *buf;
+  {
+***************
+*** 1124,1130 ****
+     If FOREVER, wait forever rather than timing out; this is used
+     while the target is executing user code.  */
+  
+! static void
+  getpkt (buf, forever)
+       char *buf;
+       int forever;
+--- 1139,1148 ----
+     If FOREVER, wait forever rather than timing out; this is used
+     while the target is executing user code.  */
+  
+! #ifndef AUX
+! static
+! #endif
+! void
+  getpkt (buf, forever)
+       char *buf;
+       int forever;
+*** ./config/mh-aux.orig	Fri Feb 11 11:09:42 1994
+--- ./config/mh-aux	Fri Feb 11 11:09:42 1994
+***************
+*** 0 ****
+--- 1,2 ----
++ CC = gcc -pipe -D_POSIX_SOURCE
++ RANLIB = echo >/dev/null
+*** ./bfd/config/aux.mh.orig	Fri Feb 11 11:09:42 1994
+--- ./bfd/config/aux.mh	Fri Feb 11 11:09:42 1994
+***************
+*** 0 ****
+--- 1,3 ----
++ HDEFINES=-DTRAD_CORE
++ HDEPFILES=trad-core.o
++ MINIMIZE=1
+*** ./bfd/config/aux.mt.orig	Fri Feb 11 11:09:42 1994
+--- ./bfd/config/aux.mt	Fri Feb 11 11:09:42 1994
+***************
+*** 0 ****
+--- 1,4 ----
++ # Target:  Apple A/UX
++ 
++ DEFAULT_VECTOR=m68kcoff_vec
++ SELECT_ARCHITECTURES=bfd_m68k_arch
+*** ./bfd/hosts/aux.h.orig	Fri Feb 11 11:09:42 1994
+--- ./bfd/hosts/aux.h	Fri Feb 11 11:09:42 1994
+***************
+*** 0 ****
+--- 1,39 ----
++ #include <fcntl.h>
++ #include <errno.h>
++ #include <stdio.h>
++ #include <sys/types.h>
++ #include <sys/stat.h>
++ #include <sys/time.h>
++ #include <ctype.h>
++ #include <string.h>
++ #include <unistd.h>
++ #include <stdlib.h>		/* for malloc() */
++ 
++ #ifndef O_ACCMODE
++ #define O_ACCMODE (O_RDONLY | O_WRONLY | O_RDWR)
++ #endif
++ #define SEEK_SET 0
++ #define SEEK_CUR 1
++ 
++ /* The following definitions are only intended for trad-core.c */
++ #define NBPG			4096
++ #define UPAGES			USIZE
++ #define HOST_DATA_START_ADDR	u.u_exdata.ux_datorg /* this seems ok */
++ #define HOST_STACK_END_ADDR	0xffffffff
++ 
++ /* EXACT TYPES */
++ typedef char int8e_type;
++ typedef unsigned char uint8e_type;
++ typedef short int16e_type;
++ typedef unsigned short uint16e_type;
++ typedef int int32e_type;
++ typedef unsigned int uint32e_type;
++ 
++ /* CORRECT SIZE OR GREATER */
++ typedef char int8_type;
++ typedef unsigned char uint8_type;
++ typedef short int16_type;
++ typedef unsigned short uint16_type;
++ typedef int int32_type;
++ typedef unsigned int uint32_type;
++ #include "fopen-same.h"
+*** ./bfd/Makefile.in.orig	Thu Feb  3 08:46:35 1994
+--- ./bfd/Makefile.in	Fri Feb 11 11:09:43 1994
+***************
+*** 296,305 ****
+  
+  
+  targets.o: targets.c Makefile
+! 	$(CC) -c $(CFLAGS) $(HDEFINES) $(TDEFINES) $(CSEARCH) $(CSWITCHES) $(TDEFAULTS) $<
+  
+  archures.o: archures.c Makefile
+! 	$(CC) -c $(CFLAGS) $(HDEFINES) $(TDEFINES) $(CSEARCH) $(CSWITCHES) $(TDEFAULTS) $<
+  
+  subdir_do: force
+  	@for i in $(DODIRS); do \
+--- 296,305 ----
+  
+  
+  targets.o: targets.c Makefile
+! 	$(CC) -c $(CFLAGS) $(HDEFINES) $(TDEFINES) $(CSEARCH) $(CSWITCHES) $(TDEFAULTS) targets.c
+  
+  archures.o: archures.c Makefile
+! 	$(CC) -c $(CFLAGS) $(HDEFINES) $(TDEFINES) $(CSEARCH) $(CSWITCHES) $(TDEFAULTS) archures.c
+  
+  subdir_do: force
+  	@for i in $(DODIRS); do \
+*** ./bfd/config.bfd.orig	Thu Feb  3 09:01:00 1994
+--- ./bfd/config.bfd	Fri Feb 11 11:09:43 1994
+***************
+*** 50,55 ****
+--- 50,56 ----
+    i960-*-bout*)		bfd_name=i960-bout ;;
+    i960-*-nindy*)	bfd_name=i960-bout ;;
+    m68*-apollo-bsd*)	bfd_name=apollo ;;
++   m68*-apple-*)		bfd_name=aux ;;
+    m68*-bull-sysv*)	bfd_name=u68k-coff ;;
+    m68*-hp-bsd*)		bfd_name=hp300bsd ;;
+    m68*-*-aout*)		bfd_name=m68k-aout ;;
+*** ./bfd/trad-core.c.orig	Thu Feb  3 08:47:19 1994
+--- ./bfd/trad-core.c	Fri Feb 11 11:09:43 1994
+***************
+*** 184,190 ****
+--- 184,195 ----
+    core_regsec (abfd)->flags = SEC_ALLOC + SEC_HAS_CONTENTS;
+  
+    core_datasec (abfd)->_raw_size =  NBPG * u.u_dsize;
++ #ifdef AUX
++   /* Can't represent 2^32 */
++   core_stacksec (abfd)->_raw_size = NBPG * u.u_ssize - 1;
++ #else
+    core_stacksec (abfd)->_raw_size = NBPG * u.u_ssize;
++ #endif
+    core_regsec (abfd)->_raw_size = NBPG * UPAGES; /* Larger than sizeof struct u */
+  
+    /* What a hack... we'd like to steal it from the exec file,
+***************
+*** 198,204 ****
+--- 203,213 ----
+  #ifdef HOST_STACK_START_ADDR
+    core_stacksec (abfd)->vma = HOST_STACK_START_ADDR;
+  #else
++ #ifndef AUX
+    core_stacksec (abfd)->vma = HOST_STACK_END_ADDR - (NBPG * u.u_ssize);
++ #else
++   core_stacksec (abfd)->vma = (HOST_STACK_END_ADDR - (NBPG * u.u_ssize))+1;
++ #endif
+  #endif
+  
+    /* This is tricky.  As the "register section", we give them the entire
+*** ./bfd/configure.host.orig	Thu Feb  3 08:46:47 1994
+--- ./bfd/configure.host	Fri Feb 11 11:09:43 1994
+***************
+*** 55,60 ****
+--- 55,61 ----
+  
+  m68*-apollo*-sysv*)	my_host=apollov68 ;;
+  m68*-apollo*-bsd*)	my_host=apollo68 ;;
++ m68*-apple*-aux*)       my_host=aux ;;
+  m68*-bull*-sysv*)	my_host=dpx2 ;;
+  m68*-convergent-sysv*)	my_host=miniframe ;;
+  m68*-cbm-amigados*)	my_host=amigados ;;
+*** ./libiberty/config.table.orig	Thu Feb  3 08:48:12 1994
+--- ./libiberty/config.table	Fri Feb 11 11:09:43 1994
+***************
+*** 7,12 ****
+--- 7,13 ----
+    rs6000-ibm-aix*)      files=${xsrcdir}alloca-botch.h ;;
+    m68k-apollo-bsd*)	frag=mh-a68bsd ;;
+    m68k-apollo-sysv*)	frag=mh-apollo68 ;;
++   m68k-apple-aux*)      frag=mh-sysv ;;
+    i[34]86-ncr-sysv4*)	frag=mh-ncr3000 ;;
+    *-*-lynxos*)		frag=mh-lynxos ;;
+    *-*-dgux*)		frag=mh-sysv ;;
+*** ./readline/config/mh-aux.orig	Fri Feb 11 11:09:43 1994
+--- ./readline/config/mh-aux	Fri Feb 11 11:09:43 1994
+***************
+*** 0 ****
+--- 1,4 ----
++ # Define USG as -DUSG if you are using a System V operating system.
++ USG = -DUSG -DNO_SYS_FILE -DHAVE_UNISTD_H
++ RANLIB = echo >/dev/null
++ INSTALL = cp
+*** ./readline/configure.in.orig	Thu Feb  3 08:47:47 1994
+--- ./readline/configure.in	Fri Feb 11 11:09:43 1994
+***************
+*** 28,33 ****
+--- 28,34 ----
+    i[34]86-*-sco*)	host_makefile_frag=config/mh-sco; files=sysdep-sco.h ;;
+    i[34]86-*-isc*)	host_makefile_frag=config/mh-isc ;;
+    m68k-apollo-sysv*)	host_makefile_frag=config/mh-apollo68v ;;    
++   m68k-apple-aux*)	host_makefile_frag=config/mh-aux ;;
+    *-*-sysv*)		host_makefile_frag=config/mh-sysv ;;
+    *-*-m88kbcs*)		host_makefile_frag=config/mh-sysv ;;
+    i[34]86-*-linux*)	host_makefile_frag=config/mh-posix ;;
+*** ./glob/configure.in.orig	Thu Feb  3 08:47:59 1994
+--- ./glob/configure.in	Fri Feb 11 11:09:43 1994
+***************
+*** 17,22 ****
+--- 17,23 ----
+    rs6000-ibm-aix3.1)	files=sysdep-aix.h;	my_host=aix ;;
+    *-*-aix*)					my_host=aix ;;
+    mips-sgi-irix*)	files=sysdep-irix.h ;;
++   m68k-apple-aux*)	files=sysdep-aix.h ;;
+    m68k-sony-news*)	files=sysdep-obsd.h ;;
+    m68k-*-sunos3*)	files=sysdep-obsd.h ;;
+    *-*-mach*)		files=sysdep-obsd.h ;;
+*** ./config.sub.orig	Thu Feb  3 09:07:29 1994
+--- ./config.sub	Fri Feb 11 11:13:59 1994
+***************
+*** 73,83 ****
+  		;;
+  	-dec* | -mips* | -sequent* | -encore* | -pc532* | -sgi* | -sony* | \
+  	-att* | -7300* | -3300* | -delta* | -motorola* | -sun[234]* | \
+! 	-unicom* | -ibm* | -next* | -hp | -isi* | -apollo | -altos* | \
+  	-convergent* | -ncr* | -news | -32* | -3600* | -3100* | -hitachi* |\
+  	-c[123]* | -convex* | -sun | -crds | -omron* | -dg | -ultra | -tti* | \
+  	-harris | -dolphin | -highlevel | -gould | -cbm | -ns | -masscomp | \
+! 	-sim)						# CYGNUS LOCAL
+  		os=
+  		basic_machine=$1
+  		;;
+--- 73,83 ----
+  		;;
+  	-dec* | -mips* | -sequent* | -encore* | -pc532* | -sgi* | -sony* | \
+  	-att* | -7300* | -3300* | -delta* | -motorola* | -sun[234]* | \
+! 	-unicom* | -ibm* | -next* | -hp | -isi* | -apollo | -altos* | -aux* | \
+  	-convergent* | -ncr* | -news | -32* | -3600* | -3100* | -hitachi* |\
+  	-c[123]* | -convex* | -sun | -crds | -omron* | -dg | -ultra | -tti* | \
+  	-harris | -dolphin | -highlevel | -gould | -cbm | -ns | -masscomp | \
+! 	-sim )						# CYGNUS LOCAL
+  		os=
+  		basic_machine=$1
+  		;;
+***************
+*** 385,390 ****
+--- 385,394 ----
+  		basic_machine=m68k-next
+  		os=-bsd
+  		;;
++ 	aux)
++ 		basic_machine=m68k-apple
++ 		os=-aux
++ 		;;
+  	amiga)
+  		basic_machine=m68k-cbm
+  		;;
+***************
+*** 658,663 ****
+--- 662,670 ----
+  	orion105)
+  		basic_machine=clipper-highlevel
+  		;;
++ 	m68k-apple*)
++ 		os=-aux
++ 		;;
+  	*)
+  		echo Invalid configuration \`$1\': machine \`$basic_machine\' not recognized 1>&2
+  		exit 1
+***************
+*** 698,704 ****
+  	      | -amigados* | -msdos* | -newsos* | -unicos* | -aos* \
+  	      | -nindy* | -vxworks* | -ebmon* | -hms* | -mvs* | -clix* \
+  	      | -riscos* | -linux* | -uniplus* | -iris* | -rtu* | -xenix* \
+! 	      | -hiux* | -386bsd* | -netbsd* | -riscix* | -lynxos* \
+  	      | -go32 | -vsta | -sim | -es1800* | -udi | -hms* | -xray | -hds* \
+  	      | -os68k* | -none* | -v88r* | -aout* | -coff | -elf* | -bosx* \
+  	      | -abug | -ecoff* | -netware* )
+--- 705,711 ----
+  	      | -amigados* | -msdos* | -newsos* | -unicos* | -aos* \
+  	      | -nindy* | -vxworks* | -ebmon* | -hms* | -mvs* | -clix* \
+  	      | -riscos* | -linux* | -uniplus* | -iris* | -rtu* | -xenix* \
+! 	      | -hiux* | -386bsd* | -netbsd* | -riscix* | -lynxos* | -aux* \
+  	      | -go32 | -vsta | -sim | -es1800* | -udi | -hms* | -xray | -hds* \
+  	      | -os68k* | -none* | -v88r* | -aout* | -coff | -elf* | -bosx* \
+  	      | -abug | -ecoff* | -netware* )
+***************
+*** 912,917 ****
+--- 919,927 ----
+  			-genix*)
+  				vendor=ns
+  				;;
++ 			-aux*)
++ 				vendor=apple
++ 				;;
+  			-mvs*)
+  				vendor=ibm
+  				;;

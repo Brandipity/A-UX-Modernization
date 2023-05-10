@@ -1,0 +1,125 @@
+Path: news.gsfc.nasa.gov!newsfeed.gsfc.nasa.gov!ukma!darwin.sura.net!howland.reston.ans.net!wupost!udel!news.udel.edu!me.udel.edu!johnston
+From: johnston@me.udel.edu (Bill Johnston)
+Newsgroups: comp.unix.aux
+Subject: set-aux-binary sets ty/cr to 'BIN '/'A/UX'
+Date: 31 Mar 1994 04:59:06 GMT
+Organization: University of Delaware
+Lines: 114
+Message-ID: <2ndlaq$ra9@news.udel.edu>
+NNTP-Posting-Host: me.udel.edu
+
+set-aux-binary is a freely redistributable utility that 
+sets the type and creator of input files to 'BIN '/'A/UX'.
+This permits binary files downloaded to a Mac partition 
+to be copied to an A/UX unix partition without invoking 
+A/UX's automatic carriage-return-to-newlines conversion,
+which can cause file corruption.
+
+usage:  in the System 7.x Finder, drag-and-drop icon(s) 
+representing unix binary file(s) onto the set-aux-binary icon.  
+
+set-aux-binary is based on ctc 1.2 by Brian Bechtel,
+with minor changes:  its TextEdit boxes for user input 
+default to 'BIN '/'A/UX', which saves keystrokes, and 
+it touches the parent folder to update the Finder icons.  
+
+Note that set-aux-binary won't repair a binary file that 
+has been mistakenly downloaded in ascii mode to a MacOS
+partition.  In such cases, see the A/UX FAQ, available
+on jagubox.gsfc.nasa.gov in /pub/aux, for detailed 
+instructions and try, try again ...
+ 
+- Bill (johnston@me.udel.edu)
+
+(This file must be converted with BinHex 4.0)
+:%R0PG#eKGAJYBQPZBA*j,R0TG!"6594%8dP8)3#3"!kN!!!"4N#A8dP8)3!"!!!
+1T(*-BA8#Z!#3!aB![b!J%R0PG#eKGAJYBQPZBA*j)$%Z-!#3$5T[!*!$I!#D!0`
+"N!!!N!-#!*!2KJ!!!5$rN!3"!+Qr[MkT[m%1!*!''3B!N!B1(J#3#X-I$3!1Ff9
+d,@&eH#eLD@jKFRN!N"(B-`#3%4B!!!YR!*!$&J#3"%&38%a$9%-a)3#RRi+BTjq
+#QJ!!&8J!N!B+F3#3"*iJ!*!)K'S-`2K1jYRYYCG6lTC3,U(m+*l66ENRGc1p@MF
+P6`NRG$-06jp6fEST`9-j6Hi9fdFiY@rpRY2@*p52dq24V5XlXLAX0MZ,YKRK55M
+CAS3HB5IKVR+bP6$#b$i*fj3IiB6@Z5@XA2NTTi4e-F*Ma55---)[`Q-,fqYq#5@
+8m0E`"hcilrULJmh)Y[F)Pb"MNe[)R*10$d!Yke`"'!#ie3H3!)XRmai8a!%UC`"
+f*5"GPXFAcKaCRXS1ZN-P,H(HNYB1AdYhAe#(lP91Chee8rA'Zl#*4I8*a"HrBm0
+lKP6PkhEUAKGKE39aNkNdclRk8+jcG@QH#Eq#Z#j#b6#JMk52&m3,iT8cZa+bY#Y
+4180U39b[m)ZI[)*FabIrB8!48M@KbA[!#6TKUe4Q5EIlC!R2K2!m2'Id!50,AS!
+MMc%ZJ#FVNCBq4[)NIe`k8A905T6BT4HqMB`dGSG2qV[d-Zq6aT'Y`G1KF!)56DL
+fmeld(ZAASIYq4l1RTX3("ZN-9NETl$alQ0q'@VQLr3apmV(,-Zk8cPMLNmUN(bP
+1+RfNDE#alQ9-bJpbZlP!H%J)#eYR"c#lD6`T*6@rD8pD!$#pij89`+$l95fr+(E
+f-HCh((1k+Th%r2iQ[B"TR9*kI#D99(G*2lpCi14%5Aq9jB%(jCNlqS'G(E#8b'E
+X5)pH6q,j&*i$iX'UDh+LqYVX`3!lBVDBLCSG%!Fe,hECDfE&+m#iG!&3dj6Lj'c
+["6fjLirCGm)HQNra*pTN'V$@bC,R!keQ-HRYFmR)-hKqJQGF2'JaNb,&a81Bqem
+#E#(1(rDG5ZDQPh(%('#89$!Ap0ST*k+qU#6QLU9L,1VNMiNri)pK*a(qQ,eAPXA
+qEcE,CQ&-mMR!bfRG*B3aHB-$R)2HE1a`"NmNC[Fl"kN[[2HkF8`Cl1iLHPf-KLa
+Q-%5$9+Q6Upa,P0"IaB0B68@(,*Jbk+02%f1TN!!6Q)QSDQ!#8r4%T9Rq!-mVdDH
+aei[4S$T9!2B2pH9Q-aL,I@!U`MRJkNT0$`0FrTl0Dqdd00Qm'r#q12q!V42J,Dj
+ZE6[SI[f'efMj'Yi)h3m1)R[+BX3XYbVD,lLkIMP@$+Zi1N-aAUEChKfQY)HhX`!
+ph[*1%pErjq8k(9Lri5ehm3q!9qHU32rRiEGm)piP$+afG5Vk+bPpZk+2TA4(f8Z
+Jdl40["QVFZba&([+mZCf'V#HpQDk1+bc[GQZ2(4M0$I6[$0,c[@AmXH&KlMQKMq
+$8D$l2`lYN!"4f'`Ui*Spl)M4T4XeESS)EkH),#5bjSQd3-B4PiX0C$cVZNjP+P5
+Q4[Q"jHrRHM1[MYcYL2Lc15F5"ZX3FGC$A,1c3CL`I`LPU"Yj%A3TTl9&cLD(e3+
+QNpYpDlC8lEb0F`4d%m9Jd0PNb@Nl2cjLhP,PqQ2p*50`cGr(,PVba0qEKi9`LdP
+mecAGNLQqiiUhX1,[A"paf,'M(8BI0K3f@iTK4(LlrT+HSFaeCX`p%mp(qGj-amr
+I%XDJ#'rp2R`YbAC-b,i0lebQm&lj$m+[6-$YK#lKN!$imAF(,4AEDaXEH+mi8V5
+0e*UUTLT5Z@fBEfq'SDM4P@fpi-QdVR(Tq0[[Iee1[2LkjjTi9$bUZ$A@eUYZ)hG
+ccXZfSLaAQMA[(Hc`rV2bM(K8#(20eVbb["-2ERYGrX6"Hb8KcL8dCQLHq84MH&r
+QSDUGD41fUMMS5Nh%!R!@B#e9`"CD`'"TaL`rV)!L@-[Bq61[&X0kaPjlpMIRDq`
+mciqIRYK6I`NU#JZ`mfAAMB"6m3cb!jrcr4acdf($6Giiei%MdTR[f0eTV)R8l%D
+5`bTF%d(P0S8))jZTN!"T5)A0&65Y*b0YDB@!lkA`LEfYaXKTZmd+[-eZ%m)RplD
+Z-5XD8IDk6@#[Hq*dDEUpcTSZK'NL,Zqlr'0dQBQF(YpVeEmbEYEEkpiDYpG0lR8
+E$ZpTCDRR,6EA&AUE`$LHG&Y1iRN#6`jBHT@)F6LXeFpUpCK@[k[@M&'V0fLeS08
+qYGB9Dr9DV(@DMM@ik!f(05K[[cMNDR@49YqVe8kY$QNep8re@Deq4D[TaSXSU`p
+eLD!T91SM!1QBF-i8,#e$m%PK8dlpP-eB"+lm'N1JiSUKpiHV$IfcV1'arM2Yr49
+Jk-d[Ki#a1Z&LZ8BEDj*86rij'cXkDQ1M(bNkpD2d5IdQ0aNhqepDaK6)FVa5PQG
+fbIMFNh%jJMATa"'rj,Pd,[F2m"kN+I8ak)!Ai5LVDrL1TUp"[BP0UflaYEQl&'B
+(p%-)MTTB@JNSa10)r*3)@JjS(XAS%GbA)EJIiCVk!Zjle6iIKe[4+EM25&aeYlX
+Pj1p@d99`*fb&)rXDeR1IlTUip9PCh"Ch+-L&X!p,QfV+CA%F&r*ckbL%GCCee2N
+kBSU4$3IGhCcE&qVZZiGH19"%LbQDXrXDDqp68UG,B2IQDZ%E+C@qG&TLU8'PVmG
+2`A"U[`TJfE5!6hjK32MR"LVqEi-NrTR"(,jL-(AM@q#,9Vlrjr('NZ9PAPEiBF3
+Ar&-KbC2%)kl`U`bUc93b43`@qH(KT2qU*+mD81j6L[X`JBBjIm@!5Se2pCrL*c%
+NUTAq0"$c5r&+KLJXjTrNYBLR92l#K3[Ajb1*drJ4RTS2G83@"P$e9hf[iSmkA*Q
+[K3lq1jp+D*5YqP[L&8Bje2S'Vil(2rfrl2rQrC2b5FlF[lljSIV-i%[maUIZL[(
+,@35Rk8djpq9ir*rL(Xq#3Bl(Fpd!m38$`ZF-m#@Ar&3pP[c1r8I(Pf"5Pf1aLqG
+8RPV-mFIHM*f,RBiPBZHSa@Prl(hLme(($$#j0f0[DMaQ-%dkqX88h40(2[BqkZF
+5+NrqkUIk8hqaEe@Sr5S4bV&A+3pC9[ZRI""rlE9B)T@ADM#R,qD*h5IS5qUS+1H
+FRSM*mrbLrq,mh*M2TIPGRZq&crC9!(pD5$fi&epILfr'6pq)5c%QAdM*Ydp+epi
+k+Cek`&EQG"@icLrl,rHhSLq2eFUEpiXR-#iH8R1QcCmfPmV)DU0-3iaA'&dHG,A
+3TD*F1AMC*28NRr*,eDPdN[1p00Gjq'H285DAD3@'58iPjP*-#p'l'#8Lr8Cck@d
+pCUbieMk1lqMUiKcqGPm`j-Grc-#'1C1l@PZ#lKfFhmHeKGUiM@DViYIGdH,MH(G
+EHiM@*S[rYMR`5#b,eKljc"LBD)1+fRlDUf,p&1e)X6j5h9"6LpZ(ieXfEkp&r50
+YL6'YV#f!dG9XEN)I*TXADUKHSbihQ,8GE9ePU'rUD!Z5M`2VFUbhBNeFDdep3ah
+@[KjhGa$p(N8riJr6C02b(Jk%cj0Q!&`+(3KId$JMDK2i$`XCc8bS$B'H00e6F+$
+R",#NXHM4m`cq+d21ahd1DJ1UGlS9rC5h!#j@TT(lT6TaZ,3rd$-%%H)-'HKa8G8
+bXP#lSQPr3Spa9FZm&E94f+eSGk)fSR,C*DLG8MA64TbZANd,)rH5UYh5KpSC(&U
+m#QkC4BpqbK)RmREBhlH$-N0Y%hUFeAUp"l@Ql)C(I,K,kRB(rH(Z0VHTZVh&jh9
+cph9dZC@ee[m!N!-0'A0PG#eKGAJYBQPZBA*j,9*&384045jdH(3!N!CAN!!!N"'
+'!!!10!#3!aB!N!1!9%9B9%&-4N%"!+Qr[QfT[m$,!*!'!li!N!B#A3!!r5-!N!B
+TdP&K(jDlZAlbG(r)ME+"2`cF)!2jI-&XJ(aHIaJMIcU(hHP"(q#`2qM(f3!cEJb
+%"-c*b38iQr8"GmJ,2-MRaK!"Q!(m)CE$)--Ip"&'"1Ue-YY!288pRD*$jhV*3KG
+$0)FqP18R#UQiC$N`'JT#YpIRjE%@X,SpJ(8Ml-Gq'!*#NZRjJ!HbrKJJ",`5F#&
+r[b@FL4mcN!$iqk%)$2K$Q8#B)il9MM$-FQ1r"hMF#2RGQ6ijmQ%1KH3BbN1qD0!
+I)LAB-"6aS6!adB44aZpK##dNrk1`,kFQ"-5)BhP9A5MN`N4M&a"CX3Bc1iap@D"
+aFMpJmSHm2L3$AZ61P*1"P,`)XX"2p05`"!L4Md@qX#q%qBC%Jr-T%#%+NBV*k@D
+MD+!$)13RH,hGRMY-PS%6X,%(T#BV3ASfD%@+$N%VRiI"[L"T&-F"@Ii3'DV0Z%1
+C[M"I(JkakqZ(M9ir"ZQ`(eQ"4`$BH"cE-[2k-YaF%+qDX`Cb0m,G%8*pj#2pac$
+J#mYb[JQ-q#53!2-`r)F!Um54BZ-S&j!!DC!!biMeZM(jL'"@lNA8bh2k2BBj5Ic
+DA$FpJD&kQ(bIKQir)Pq*q@l5Me2I6EEJqN+ND)lG!9q)I-lQhaEFUKAfq2dJ#hS
+*-[h5R+3*%pm3p'q'3*J8Km2RI*[FPpZ5q1!Fk0U6IXGZIj!!rc+3!lMhhCNF'Bk
+H'Fl`*)IFBAGb*Sc`SQ@@5eH3!1kdR%8j2NbJ@!(cKmK34KjH&Mp-1*8%CF[i&h"
+RZJPA6di@!U%FY2)(Jd$F"c+%&i9DC[Q51Dm[Q1ccFK+KF$m!)5%5Ff9d,@&eH#e
+LD@jKFRNJ-5i`!*!5I!#D!0`"N!!!N!-"!!!,C`#3"aB!N!1'!!!")2q3"!%!UEq
+q2UQr`3i!N!BC"J#3"JfZ!*!+9%QXd3!!!3#3!`%8!*!$&!#3!c*!!MB("JJ)"N!
+%[T)R!T05CA-T!e0dBA4eFaCIAc038K*cCA3YBA9i,@*TEQ&bH5jcDA4K!J!#!&0
+*9%46593K!J"6594%8dP8)3#3'+QrZTJ!!!kN!!!"4M3J'hNJ((N#6T-C4ZJd!8T
+(J!3"GJa("p"[1PFJ*J%!T1!#N!"m"p"i9N`"pUBd)"Yb)"ab%dk66qm!$'X&!6C
++E!*3E3!!PKB`,!*35-!JE!*-ji!#,c!)!PF5r["1V3%0XZ8"!8jA)#SQCeEP!3%
+X&bmX!!C1V33U8)m[!%kY&!3U!*!$%!!V!!8"'!(f!*!'!`#3!`%!N!-"&!#3!a3
+!N!-b!*lGL!dk!*!$(!!b!!"6CA4R!*!$#J!!rrm!N!@I)p69#3:
+
+
+
+
+-- 
+-- Bill Johnston (johnston@me.udel.edu)
+-- 38 Chambers Street; Newark, DE 19711; (302)368-1949
+

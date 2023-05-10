@@ -1,0 +1,189 @@
+This is a copy of a posting on comp.unix.aux concerning compiling CAP
+for A/UX
+
+---------------------------------------------------------------------
+
+/*
+ * First of all, a short message from someone who has followed the
+ * following directions
+ */
+
+From dhurtt@m15t.ess.harris.com Mon Aug  2 11:27:40 1993
+Return-Path: <dhurtt@m15t.ess.harris.com>
+Received: from m15t.ess.harris.com by jagubox.gsfc.nasa.gov with smtp
+	(Smail3.1.28.1 #2) id m0oN1nW-0003CcC; Mon, 2 Aug 93 11:27 EDT
+Received: by m15t.ess.harris.com (5.64/A/UX-3.00)
+	id AA00228; Sat, 31 Jul 93 19:23:53 PDT
+Date: Sat, 31 Jul 93 19:23:53 PDT
+From: dhurtt@m15t.ess.harris.com (Dale Hurtt)
+Message-Id: <9308010223.AA00228@m15t.ess.harris.com>
+To: dhurtt@ic1d.harris.com, jim@jagubox.gsfc.nasa.gov
+Subject: Additions to CAP.txt
+Status: RO
+
+I downloaded the document CAP.txt and followed the information there and
+thought I would pass along all of the other steps I took in order to get
+CAP 6.0 patch level 143 to work.
+
+The statements about the makefile are still the same. Delete all of the 
+Makefiles, run gen.makes, and then make using the makefiles.
+Edit appletalk.h in the netat directory (it wasn't real clear which appletalk
+header file was being referred to) as listed in CAP.txt. The line:
+
+short lap_proto = LAP_AUX;
+
+needs to be added to the following files:
+
+cap60/lib/cap/abauxddp.c
+cap60/applications/papif/papif.c
+cap60/applications/aufs/aufs.c
+cap60/applications/lwsrv.c
+cap60/contrib/lwrename.c
+cap60/contrib/printqueue.c
+cap60/samples/lwpr.c
+cap60/samples/tlw.c
+cap60/samples/atlook.c
+cap60/samples/getzones.c
+cap60/samples/isrv.c
+cap60/samples/ash.c
+
+What I did was create a short script that appends the necessary line on the
+bottom of the files.
+
+As CAP.txt indicates, the last change is in cap60/applications/aufs/afposenum.c
+where "index" needs to be changed to "idx".  Just a note - don't do global 
+search and replaces -- there are calls to rindex().
+
+The instructions that come with CAP are not very clear on what steps to take --
+that is, until you find the reference to run make in the docs/ directory. Once
+install.doc is made you can print it out.
+
+/*
+ * Now here's what to do and how to do it
+ */
+
+Newsgroups: comp.unix.aux
+Path: skates.gsfc.nasa.gov!ames!haven.umd.edu!uunet!ivgate!beeble!dent
+From: dent@beeble.omahug.org (Dave Caplinger)
+Subject: Re: CAP on AUX (Answer)
+References: <20virs$f47@altitude.HIP.CAM.ORG> <C9pEpB.2v8@news.cis.umn.edu> <rodgrim-080793085505@unicorn.imv.aau.dk> <93190.164115AUBXG@asuacad.bitnet> <1993Jul10.160546.1005@tolten.puc.cl>
+Organization: Beeble Planning Commission
+Date: Sun, 11 Jul 1993 13:15:14 GMT
+Message-ID: <CA04tF.2G1@beeble.omahug.org>
+Lines: 110
+
+ekaftan@tolten.puc.cl (Eduardo Kaftanski) writes:
+
+>In article <93190.164115AUBXG@asuacad.bitnet> AUBXG@ASUACAD.BITNET (Ben Goren) writes:
+>>Would either of you who said that you got CAP to compile on A/UX mind
+>>doing some hand-holding? I've tried, many times, with patch levels from
+>>100 through 143, and every time I get compilation errors out the wazoo
+>>on `make programs`--everything before then works fine, even without
+>>warnings.
+
+>        Yes, of course I can help you out! I've installed CAP tree times
+>in a pair of aux boxes and the three times i've been able to make the
+>whole thing without a single problem. I'm not sure it can do, but I will
+>re-install CAP in one of them just to refresh myself of the whole
+>procedure in rder to be able to help.
+
+FYI, here are the instructions I came up with a while back when I was getting
+CAP v6.0pl128 running on my A/UX box.  
+
+One final note before jumping back in time.. I have used lwsrv since this
+all happened, and it does work fine.  In fact, this is the only part of CAP
+that I use since aufs is so slow (see the end of the included message for
+times etc.)
+
+Hope this helps... I'd be happy to help out via email if you have any other
+questions/comments...
+
+Dave Caplinger
+dent@beeble.omahug.org
+
+--- Begin included message ---
+
+Well I finally got CAP to compile (partly) on A/UX 3.0!
+
+I know you're in suspense, so here's how I did it:   :-)
+
+First of all, be aware that make uses "Makefile" by default, but gen.makes
+creates "makefile".  Delete the Makefiles that come in the distribution
+(not Makefile.m4) so that after you run "gen.makes" your later "make"
+will actually use the configuration you've defined. :-)
+
+Now we have to trick CAP into not trying to use KIP or MKIP or UAB or
+whatever else since we already have built-in AppleTalk in A/UX:
+
+Edit appletalk.h:
+add this line where the other LAP_* defines are:
+#define LAP_AUX		5
+
+Edit cap60/lib/cap/abauxddp.c
+add this line:
+short lap_proto = LAP_AUX;
+
+These two things ensure that lap_proto is no longer an unresolved symbol in
+lipcap.a.  They don't actually do anything, but I'm hoping that "nothing" is
+the right thing to do so we can let A/UX's built-in appletalk support work.
+
+In cap60/applications/aufs/afposenum.c, from line 940 on, change the variable
+'index' to 'idx' (or something other than 'index' so it won't conflict with
+'index()'.)
+
+Once these three modifications are made, and you're sure that your make is
+using 'makefile' and not 'Makefile' in the various directories, it should
+compile.  Note that you do not need atis (and in fact it won't be compiled),
+so after you compile, try running atlook to see what it can see.  (You can
+compare this with A/UX's 'atlookup' command; they should see the same
+things...)  If you start up aufs, then you should be able to log into it
+with ash.
+
+One thing that doesn't work is "getzones" (although Apple's 'atlookup -z'
+works fine..) but I haven't had a chance to try to track down why it
+doesn't work.
+
+NOTE:  I haven't actually tried beating on this with several client macs at
+once yet, nor have I tried the LaserWriter support yet.  However, this should
+at least get you up and running, and hopefully we'll be able to work out
+whatever is still not quite right.  :-)  If you have severe problems or
+don't understand my explanation, send me email and I'll try to lend a hand...
+
+Just for your information, here are some informal tests I ran once I had CAP
+running just to compare it's performance against AppleShare and FileSharing.
+The file I copied was a 15.5 MB Folder that I just "finder-copied".
+
+Times:
+
+  Client IIfx to A/UX CAP/aufs     8:15   (Zone A to Zone B)
+  A/UX CAP to Client IIfx          4:05
+
+  Client IIfx to Fshare 7.01       5:05   (Zone A to Zone B)
+  Fshare 7.01 to Client IIfx       3:30
+
+  Client IIfx to Ashare 3.0        4:00   (Zone A to Zone A)
+  Ashare 3.0 to Client IIfx        2:42
+
+Client is defined as a Mac IIfx running System 7.01 with 32MB RAM.
+A/UX CAP is a Quadra 700 running A/UX 3.0 & CAP 6.0pl126 with 20MB RAM.
+Fshare 7.01 is a Mac IIci running System 7.01 file-sharing (8MB RAM).
+Ashare 3.0 is a Mac IIfx running AppleShare 3.0 (8MB RAM).
+
+In all cases, the servers were otherwise completely idle (I did this at
+about 2 in the morning :-) so it's hardly a fair test.  I know that our
+AppleShare server degrades quickly as you add more simultaneous users, and
+I would guess that CAP wouldn't degrade quite as fast, but that's only a
+guess.  Also, there may be some things I could have done to tune CAP to
+get more performance, but since I'm new to this, I don't really know what
+they are yet.  :-)
+
+(Does anyone else have any kind of informal tests of other CAP-capable
+platforms running aufs that show it actually performing better than
+AppleShare 3.0?  :-)
+
+--- end of included message ---
+
+    Jim Jagielski               |  "Supreme executive power derives from
+    jim@jagubox.gsfc.nasa.gov   |   a mandate from the masses, not from
+    NASA/GSFC, Code 734.4       |   some farcical aquatic ceremony."
+    Greenbelt, MD 20771         |		- Dennis

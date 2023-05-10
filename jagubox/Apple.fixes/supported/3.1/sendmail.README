@@ -1,0 +1,25 @@
+Apple Computer, Inc.
+
+A patch to version 3.1 of A/UX for these vulnerabilities is available via
+anonymous FTP from ftp.support.apple.com or aux.support.apple.com; in each case,
+a compressed, replacement version (8.6.9) of sendmail is in pub/aux.patches.
+
+Output of the sum -r and sumdir commands for the sendmail.Z archive
+
+sumdir sendmail.Z
+29425   194849 sendmail.Z
+
+sum -r    sendmail.Z
+29425   381 sendmail.Z
+
+Uncompress this file using compress(1) and replace the previous version
+(8.6.4 or 8.6.4.1) in /usr/lib; be sure to kill the running sendmail and 
+restart.
+
+Earlier versions of A/UX are not supported by this patch.  Users of previous
+versions are encouraged to update their system to A/UX 3.1 or compile and
+install the version of sendmail available from ftp.cs.berkeley.edu.
+
+Customers should contact their reseller for any additional information.
+
+

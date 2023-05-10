@@ -1,0 +1,24 @@
+This is a port of libg++-2.5.3 to A/UX (3.1; should work under
+3.0.x/3.0/2.0/2.0.1, except possibly etags).
+
+Due to changes in the operation of gcc/g++, libg++ is no longer
+automatically used when linking a C++ program. You need to specify -lg++
+on the link line...
+
+To install libg++-2.5.3:
+	1) Untar the libg++-2.5.3.aux.tar.Z file in some convenient place
+	   (/usr/local/bin or /usr/local/Gnu will do).
+	2) In the directory 'lib' under where you untarred the distribution,
+	   you'll find 'libg++.a', 'libiberty.a', and the directory
+	   'g++-include'. Move these files to /usr/local/lib (or
+	   /usr/local/Gnu/lib if you installed gcc in /usr/local/Gnu) and
+	   they will be automatically found.
+
+As always, problems that appear to be in the GNU sources should be sent
+to them, while A/UX related bugs should go to me.
+
+--John
+coolidge@apple.com
+
+Disclaimer: Apple Computer, Inc., is in no way responsible for this
+package (and is probably unaware of its existance).

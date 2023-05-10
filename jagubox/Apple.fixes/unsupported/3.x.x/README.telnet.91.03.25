@@ -1,0 +1,20 @@
+These are the Berkeley 91.03.25 telnet and telnetd ported to A/UX. They
+offer a number of additional features (terminal and windowsize
+negotiation, a rlogin-like protocol, hooks for authentication, hooks
+for kerberos, and others). In addition, the in.telnetd fixes a bug in
+A/UX's in.telnetd which can leave ptys allocated even though the user
+has been disconnected.
+
+To install the binaries: create a convenient temporary directory and
+untar the bin.tar.Z file. Move telnet to where you'd like it to be (I
+keep it in /usr/local/bin). Rename Apple's /usr/etc/in.telnetd to
+in.telnetd.apple or some other name, and move the new in.telnetd to
+/usr/etc. Finally, move telnet.1.z and telnetd.8.z into their
+respective man page directories (I keep local man pages in
+/usr/catman/l_man/man?).
+
+Please send A/UX-related bug reports to me, and bugs that appear to be
+in the Berkeley code to them. Best of luck!
+
+--John
+coolidge@apple.com

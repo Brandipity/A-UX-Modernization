@@ -1,0 +1,22 @@
+
+These files are intended to fix bugs in A/UX 3.0, 3.0.1, 3.0.2, and 3.1
+(unless otherwise indicated; some of these bugs are fixed in some
+releases of 3.x). They are not supported by Apple Computer, Inc., or
+any other agency (including the supplier of the file or the operator of
+this ftp site. While we will attempt to resolve any problems caused by
+these files, such support is on a time-available basis and may not occur
+(or may be subject to long delays).
+
+This software is made available "as is" and carries no warrentees or
+guarantees of fitness. While an effort has been made to ensure that
+these programs are free from serious defects, no formal testing has
+been done. The user assumes all liability and risk stemming from the
+use of these programs.
+
+	o Replacements for 3.0 _only_ are found in 3.0
+
+	o Replacements for 3.0.1 _only_ are found in 3.0.1
+
+	o Replacements for 3.0 and 3.0.1 are found in 3.0.x
+
+	o Replacements for 3.0, 3.0.1|2 and 3.1 are found in 3.x.x

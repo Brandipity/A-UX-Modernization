@@ -1,0 +1,46 @@
+This file contains the most recent listing of available files in Web_stuff
+as well as a short description of each. Most are GNUzipped (.gz) tar files.
+You will need the '../GNU_stuff/gzip_*.bin.tar.Z' file (which contains the
+GNUzip utility 'gzip|gunzip') to decompress these.
+
+Diff-files can be applied by using 'patch' which is available precompiled
+as '../Utilities/patch.bin.tar.gz'
+
+A1.README::
+	A text file description of all files in this directory.
+
+Mosaic-2.2.diffs.aux.tar.gz::
+	Port of the latest version of Mosiac (2.2) for A/UX. Provided by Eric
+	Rosen (eric@cse.ucsc.edu). Be sure to read README.AUX.
+
+Mosaic.gz::
+	Precompiled binary of X-Mosaic 2.4 for A/UX. Ignore the warnings :)
+
+apache_1.0.0.aux.tar.gz::
+	Port of Apache 1.0.0 for A/UX. Complete with binary and sources!
+
+freeWAIS-0.3.aux.tar.gz::
+	Full port of freeWAIS v0.3 for A/UX. Thanks to Jon Stevens
+	for the port.
+
+gopher2.016-diffs::
+	Patch file for gopher/gopherd 2.016 to compile and run under A/UX.
+
+httpd-1.4.1-aux.bin.tar.gz::
+	Port of the latest WWW server, httpd v1.4.1, for A/UX. Precompiled
+	and with all needed files to run it "right away" on your system.
+	Be sure to read the included AUX_README file though...
+
+lynx2-3.diffs::
+	Diffs to get lynx2-3 to compile correctly for A/UX. Requires 'gcc'.
+--
+===========================================================================
+#include <std/disclaimer.h>
+                                 =:^)
+           Jim Jagielski                    NASA/GSFC, Code 734.4
+     jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+        Voice: 301-286-5964                   FAX: 301-286-1719
+
+"If we increase the size of the penguin until it is the same height as a man
+ and then compare the relative brain size, we now find that the penguin's
+ brain is still smaller. But, and this is the point, it is larger than it WAS!"

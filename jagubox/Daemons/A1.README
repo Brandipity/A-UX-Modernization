@@ -1,0 +1,140 @@
+This file contains the most recent listing of available files in Daemons
+as well as a short description of each. Most are GNUzipped (.gz) tar files.
+You will need the '../GNU_stuff/gzip_*.bin.tar.Z' file (which contains the
+GNUzip utility 'gzip|gunzip') to decompress these.
+
+Diff-files can be applied by using 'patch' which is available precompiled
+as '../Utilities/patch.bin.tar.gz'
+
+A1.README::
+	A text file description of all files in this directory.
+
+AUXftpd.tar.gz::
+	This is a port of an earlier version of in.ftpd. This version logs
+	all uses of ftp into your machine and pays extra close attention
+	when someone logs in via anonymous ftp, logging a great deal of
+	info via syslogd. It includes updates to /usr/include/arpa/*.h files
+	for A/UX 2.0, 2.0.1 and 3.0.x. Globbing in this version is fixed.
+	The WUARCHIVE ftpd-server is better :)
+
+AUXsm565.tar.gz::
+	This is a port of sendmail ver 5.65 for A/UX. If you are running an
+	older version of A/UX, this updates sendmail to 5.65. It's also
+	useful for later A/UX's since it's been hacked to look in /etc/hosts
+	for hostname/IP-address info if the nameserver can't find any, which
+	is very useful!
+
+AUXsmail.tar.gz::
+	Tar package that contains patches and suggestions to be applied
+	to smail 3.1.28 to compile for use under A/UX. smail is an
+	_excellent_ replacement for sendmail. You can snag the complete
+	source from ftp.uu.net in pub/networking/mail.
+
+INN.config.data.1::
+	Having trouble compiling INN. Here's a copy of INN's config.data file
+	for A/UX. Provided by Richard Todd (rmtodd@skywalker.ecn.uoknor.edu).
+
+INN.config.data.2::
+	Having trouble compiling INN. Here's a copy of INN's config.data file
+	for A/UX. Provided by Chris North (cnorth@cambridge.apple.com)
+
+INN.config.data.3::
+	Having trouble compiling INN. Here's a copy of INN's config.data file
+	for A/UX. Provided by Peter Brewer (brewer@hamlet.umd.edu).
+
+INN.config.data.cc::
+	For those who want (or need!) to compile INN with cc, here's a copy
+	of an INN config.data file just for that. It requires the
+	INN.loadave.c.-cc package as well. From Fred Condo
+	(fred@covina.lightside.com).
+
+INN.loadave.c.-cc::
+	Replacement for INN's loadave.c when you are compiling INN with
+	cc instead of gcc. From Fred Condo (fred@covina.lightside.com).
+
+README.inetd::
+	Short little README file for the latest replacement version
+	of inetd for A/UX.
+
+bind-4.9.5-aux.tar.gz::
+	Complete source and binary package for BIND/Named-4.9.5
+	for A/UX 3.1.1
+
+fingerd.bin.tar.gz::
+	This is a port of the latest version of in.fingerd. Basically, the
+	big difference is that it logs all finger requests via the syslogd
+	daemon.
+
+gated-2.1.aux.patches::
+	Patches that add support to the official gated v2.1 (patchlevel 3)
+	distribution for A/UX. Tested under A/UX 2.0.1 but will most
+	probably work with later versions.
+
+httpd-1.3sec.bin.tar.gz::
+	Port of the latest WWW server, httpd v1.3, for A/UX. Precompiled
+	and with all needed files to run it "right away" on your system.
+	Be sure to read the included AUX_README file though...
+
+inetd-1.9.tar.gz::
+	BSD/Reno version of 'inetd' ported for A/UX 3.x.x. Includes some
+	very nice features such as running daemons as any user, passing
+	arguments to daemons and rereading of /etc/servers upon receiving
+	a SIGHUP signal. Newer version will also try to read inetd.conf if
+	servers doesn't exist and provides host access control a.la. tcpd
+	(tcp_wrappers). Ported|maintained by Jim Jagielski.
+
+ntalk.tar.gz::
+	Port of the "new" (BSD 4.3) versions of talk and talkd. The are
+	created as "ntalk" and "ntalkd" so that you don't loose previous
+	compatibility. Port by Steve Green (xrsbg@dirac.gsfc.nasa.gov).
+
+pcnfsd-v2-AUX.tar.gz::
+	Port of v2 of the the pcnfsd daemon for A/UX. Should work
+	better than the version supplied with A/UX.
+
+portmap-aux.tar.gz::
+	Replacement of /etc/portmap for A/UX 3.1(.1). Secure version
+	uses tcp_wrapper access control. Port of Wietse Venema
+	(wietse@wzv.win.tue.nl) portmapper 4.
+
+popper-aux.tar.gz::
+	Port of the Popper server for A/UX. By Ben Goran
+	(ben@tux.fa.asu.edu).
+
+popper-aux-shadow.tar.gz::
+	The 'popper' package changed to support shadow-passwords under
+	A/UX.
+
+slipdaemon.tar.gz::
+	A neat little daemon that is used to maintain a SL/IP connection.
+	Very useful! Provided by Alan Friedman (alan@kether.intellint.com)
+
+syslogd-1.2.tar.gz::
+	Replacement of syslogd (and syslog.h) for A/UX. Needed since
+	A/UX's syslogd doesn't handle 'news' facility very well :)
+	Based on BSD/Reno version - ported by Jim Jagielski.
+
+tcp_wrappers_7.4-aux.tar.gz::
+	Port of Wietse Venema (wietse@wzv.win.tue.nl) tcp_wrappers for
+	A/UX 3.1(.1)
+
+wu-ftpd-2.4.aux.tar.gz::
+	Port of the latest version (2.4) of the wuarchive ftp-server daemon
+	(wu-ftpd) for A/UX. Lots of neat extras: recommended! Requires 'gcc'
+	to compile.
+
+xntp-aux.tar.gz::
+	Port of the XNTPD time server daemon for A/UX. xntpd is a full
+	featured server that keeps you clock in sync with various clocks
+	on the net... easy to maintain 20ms accuracy.
+--
+===========================================================================
+#include <std/disclaimer.h>
+                                 =:^)
+           Jim Jagielski                    NASA/GSFC, Code 734.4
+     jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+        Voice: 301-286-5964                   FAX: 301-286-1719
+
+"If we increase the size of the penguin until it is the same height as a man
+ and then compare the relative brain size, we now find that the penguin's
+ brain is still smaller. But, and this is the point, it is larger than it WAS!"

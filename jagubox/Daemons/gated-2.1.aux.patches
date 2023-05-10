@@ -1,0 +1,457 @@
+The following patches update gated version 2.1 (Patch Level 3)
+for A/UX version 2.01.  By herbw@wiskit.rain.com (Herb Weiner)
+
+*** Makefile.ORIGINAL	Sun Jun 13 17:06:19 1993
+--- Makefile	Sun Jun 13 17:06:19 1993
+***************
+*** 15,21
+  			src/compat/asm.sed src/compat/make
+  
+  ALTSRCFILES	=	src.alt/Makefile src.alt/*.[ch]\
+! 			src.alt/{version,sigconv}.awk src/asm.sed
+  ROOTFILES	=	Acknowledgements CHANGES Copyright Licensing Makefile README
+  ROOTDIRS	=	aux conf man rfc
+  TARFILES	=	${ROOTFILES} ${ROOTDIRS} ${SRCFILES}
+
+--- 15,21 -----
+  			src/compat/asm.sed src/compat/make
+  
+  ALTSRCFILES	=	src.alt/Makefile src.alt/*.[ch]\
+! 			src.alt/version.awk src.alt/sigconv.awk src/asm.sed
+  ROOTFILES	=	Acknowledgements CHANGES Copyright Licensing Makefile README
+  ROOTDIRS	=	aux conf man rfc
+  TARFILES	=	${ROOTFILES} ${ROOTDIRS} ${SRCFILES}
+*** src/Makefile.config.ORIGINAL	Sun Jun 13 17:07:09 1993
+--- src/Makefile.config	Sun Jun 13 17:07:10 1993
+***************
+*** 9,15
+  #	Directory where gated and support programs will reside.  Usually
+  #	/etc (/usr/etc on SunOS 4.0).
+  #
+! DESTDIR=/etc
+  
+  #
+  #	Include directories for NYSERnet's SNMP.
+
+--- 9,15 -----
+  #	Directory where gated and support programs will reside.  Usually
+  #	/etc (/usr/etc on SunOS 4.0).
+  #
+! DESTDIR=/usr/local/bin
+  
+  #
+  #	Include directories for NYSERnet's SNMP.
+***************
+*** 14,20
+  #
+  #	Include directories for NYSERnet's SNMP.
+  #
+! SNMP_INCLUDE=/usr/include/arpa/snmp
+  
+  #
+  #	Include file which defines all the signals, usually
+
+--- 14,20 -----
+  #
+  #	Include directories for NYSERnet's SNMP.
+  #
+! #SNMP_INCLUDE=/usr/include/arpa/snmp
+  
+  #
+  #	Include file which defines all the signals, usually
+***************
+*** 30,36
+  #
+  #	Where to look for awk.  For BSD 4.3 Reno use /usr/bin/awk
+  #
+! AWK=/bin/awk
+  
+  #
+  #	Compile time definitions.  These are defined in Makefile.gated
+
+--- 30,36 -----
+  #
+  #	Where to look for awk.  For BSD 4.3 Reno use /usr/bin/awk
+  #
+! AWK=/usr/bin/awk
+  
+  #
+  #	Compile time definitions.  These are defined in Makefile.gated
+***************
+*** 35,41
+  #
+  #	Compile time definitions.  These are defined in Makefile.gated
+  #
+! DFLAGS= -DSUNOS
+  
+  #
+  #	Where to find gated includes.
+
+--- 35,42 -----
+  #
+  #	Compile time definitions.  These are defined in Makefile.gated
+  #
+! #DFLAGS= -DSYSV -DGATEWAY
+! DFLAGS= -DGATEWAY
+  
+  #
+  #	Where to find gated includes.
+***************
+*** 65,71
+  #	nameserver and don't have the resolver routines in libc.  For AIX
+  #	3.1 you will need '-lm -lbsd'
+  #
+! LDFLAGS=
+  
+  #
+  #	Flags for lint
+
+--- 66,72 -----
+  #	nameserver and don't have the resolver routines in libc.  For AIX
+  #	3.1 you will need '-lm -lbsd'
+  #
+! LDFLAGS=	-lbsd -lc_s
+  
+  #
+  #	Flags for lint
+***************
+*** 100,106
+  #	Command to update the symbol table in a library.  Should be
+  #	'ranlib' on BSD.  AIX/PS2 requires ':'.
+  #
+! RANLIB=	ranlib
+  
+  #
+  #	C compilation definitions.  On Vaxen the assembler output of the
+
+--- 101,107 -----
+  #	Command to update the symbol table in a library.  Should be
+  #	'ranlib' on BSD.  AIX/PS2 requires ':'.
+  #
+! RANLIB=	echo ranlib
+  
+  #
+  #	C compilation definitions.  On Vaxen the assembler output of the
+*** src/config.h.ORIGINAL	Sun Jun 13 17:07:09 1993
+--- src/config.h	Sun Jun 13 17:07:10 1993
+***************
+*** 146,152
+  #ifdef	hpux
+  #define	UNIX_NAME "/hp-ux"
+  #endif				/* hp-ux */
+! #if	defined(AIX) || defined(SYSV)
+  #define	UNIX_NAME "/unix"
+  #endif				/* AIX */
+  #ifndef	UNIX_NAME
+
+--- 146,152 -----
+  #ifdef	hpux
+  #define	UNIX_NAME "/hp-ux"
+  #endif				/* hp-ux */
+! #if	defined(AIX) || defined(SYSV) || defined(_AUX_SOURCE)
+  #define	UNIX_NAME "/unix"
+  #endif				/* AIX */
+  #ifndef	UNIX_NAME
+***************
+*** 204,210
+  #endif
+  
+  /* Macros for System V compatability */
+! #if	defined(SYSV) || defined(hpux)
+  #define	srandom	srand
+  #define	random	rand
+  #define	setlinebuf(x)	setvbuf(x, NULL, _IOLBF, BUFSIZ)
+
+--- 204,210 -----
+  #endif
+  
+  /* Macros for System V compatability */
+! #if	defined(SYSV) || defined(hpux) || defined (_AUX_SOURCE)
+  #define	srandom	srand
+  #define	random	rand
+  #define	setlinebuf(x)	setvbuf(x, NULL, _IOLBF, BUFSIZ)
+*** src/include.h.ORIGINAL	Sun Jun 13 17:07:09 1993
+--- src/include.h	Sun Jun 13 17:07:10 1993
+***************
+*** 67,72
+   * System and EGP header files to be included.
+   */
+  
+  #ifdef	vax11c
+  #include "[.vms]gated_named.h"
+  #endif	/* vax11c */
+
+--- 67,76 -----
+   * System and EGP header files to be included.
+   */
+  
++ #ifdef _AUX_SOURCE
++ #include <time.h>
++ #endif	/* _AUX_SOURCE */
++ 
+  #ifdef	vax11c
+  #include "[.vms]gated_named.h"
+  #endif	/* vax11c */
+*** src/krt.c.ORIGINAL	Sun Jun 13 17:07:10 1993
+--- src/krt.c	Sun Jun 13 17:07:10 1993
+***************
+*** 70,77
+  #define ROUTE_KERNEL
+  #include "include.h"
+  #include <nlist.h>
+- #ifdef	SYSV
+- #include <sys/sioctl.h>
+  #include <sys/stropts.h>
+  #else	/* SYSV */
+  #include <sys/ioctl.h>
+
+--- 70,75 -----
+  #define ROUTE_KERNEL
+  #include "include.h"
+  #include <nlist.h>
+  #include <sys/stropts.h>
+  #include <sys/ioctl.h>
+  #include <sys/mbuf.h>
+***************
+*** 73,79
+  #ifdef	SYSV
+  #include <sys/sioctl.h>
+  #include <sys/stropts.h>
+- #else	/* SYSV */
+  #include <sys/ioctl.h>
+  #endif	/* SYSV */
+  #include <sys/mbuf.h>
+
+--- 71,76 -----
+  #include "include.h"
+  #include <nlist.h>
+  #include <sys/stropts.h>
+  #include <sys/ioctl.h>
+  #include <sys/mbuf.h>
+  #ifndef vax11c
+***************
+*** 75,81
+  #include <sys/stropts.h>
+  #else	/* SYSV */
+  #include <sys/ioctl.h>
+- #endif	/* SYSV */
+  #include <sys/mbuf.h>
+  #ifndef vax11c
+  #include <sys/file.h>
+
+--- 72,77 -----
+  #include <nlist.h>
+  #include <sys/stropts.h>
+  #include <sys/ioctl.h>
+  #include <sys/mbuf.h>
+  #ifndef vax11c
+  #include <sys/file.h>
+***************
+*** 169,174
+  #define krt_conv(ptr)	mtod(&ptr, struct rtentry *)
+  #endif				/* !defined(krt_next) && !defined(RTM_ADD) */
+  
+  
+   /*	Delete a route given dest, gateway and flags	*/
+  /*ARGSUSED*/
+
+--- 165,171 -----
+  #define krt_conv(ptr)	mtod(&ptr, struct rtentry *)
+  #endif				/* !defined(krt_next) && !defined(RTM_ADD) */
+  
++ #ifdef _AUX_SOURCE
+  
+   /*  There is a bug in the Apple A/UX 2.01 nlist function.  It will	*/
+   /*  return a value of zero for any symbol that is in the bss region.	*/
+***************
+*** 170,175
+  #endif				/* !defined(krt_next) && !defined(RTM_ADD) */
+  
+  
+   /*	Delete a route given dest, gateway and flags	*/
+  /*ARGSUSED*/
+  int
+
+--- 167,201 -----
+  
+  #ifdef _AUX_SOURCE
+  
++  /*  There is a bug in the Apple A/UX 2.01 nlist function.  It will	*/
++  /*  return a value of zero for any symbol that is in the bss region.	*/
++  /*  It does work correctly for symbols which are in the data region.	*/
++  /*  This function opens a pipe to the nm(1) command, which works	*/
++  /*  correctly, although more slowly, for symbols in the bss region.	*/
++  /*  Herb Weiner <herbw@wiskit.rain.com>				*/
++ 
++ long pipe_nlist (symbol)
++ char	*symbol;
++ {
++ 	char	command [256];
++ 	char	buffer [256];
++ 	char	*bufp;
++ 	FILE	*symbol_pipe;
++ 	long	value = 0;
++ 
++ 	sprintf (command, "/bin/nm -d %s | /bin/grep %s", UNIX_NAME, symbol);
++ 	symbol_pipe = popen (command, "r");
++ 
++ 	fgets (buffer, sizeof (buffer), symbol_pipe);
++ 	bufp = strchr (buffer, '|');
++ 	if (bufp != NULL)
++ 		sscanf (bufp, "|%ld|", &value);
++ 
++ 	pclose (symbol_pipe);
++ 	return (value);
++ }
++ #endif				/* _AUX_SOURCE */
++ 
+   /*	Delete a route given dest, gateway and flags	*/
+  /*ARGSUSED*/
+  int
+***************
+*** 1306,1311
+      /* Build nlist from symbol names */
+      nl = (struct nlist *) calloc(NL_SIZE, sizeof(struct nlist));
+      for (i = NL_SIZE; i--;) {
+  	/* Use memcpy to avoid warning about const char * */
+  	memcpy((caddr_t) & nl[i].n_name, (caddr_t) & nl_names[i].nl_name, sizeof(char *));
+  #ifdef	NLIST_NOUNDER
+
+--- 1332,1343 -----
+      /* Build nlist from symbol names */
+      nl = (struct nlist *) calloc(NL_SIZE, sizeof(struct nlist));
+      for (i = NL_SIZE; i--;) {
++ #ifdef _AUX_SOURCE
++ 	nl[i].n_nptr = nl_names[i].nl_name;
++ 	if (nl[i].n_nptr)
++ 	    nl[i].n_nptr++;
++ 	nl[i].n_zeroes = 0;
++ #else
+  	/* Use memcpy to avoid warning about const char * */
+  	memcpy((caddr_t) & nl[i].n_name, (caddr_t) & nl_names[i].nl_name, sizeof(char *));
+  #ifdef	NLIST_NOUNDER
+***************
+*** 1313,1318
+  	    nl[i].n_name++;
+  	}
+  #endif				/* NLIST_NOUNDER */
+  	if (nl_names[i].nl_ptr) {
+  	    *nl_names[i].nl_ptr = &nl[i];
+  	}
+
+--- 1345,1351 -----
+  	    nl[i].n_name++;
+  	}
+  #endif				/* NLIST_NOUNDER */
++ #endif				/* _AUX_SOURCE */
+  	if (nl_names[i].nl_ptr) {
+  	    *nl_names[i].nl_ptr = &nl[i];
+  	}
+***************
+*** 1328,1333
+  	    quit(errno);
+  	}
+      }
+      kmem = open("/dev/kmem", O_RDONLY, 0);
+      if (kmem < 0) {
+  	trace(TR_ALL, LOG_ERR, "krt_init: open(\"/dev/kmem\"): %m");
+
+--- 1361,1375 -----
+  	    quit(errno);
+  	}
+      }
++ 
++ #ifdef _AUX_SOURCE
++     /* Use nm(1) to get the value of symbols in the bss region */
++     if (krt_rt[KRT_RTHOST]->n_value == 0)
++ 	krt_rt[KRT_RTHOST]->n_value = pipe_nlist (krt_rt[KRT_RTHOST]->n_nptr);
++     if (krt_rt[KRT_RTNET]->n_value == 0)
++ 	krt_rt[KRT_RTNET]->n_value = pipe_nlist (krt_rt[KRT_RTNET]->n_nptr);
++ #endif				/* _AUX_SOURCE */
++ 
+      kmem = open("/dev/kmem", O_RDONLY, 0);
+      if (kmem < 0) {
+  	trace(TR_ALL, LOG_ERR, "krt_init: open(\"/dev/kmem\"): %m");
+*** src/trace.c.ORIGINAL	Sun Sep  5 19:41:06 1993
+--- src/trace.c	Sun Sep  5 19:41:06 1993
+***************
+*** 456,462
+  #ifdef	vax11c
+      if (trace_FILE && (trace_FILE != sstdout)) {
+  #endif	/* vax11c */
+! 	if ((trace_flags & flags) & ~TR_NOSTAMP) {
+  	    *time_buffer = 0;
+  	    if (!((trace_flags | flags) & TR_NOSTAMP)) {
+  		tm = localtime(&time_sec);
+
+--- 456,463 -----
+  #ifdef	vax11c
+      if (trace_FILE && (trace_FILE != sstdout)) {
+  #endif	/* vax11c */
+! 	if (((trace_flags & flags) & ~TR_NOSTAMP) || pri)
+! 	{
+  	    *time_buffer = 0;
+  	    if (!((trace_flags | flags) & TR_NOSTAMP)) {
+  		tm = localtime(&time_sec);
+***************
+*** 467,477
+  		(void) sprintf(&time_buffer[strlen(time_buffer)], "[%d] ",
+  			       my_pid);
+  	    }
+! 	    if (*time_buffer) {
+! 		(void) fputs(time_buffer, trace_FILE);
+! 	    }
+! 	    (void) fputs((char *) trace_buffer, trace_FILE);
+! 	    (void) fputc('\n', trace_FILE);
+  	}
+  	if (pri && !test_flag) {
+  	    syslog(pri, (char *) trace_buffer);
+
+--- 468,480 -----
+  		(void) sprintf(&time_buffer[strlen(time_buffer)], "[%d] ",
+  			       my_pid);
+  	    }
+! 		if (trace_FILE)
+! 		{
+! 			if (*time_buffer)
+! 				(void) fputs(time_buffer, trace_FILE);
+! 			(void) fputs((char *) trace_buffer, trace_FILE);
+! 			(void) fputc('\n', trace_FILE);
+! 		}
+  	}
+  /* --------------------------------------------
+  	if (pri && !test_flag) {
+***************
+*** 473,478
+  	    (void) fputs((char *) trace_buffer, trace_FILE);
+  	    (void) fputc('\n', trace_FILE);
+  	}
+  	if (pri && !test_flag) {
+  	    syslog(pri, (char *) trace_buffer);
+  	}
+
+--- 476,482 -----
+  			(void) fputc('\n', trace_FILE);
+  		}
+  	}
++ /* --------------------------------------------
+  	if (pri && !test_flag) {
+  	    syslog(pri, (char *) trace_buffer);
+  	}
+***************
+*** 476,481
+  	if (pri && !test_flag) {
+  	    syslog(pri, (char *) trace_buffer);
+  	}
+  #ifdef	vax11c
+      } else {
+  	if (((trace_flags & flags) & ~TR_NOSTAMP) || (pri && !test_flag))
+
+--- 480,486 -----
+  	if (pri && !test_flag) {
+  	    syslog(pri, (char *) trace_buffer);
+  	}
++ -------------------------------------------- */
+  #ifdef	vax11c
+      } else {
+  	if (((trace_flags & flags) & ~TR_NOSTAMP) || (pri && !test_flag))

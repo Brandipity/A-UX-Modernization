@@ -1,0 +1,59 @@
+This file contains the most recent listing of available files in the
+~ftp/pub/aux/security direction, as well as a short listing of each.  Some are
+GNUzipped (.gz) tar files.
+
+A1.README::
+	This here file :)
+
+better.perms::
+	A little 'ksh' script that changes the owners, groups and
+	permission of some files to what's recommended in the FAQ
+	to make them (and your system) a bit more secure
+
+inetd-1.9.tar.gz::
+	BSD/Reno version of 'inetd' ported for A/UX 3.x.x. Includes some
+	very nice features such as running daemons as any user, passing
+	arguments to daemons and rereading of /etc/servers upon receiving
+	a SIGHUP signal. Newer version will also try to read inetd.conf if
+	servers doesn't exist and provides host access control a.la. tcpd
+	(tcp_wrappers). Ported|maintained by Jim Jagielski.
+
+md5.bin.tar.gz::
+	Port of 'md5' for A/UX. md5 generates a "message-digest"
+	fingerprint (checksum) of a file. This fingerprint is
+	much more secure than regular checksums since it's virtually
+	impossible for 2 different "messages" to have the same finger-
+	print or to generate a message to have a predetermined one.
+
+portmap-aux.tar.gz::
+	Replacement of /etc/portmap for A/UX 3.1(.1). Secure version
+	uses tcp_wrapper access control. Port of Wietse Venema
+	(wietse@wzv.win.tue.nl) portmapper 4.
+
+sh.tar.gz::
+	Replacement for /bin/sh that fixes a few security holes,
+	in SUID programs that use 'system()' or 'popen()', by
+	resetting IFS before a script is executed.
+	** A MUST HAVE !! **
+
+ssh-1.2.17-aux.tar.gz::
+	Port of ssh-1.2.17 for A/UX. ssh is a secure replacement
+	for the rsh/rlogin/rcp family (and more!)
+
+sudo.tar.gz::
+	Source for the famous 'sudo' utility that allows other users to
+	perform 'root' functions while limiting what they can do.
+
+tcp_wrappers_7.4-aux.tar.gz::
+	Port of Wietse Venema (wietse@wzv.win.tue.nl) tcp_wrappers for
+	A/UX 3.1(.1)
+--
+===========================================================================
+#include <std/disclaimer.h>
+                                 =:^)
+           Jim Jagielski                    NASA/GSFC, Code 734.4
+     jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+
+"If we increase the size of the penguin until it is the same height as a man
+ and then compare the relative brain size, we now find that the penguin's
+ brain is still smaller. But, and this is the point, it is larger than it WAS!"

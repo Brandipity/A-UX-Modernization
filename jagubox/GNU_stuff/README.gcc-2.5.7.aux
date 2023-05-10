@@ -1,0 +1,206 @@
+These patches should allow gcc 2.5.7 to work under A/UX 2.0, 2.0.1,
+3.0, 3.0.x, and 3.1 (hopefully :-)). They've been completely rewritten
+(again) from the previous versions of these patches, although they're
+very similar to the 1.40 patches. At the moment, only gas with SDB
+debugging information is supported; I'll try to do support for Apple's
+as if someone wants it, but it shouldn't be needed (see below). gas
+with DBX will work and requires only a recompile (but see below). gcc
+2.5.7 as distributed supports C, C++, and Objective-C programs
+(however, I have no test cases for Objective-C under A/UX, so I don't
+know if it works or not. If someone uses it, please tell me what the
+results are).
+
+Distribution: The following files should be available on
+wuarchive.wustl.edu in the systems/aux directory (/archive/systems/aux
+for those NFS mounting wuarchive) or in the gnu directory:
+gcc-2.5.7.bin.tar.Z              Binaries for gcc-2.5.7 on A/UX.
+gcc-2.5.7.aux.diffs.Z            Patches for gcc-2.5.7 supporting A/UX.
+					These should not break support
+					for any other machine, and
+					should work with A/UX 2.0(.1)
+					and 3.0(.x).
+gcc-2.5.7.aux.src.tar.Z          Sources for gcc-2.5.7 with the above
+					diffs already applied.
+
+Some of the 2.0.1 header files are incorrect when used with an ANSI C
+compiler. In most cases the fix is obvious; however, if you can't find a
+fix, try -traditional. If nothing else works, send me (and Apple) a bug
+report and I'll try to fix the problem.
+
+Features and notes:
+
+Partial header file conflict: Many A/UX header files contain a test for
+__STDC__=1. This is so they can turn off features not defined in version
+1 of the ANSI C standard. However, many of these features are used by C++
+(among others) and it is vital that a prototype exist for these functions.
+Thus, unless -ansi is specified I define __STDC__=2. This allows all of
+libg++ and its tests to build successfully.
+
+The install script: I added in 2.4.2 a basic install script that can
+install gcc in either /usr/local/{bin,lib} or /usr/local/Gnu{/lib}.
+This version contains a number of fixes to the install script. It now
+successfully fixes all include files (it missed two due to not having
+cpp around before) and allows installing over an existing installation.
+The install script automatically runs fixincludes and fixcrts, installs
+all the header files and *crt*.o files properly, and puts the binaries
+and libraries in the right places. It also installs the man pages. It
+doesn't handle the commando dialog.
+
+In 2.5.7, fixincludes again does something under A/UX. It appears that
+the fixed header files are, at minimum, not causing any trouble; they
+may be fixing problems that I haven't noticed. There is a conflict with
+one 3.1 header file (param.h) and gcc. fixincludes is supposed to fix
+this one -- please tell me if it doesn't.
+
+I believe there is still a problem when compiling C++ programs with -g.
+It's on my list of things to look at when I find the time.
+
+Updates in 2.4.2
+
+There are many bug fixes and improvements in 2.4.2, but there's been
+very little change in the A/UX support. The only real changes are the
+new install script and some changes in the aux.h file to better support
+A/UX/SYSV-m68k style return values and 96-bit floating point.
+
+Updates from 2.3.3
+
+In 2.3.3 I changed file name output to do things 'the right way', and
+fixed collect to use native COFF support rather tthan running nm as a
+subprocess.
+
+Bug fixes: A bug in gas that caused bad debugging information (sufficient
+to cause nm to crash) has been fixed. Also, a problem with return value
+conventions has been fixed. This problem only affects code compiled with
+the -fomit-frame-pointer flag which is called by very old (and odd) code.
+It's pretty unlikely that anyone out there has ever been bit by it...
+
+File name output: Directory names are now trimmed from file name output,
+so you only get the file's name and not its path in the debug information.
+
+Pascal string support: The \p escape is now supported in strings. It
+generates Pascal-format strings (leading length and the string; no
+trailing \000). More Pascal support will be added as fast as I can
+borrow it :-).
+
+Multilanguage support: The gcc driver program 'recognizes' various file
+names and calls the right programs automatically. Files with .c
+suffixes call the C compiler. Files with .cc, .cxx, or .C call the C++
+compiler. Files with .m call the Object C compiler. A few other
+suffixes (for assembler source, assembler with preprocessor directives,
+and already-preprocessed C and C++) are supported.
+
+gcc 2.4.x uses a somewhat different directory layout than that used by
+1.x. This is to allow for supporting multiple compiler versions and
+cross-compiling. The directory layout now looks like:
+	/usr/local/Gnu/	gcc
+			g++ (shell script)
+			gas
+			protoize/unprotoize
+			lib/gcc/aux/2.0/cc1
+					cc1plus
+					cc1obj
+					cpp
+					include/
+					as (symlink to /usr/local/Gnu/gas)
+					ld (collect2 renamed to ld)
+					fixcrts (see installation notes)
+					crtfix
+					libgcc.o
+					libobjc.o
+					specs (see below)
+If you're installing things in /usr/local/bin, gcc and the other
+binaries go there and the lib tree is rooted in /usr/local/lib.
+
+The specs file: gcc 2.5.7 reads a number of configuration parameters
+(symbols to predefine, runtime files to load, library search paths, and
+other such things) from the specs file. It MUST be in the directory for
+which the gcc driver was compiled; by changing it, you can move most
+everything else where you want it. Most people won't want or need to
+change it.
+
+Debugging symbols: I've switched to a different version of gas 1.38.1
+for the gcc 2.5.7 release. This version of gas produces COFF/SDB format
+symbol entries. This may mean that g++ debugging is somewhat more
+difficult (I'm not sure; they may have overcome this problem in 2.0). It
+does mean that gdb-4.x support is much easier and that gcc compiled
+programs can now be debugged with sdb/cdb/dbx. It also means that
+supporting Apple's as is not important, since gas is producing
+compatible output and is a better assembler.
+
+New compiler flags: gcc 2.5.7 has a number of new compiler flags (and at
+least one, -fcombine-regs, has been removed). The most interesting are
+-O2, which turns on all standard optimizations, and -g0 and -g1, which
+produce various reduced levels of debugging information while still
+allowing some simple debugging. Read the man page or the texinfo files
+for the whole story.
+
+New flags:
+Support for various compatibility flags. gcc 2.5.7 always defines the
+following flags:
+	-Dunix -Dm68k -DAUX -DmacII
+(and, of course, __GNUC__ and __STDC__ as appropriate). In addition, by
+default -D_AUX_SOURCE, -D_BSD_SOURCE, and -D_SYSV_SOURCE are defined.
+The following flags change the predefined symbols as shown:
+	Flags		Symbols				Libraru
+	-sbsd or -ZB	-D_BSD_SOURCE -DBSD		-lbsd
+	-ssysv or -ZS	-D_SYSV_SOURCE -DSYSV -DUSG	-lsvid
+	-sposix or -ZP	-D_POSIX_SOURCE -DPOSIX		-lposix
+	-saux or -ZA	-D_AUX_SOURCE
+Flags -ZB, -ZS, and -ZP are defined for compatibility with Apple's cc;
+the -s versions are defined for convenience. In addition to changing the
+symbol set, any programs linked with these flags will include the
+libraries listed above.
+
+In addition, one more -s flag is defined: -smac. This flag is used when
+linking Mac hybrid programs (A/UX programs which call the Mac toolbox).
+-smac links with the appropriate libraries for hybrid programs.
+
+There's one more new flag: -static. If -static is not specified, gcc
+links with -lc_s (and -lmac_s for hybrid programs). With -static, gcc
+links with -lc and -lmac.
+
+
+Nonfeatures:
+
+Support for A/UX 1.1 has been removed. I don't have a 1.1 machine to
+test on. If someone wants to get gcc 2.5.7 running on 1.1, I'll try to
+help with the task. Mostly, it would involve removing shared library
+assumptions.
+
+Support for DBX-in-COFF has been removed. It should be easy to add back,
+but I think the GNU tools are moving to properly support COFF. The
+DBX-in-COFF stuff was a hack that doesn't seem to be maintained by
+anyone, so I'm not happy about relying on it.
+
+Right now, building 2.0 with Apple's cc is difficult. It should build
+correctly with gcc 1.40, which can be built with cc. I'll look into
+better supporting builds with cc soon.
+
+At the moment, the -big and -vbig flags aren't supported. I don't think
+anyone used them anyway (I haven't had to in quite a while).
+
+I haven't written a new commando dialog for 2.0 yet. It's in the works.
+
+Bug reports: Bugs in the A/UX port of gcc should be sent to
+coolidge@apple.com. Bugs which appear to be part of the compiler itself
+should be sent to the FSF. I don't advise telling them that you're
+using the compiler under A/UX, even if the bug appears to be machine
+independent, since experience has shown that they don't listen to
+anything A/UX-related.
+
+Much thanks to David Berry, formerly of Apple Computer, for the first
+version of these patches and for getting the whole thing started way
+back when! Thanks also to the FSF and the many volunteers who put GCC
+2.0 together (even if most of them didn't want it running on A/UX :-)).
+Thanks to Kristopher L. Tyra for providing the basis for MacOS hybrid
+program support and the original versions of the -sbsd/-ssysv flags.
+Thanks to Thomas Eberhardt for some patches and fixes to the cpp flags
+(misspelling in the 68881 flags; better use of the mc680{0,1,2}00
+flags). Finally, thanks to everyone who's using GCC out there (yes,
+even those of you who send me strange bug reports :-)); knowing that
+people are getting lots of use out of these things keeps me going!
+
+Good luck!
+
+--John Coolidge
+coolidge@apple.com

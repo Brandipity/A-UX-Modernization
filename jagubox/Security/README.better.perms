@@ -1,0 +1,11 @@
+This is an ugly, little ksh script that changes the owner, group and
+modes of various files under A/UX to what's recommended in the FAQ to make
+them (and your system) a bit more secure.
+
+It's pretty easy to add more entries :)
+--
+#include <std/disclaimer.h>
+    Jim Jagielski               |
+    jim@jagubox.gsfc.nasa.gov   |  "Dead or alive, you're coming with me."
+    NASA/GSFC, Code 734.4       |                  RoboCop
+    Greenbelt, MD 20771         |

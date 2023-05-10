@@ -1,0 +1,47 @@
+This file contains the most recent listing of available files in Info
+as well as a short description of each. Most are GNUzipped (.gz) tar files.
+You will need the '../Gnu_stuff/gzip_*.bin.tar.Z' file (which contains the
+GNUzip utility 'gzip|gunzip') to decompress these.
+
+Diff-files can be applied by using 'patch' which is available precompiled
+as '../Utilities/patch.bin.tar.gz'
+
+A1.README::
+	A text file description of all files in this directory.
+
+AUXFAQ.pkg.sit::
+	The A/UX FAQ in Newton package format.
+
+CAP.txt::
+	A copy of a posting on c.u.a concerning configuring CAP under
+	A/UX.
+
+DeskWriter.txt::
+	A copy of a posting on c.u.a concerning using a HP DeskWriter
+	under A/UX.
+
+FAQ.aux::
+	The Frequently Asked Questions list for A/UX.
+
+FAQ.aux.201::
+	The Frequently Asked Questions list for A/UX 2.0.1... it focuses on
+	this "older" version of A/UX.
+
+emerg.tar.gz::
+	Instructions on how to create a small, bootable, backup root
+	partition on your hard disk for use in emergencies.
+
+slip.help::
+	Need help in getting your CSlip up and running. This text file provides
+	some helpful hints and clues to aid in your quest.
+--
+===========================================================================
+#include <std/disclaimer.h>
+                                 =:^)
+           Jim Jagielski                    NASA/GSFC, Code 734.4
+     jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+        Voice: 301-286-5964                   FAX: 301-286-1719
+
+"If we increase the size of the penguin until it is the same height as a man
+ and then compare the relative brain size, we now find that the penguin's
+ brain is still smaller. But, and this is the point, it is larger than it WAS!"

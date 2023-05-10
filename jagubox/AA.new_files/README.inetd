@@ -1,0 +1,144 @@
+The file inetd.tar.gz contains source and binaries for the BSD4.3-Reno inetd
+for A/UX The BSD4.3-reno inetd has several advantages over the A/UX inetd: it
+supports rereading its setup files when sent SIGHUP; it has a number of small,
+built-in services (echo, daytime, and others) and it can run daemons as any
+user can pass arguments to them.
+
+inetd has been further augmented to understand A/UX-format entries in
+/etc/servers as well as BSD-format entries (thus, you can just use your
+existing /etc/servers and update entries to BSD-format as required). It also
+understands A/UX-format rpc entries, can log which daemons were spawned and,
+thanks to the tcp_wrappers library, can also perform host-access control for
+each daemon.
+
+Due to the system-call fixes in A/UX 3.1, the provided 'inetd' binary will
+only work under 3.1, but you can recompile it (using 'gcc') for older versions.
+
+Files are:
+    Makefile :
+	A simple makefile to build and install inetd
+    README-inetd :
+	This file
+    hosts_access.5.Z :
+	Man page for tcp_wrapper hosts_access file format.
+    inetd :
+	Working inetd for A/UX 3.1 (must be recompiled with 'gcc'
+	for older versions).
+    inetd.1m.man :
+	BSD-format man page source (will not format with -man on A/UX)
+    inetd.1m.Z :
+	Formatted and compressed inetd man page
+    inetd.c :
+	Modified BSD inetd source
+    libwrap.a :
+	The tcp_wrapper libwrap archive. Required if you wish to
+	recompile inetd.
+    servers :
+	BSD-format conf file for A/UX (if you haven't modified your
+	/etc/servers, this is a drop-in replacement)
+    services :
+	Include just for the heck of it :)
+
+The original port was done by John Coolidge (coolidge@apple.com). Since
+then, Jim Jagielski (jim@jagubox.gsfc.nasa.gov) has "taken over" keeping
+inetd up to date and fixing bugs. If you see any bugs or have any problems
+or suggestion, please Email Jim.
+
+VERSION HISTORY:
+
+===Version 1.8===============================================================
+
+ 1. Some minor code cleaning
+ 2. Have '-p' option override '-a'... before, if 'inetd' was called
+    with '-p -a -l', the PARANOID option would be overruled by the
+    later "regular" access control option '-a'. This behavior "makes
+    sense", but we should know better. Now, '-p' has higher authority
+    than '-a'.
+
+===Version 1.7===============================================================
+
+ 1. Minor buglet: gethostbyname() test should have used 'while' not 'if'
+ 2. Changed #1 to break out gethostby*() functions as 'if' loops.
+ 3. Fixed PARANOID code
+
+===Version 1.6===============================================================
+
+2 minor (but #1 was important) changes.
+ 1. Starting with v1.5, inetd was linked with '-lbsd' to get BSD-type
+    signals. However, this caused troubles with some ported shells (such as
+    'tcsh'). Now we just call 'set42sig()' to get _only_ what we want and
+    avoid having the child inherit compatibility stuff it shouldn't.
+ 2. Better form of daemon()
+
+===Version 1.5===============================================================
+
+Not a lot of code changes (basically some modifications and code cleanup
+so that compiling with '-Wall' looks cleaner) but some _major_ additional
+functionality. Thanks to Wietse Venemas, author of tcp_wrapper (tcpd), who
+allowed me to use some routines of tcpd, inetd 1.5 now includes host access
+control. This means you can select which hosts can or cannot spawn which
+daemons. Since inetd 1.5 uses the same routines, you can use the same access
+control files (/etc/hosts.allow and /etc/hosts.deny) that tcpd does. In fact,
+you won't even need to use tcpd anymore. Read the inetd man-page for more
+info.
+
+As expected, inetd 1.5 requires the tcp_wrappers distribution if you want to
+perform a full recompile (my copy of the libwrap.a archive from tcpd 6.3 is
+included).
+
+===Version 1.4===============================================================
+
+If /etc/servers doesn't exist, then inetd will try /etc/inetd.conf.
+
+Changed ordering of daemon() code.
+
+===Version 1.3===============================================================
+
+Pretty minor little fixes. It's easier to determine the version of inetd
+running. Some network related casts are made where needed. Some code
+cleanup as well...
+
+===Version 1.2===============================================================
+
+I've fixed a few things... First of all, previous versions assumed that
+the "<address>" magic cookie would always be the _only_ argument to the
+daemon (and, of course, would _always_ be the 1st one). 'inetd'v1.2 no
+longer assumes this.
+
+	... /usr/etc/in.telnetd	in.telnetd -l <address>
+
+will work correctly.
+
+Also, I've changed the logging "procedure"; it's now logged at the
+LOG_LOCAL2 facility (was LOG_DAEMON) and it's now semi-formatted to make
+scanning the logs easier. All "daemons" are now logged and 'inetd' is
+a little smarter in figuring-out the remote host's address and name.
+
+The SIGHUP rereading-bug (which only happened occasionally) has been
+fixed as well.
+
+Finally, some semi-major code-shuffling was done. This was due to make
+things a little more logical as well as to allow Apple-specific capabilities
+to be handled in a similar way than non-Apple ones; for example, a failed
+'bind' for an rpc daemon-socket will be retried in the same way the
+normal steam socket-types were.
+
+
+==Version 1.1================================================================
+
+I've updated John's original port a bit. First of all, 'inetd' will correctly
+handle tcp wrapper daemons, such as 'tcpd'. Secondly, I've added, for
+future reference, the daemon() function to the program. Finally, I've
+added logging capability... basically what this means is that if enabled
+(by calling 'inetd' with the "-l" option), 'inetd' will log via syslogd
+(LOG_DAEMON at LOG_INFO level) when a daemon is spawned and which host
+made the request. This provides, internal to 'inetd' itself, some of the
+functionality of 'tcpd' (although 'inetd' doesn't do access lists at all,
+yet :) ).
+
+--
+#include <std/disclaimer.h>
+    Jim Jagielski               |  "That is no ordinary rabbit... 'tis the
+    jim@jagubox.gsfc.nasa.gov   |   most foul, cruel and bad-tempered
+    NASA/GSFC, Code 734.4       |   rodent you ever set eyes on"
+    Greenbelt, MD 20771         |                   Tim the Enchanter

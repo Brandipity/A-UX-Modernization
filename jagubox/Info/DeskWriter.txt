@@ -1,0 +1,415 @@
+This is a copy of a posting on comp.unix.aux about using an HP DeskWriter
+under A/UX.
+
+-------------------------------------------------------------------------
+
+Path: skates.gsfc.nasa.gov!ames!agate!howland.reston.ans.net!noc.near.net!transfer.stratus.com!greer.az.stratus.com!user
+From: mp@az.stratus.com (Mike Peters)
+Newsgroups: comp.unix.aux
+Subject: Re: Problems of a newcomer
+Followup-To: comp.unix.aux
+Date: 10 Jul 1993 05:17:10 GMT
+Organization: Stratus Computer, Inc.
+Lines: 392
+Distribution: world
+Message-ID: <mp-090793222020@greer.az.stratus.com>
+References: <YgCvpLi00WB44Q_o9t@andrew.cmu.edu> <1907@jagubox.gsfc.nasa.gov> <mp-090793184650@kohlsranch.az.stratus.com>
+NNTP-Posting-Host: greer.az.stratus.com
+
+In article <mp-090793184650@kohlsranch.az.stratus.com>,
+mp@tucson.az.stratus.com (Mike Peters) wrote:
+> 
+> I use an HP DeskWriterC on LocalTalk with 3.0 with no problems.  The MacOS
+> (whild running A/UX prints to it via SuperLaserSpool (3.1 I think) and I
+> can use lpr to spool to it from A/UX (I saw a post a while back that
+> supplied all of the required info to make it work under A/UX.  Things like
+> the printcap and filter code). I'm not running A/UX right now (shame on me
+> }:-( ) but I can repost the info and give credit to the original offer.
+> 
+
+Well, I ended up bringing up A/UX :-) so here is the info I mentioned. 
+
+Jim, perhaps this could be included in the FAQ and the information could be
+posted on jagubox?  When I first got A/UX a year or so ago, I struggled for
+weeks to get my DeskWriter working and finally gave up after numerous posts
+to this group went unanswered.  Finally, I saw Jeff's post recently and can
+finally use my printer.
+
+Disclaimer:  I said it, not Stratus!
+----------------------------------------------------------------------
+Mike Peters                     Unix Mail: mp@az.stratus.com
+Consulting Systems Engineer      VOS Mail: Mike_Peters@vos.stratus.com
+Stratus Computer, Inc.         Voice Mail: (602) 852-3002
+----------------------------------------------------------------------
+
+~From: jdh@hare.udev.cdc.com (jeff holmbeck)
+~Subject: Re: Printing w/ DeskWriter under A/UX 3.0
+Organization: Control Data
+~Date: Sat, 12 Jun 1993 22:47:07 GMT
+Message-ID: <C8J5yK.EpK@raistlin.udev.cdc.com>
+X-Newsreader: TIN [version 1.1 PL9]
+~References: <C8EuEq.K79@news.claremont.edu>
+~Sender: usenet@raistlin.udev.cdc.com (News poster)
+~Lines: 347
+
+Philip Winston (pwinston@jarthur.claremont.edu) wrote:
+: Any idea on getting the printer to work with the Chooser/Mac App route or
+: the lpr/printcap route??  Thanks for any help.
+
+I haven't tried 3.9 yet on A/UX, but 3.1 works fine on the Mac OS side.
+I just ran the DeskWriter installer on my personal System Folder.
+
+I have been able to get text files on the UNIX side to print on my
+DeskWriter.
+If you specify the proper name on the "atprint" command, you can send text
+to
+the DeskWriter and get some output in an ugly monospaced font.  Here
+are some rules that I have discovered:
+
+        1. You need both a carriage return and line feed after each line.
+        2. Backspace works as expected so you can overprint.
+        3. Tab does not work.  You have to replace a tab by the appropriate
+           number of spaces.
+        4. Form Feed works as expected to start a new page.
+        5. The maximum line size is 80 character.
+        6. The maximum page size appears to be 66 and 1/2 lines.  For best
+           results, send a Form Feed after each 66 lines.
+
+Does anyone know if there are control sequences change the font, the style,
+etc.?
+
+Following is what I did to get DeskWriter printing to work from my A/UX
+machine.  No guarentees, but I am sure you can adapt it for your
+environment.
+
+First put an apropriate entry into your /etc/printcap file.  Something
+like this will do:
+
+# DeskWriter
+dw|DeskWriter|deskwriter:\
+        :lp=/dev/null:\
+        :if=/usr/spool/lpd/DeskWriter/ifilter:\
+        :sd=/usr/spool/lpd/DeskWriter:
+
+Create your spool directory:
+
+        # mkdir /usr/spool/lpd/DeskWriter
+        # chown daemon /usr/spool/lpd/DeskWriter
+        # chgrp daemon /usr/spool/lpd/DeskWriter
+        # chmod 775 /usr/spool/lpd/DeskWriter
+
+Use the atlookup command to find the full name of your DeskWriter.  On
+my machine, it is "DeskWriter:DeskWriter@*":
+
+        # atlookup
+        Found 4 entries in zone *
+        0000.80.83 DeskWriter:DeskWriter
+
+Create your /usr/spool/lpd/DeskWriter/ifilter script.  It should look
+something like this.  Be sure to use the name of your printer for the
+"Printer" variable:
+
+-------- Begin ifilter ---------
+#!/bin/sh
+Printer=DeskWriter:DeskWriter@*
+
+until [ -n "$status" -a -z "$error" ]
+do
+        status=`atstatus "$Printer"`
+        if [ $? -ne 0 ] ; then
+                exit 2
+        fi
+
+        error=`echo $status | fgrep Error`
+        if [ -n "$error" ] ; then
+                echo $error 1>&2
+                echo $error > status
+                sleep 60
+        fi
+done
+
+/usr/local/bin/dfilter -t | atprint "$Printer" 2> /dev/null
+-------- End   ifilter ---------
+
+In the above example, lines will be indented by 8 spaces and lines of
+greater
+than 72 characters will be truncated.  This is handy for formatted output
+such
+as man pages or output from pr(1).  If you want long lines to be wrapped,
+remove the "-t" argument from the "dfilter" command.  If you don't want
+indentation, specify "-i 0".
+
+Compile dfilter and put the binary into /usr/local/bin/dfilter.  The
+source of dfilter is:
+
+-------- Begin dfilter.c ---------
+#include <stdio.h>
+#include <sys/types.h>
+#include <string.h>
+
+extern  int     getopt();
+extern  void    *malloc();
+extern  void    *realloc();
+extern  long    strtol();
+
+extern  char    *optarg;
+extern  int     optind;
+
+#define BS '\010'
+#define CR '\015'
+#define FF '\014'
+#define LF '\n'
+#define NL '\n'
+#define SP ' '
+#define TAB '\011'
+
+static  char    *getline();
+
+static  int     literal = 0;    /* literal control characters */
+static  int     indent = 8;     /* indentation */
+static  char    *login = NULL;  /* login name */
+static  char    *host = NULL;   /* host name */
+static  char    *acct_file = NULL; /* accounting file name */
+static  int     pl = 66;        /* page length */
+static  int     pw = 80;        /* page width */
+static  int     truncate_lines = 0; /* set if long lines are truncated */
+static  int     ticount = 0;
+static  int     tlcount = 0;
+static  int     tocount = 0;
+static  int     tpcount = 0;
+
+static  char    *eusage =
+        "Usage: %s [-c] [-w width] [-l length] [-i indent] [-n login] [-h
+host]
+[-t] [acct-file]\n";
+
+int
+main(argc, argv)
+        int     argc;
+        char    **argv;
+{
+        char    *line;
+        int     len;
+        int     lcount;
+        int     ccount;
+        int     opt;
+        int     trunc;
+        char    *ptr;
+        int     scan;
+        int     index;
+
+        /* crack optional arguments */
+        while ((opt = getopt(argc, argv, "cw:l:i:n:h:t")) != EOF) {
+                switch (opt) {
+                case 'c':       /* literal characters */
+                        literal = 1;
+                        break;
+                case 'w':       /* page width */
+                        pw = (int) strtol(optarg, &ptr, 0);
+                        if (ptr[0] != '\0') {
+                                fprintf(stderr, eusage, argv[0]);
+                                exit(1);
+                        }
+                        break;
+                case 'l':       /* page length */
+                        pl = (int) strtol(optarg, &ptr, 0);
+                        if (ptr[0] != '\0') {
+                                fprintf(stderr, eusage, argv[0]);
+                                exit(1);
+                        }
+                        break;
+                case 'i':       /* indent */
+                        indent = (int) strtol(optarg, &ptr, 0);
+                        if (ptr[0] != '\0') {
+                                fprintf(stderr, eusage, argv[0]);
+                                exit(1);
+                        }
+                        break;
+                case 'n':       /* login name */
+                        login = optarg;
+                        break;
+                case 'h':       /* host name */
+                        host = optarg;
+                        break;
+                case 't':       /* truncate long lines */
+                        truncate_lines = 1;
+                        break;
+                }
+        }
+
+        /* get accounting file name */
+        if (optind < argc) {
+                acct_file = argv[optind];
+                optind++;
+        }
+        if (optind != argc) {
+
+                /* too many arguments */
+                fprintf(stderr, eusage, argv[0]);
+                exit(1);
+        }
+
+        /* initialize with a Carriage Return */
+        printf("%c", CR);
+        for (index = 0; index < indent; index++) {
+                printf(" ");
+        }
+
+        /* read each line of standard input */
+        lcount = 0;
+        while ((line = getline()) != NULL) {
+                len = strlen(line);
+                ticount += len;
+                ccount = 0;
+                trunc = 0;
+                for (scan = 0; scan < len; scan++) {
+
+                        /* check each character in the line */
+                        switch (line[scan]) {
+                        case TAB:
+
+                                /* Tab, print up to eight spaces */
+                                for (index = 8 - (ccount % 8); index > 0;
+                                    index--) {
+                                        if (!trunc) {
+                                                printf("%c", SP);
+                                        }
+                                        ccount++;
+                                        if (ccount >= (pw - indent)) {
+
+                                                /* no point tabbing beyond
+                                                   page width */
+                                                break;
+                                        }
+                                }
+                                break;
+                        case BS:
+
+                                /* Back Space, decrement */
+                                if (!trunc) {
+                                        printf("%c", BS);
+                                }
+                                if (ccount > 0) {
+                                        ccount--;
+                                }
+                                break;
+                        case NL:
+
+                                /* new line, we will handle it later */
+                                break;
+                        default:
+
+                                /* regular character, just print it */
+                                if (!trunc) {
+                                        printf("%c", line[scan]);
+                                        tocount++;
+                                }
+                                ccount++;
+                                break;
+                        }
+                        if ((line[scan] == NL) || (ccount >= (pw -
+indent))) {
+
+                                /* Carriage Return/Line Feed required */
+                                if (!trunc) {
+                                        printf("%c", CR);
+                                        lcount++;
+                                        if ((lcount % pl) == 0) {
+
+                                                /* end of page,
+                                                   force a Form Feed */
+                                                printf("%c", FF);
+                                                tpcount++;
+                                                tocount++;
+                                        } else {
+
+                                                /* Line Feed is enough */
+                                                printf("%c", LF);
+                                                tlcount++;
+                                                tocount++;
+                                        }
+                                        for (index = 0; index < indent;
+                                            index++) {
+                                                printf(" ");
+                                        }
+                                }
+                                trunc = truncate_lines;
+                                ccount = 0;
+                        }
+                }
+        }
+
+        /* make sure we finish with a Form Feed */
+        if ((lcount % pl) != 0) {
+                printf("%c%c", CR, FF);
+                tocount++;
+                tpcount++;
+        }
+        exit(0);
+}
+
+static  char    *
+getline()
+{
+        static  char    *line = NULL;
+        static  int     size = 0;
+        int     pos;
+        int     len;
+
+        if (line == NULL) {
+                size = 1024;
+                if ((line = (char *) malloc(size)) == NULL) {
+                        size = 0;
+                        return (NULL);
+                }
+        }
+        pos = 0;
+        while (fgets(&line[pos], 1024, stdin) == &line[pos]) {
+                if (((len = strlen(line)) > 0) && (line[len - 1] == NL)) {
+                        pos += len;
+                        break;
+                }
+                if ((len + 1024) > size) {
+                        size += 1024;
+                        if ((line = (char *) realloc((char *) line, size))
+==
+                            NULL) {
+                                size = 0;
+                                return (NULL);
+                        }
+                }
+        }
+        if (pos < 1) {
+                return (NULL);
+        }
+        return (line);
+}
+-------- End   dfilter.c ---------
+
+Some things that are not in dfilter that might be nice to have:
+
+        1. lpd accounting
+        2. print pages in reverse order
+        3. print only odd or even pages
+
+
+Kill lpd, restart it, and try printing something, like a man page:
+
+        # kill XXXX
+        # /usr/lib/lpd
+        # man ls | lpr -Pdw
+
+
+
+--
+
+Jeff Holmbeck                   Control Data Systems, Inc.
+Jeff.Holmbeck@cdc.com           ARH215
+(612)482-3255                   4201 Lexington Avenue North
+fax: (612)482-2791              Arden Hills, MN 55126
+-----------------------------------------------------------
+
+    Jim Jagielski               |  "Supreme executive power derives from
+    jim@jagubox.gsfc.nasa.gov   |   a mandate from the masses, not from
+    NASA/GSFC, Code 734.4       |   some farcical aquatic ceremony."
+    Greenbelt, MD 20771         |		- Dennis

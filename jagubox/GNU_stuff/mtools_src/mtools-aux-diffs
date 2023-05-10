@@ -1,0 +1,45 @@
+*** Makefile-org	Fri Sep  4 14:02:52 1992
+--- Makefile	Fri Sep  4 14:46:42 1992
+***************
+*** 14,22 ****
+  #CFLAGS = -O -M2e -DINT16 -DXENIX -DLOCKF
+  #LDFLAGS = -s -M2e -i -f 5000
+  
+  CFLAGS	= -O
+  LDFLAGS	= -s
+! LD	= cc
+  LINT	= lint
+  SHLIB	= 
+  SHAR	= shar -a
+--- 14,23 ----
+  #CFLAGS = -O -M2e -DINT16 -DXENIX -DLOCKF
+  #LDFLAGS = -s -M2e -i -f 5000
+  
++ CC = gcc
+  CFLAGS	= -O
+  LDFLAGS	= -s
+! LD	= $(CC)
+  LINT	= lint
+  SHLIB	= 
+  SHAR	= shar -a
+*** devices.c-org	Fri Sep  4 14:02:59 1992
+--- devices.c	Fri Sep  4 14:46:49 1992
+***************
+*** 5,10 ****
+--- 5,20 ----
+  #include <stdio.h>
+  #include "msdos.h"
+  
++ #ifdef _AUX_SOURCE
++ struct device devices[] = {
++ 	{'A', "/dev/rfd/d0", 0L, 12, 0, (int (*) ()) 0, 80, 2, 18},
++ 	{'A', "/dev/rfd/d0", 0L, 12, 0, (int (*) ()) 0, 80, 2, 9},
++ 	{'B', "/dev/rfd/d1", 0L, 12, 0, (int (*) ()) 0, 80, 2, 18},
++ 	{'B', "/dev/rfd/d1", 0L, 12, 0, (int (*) ()) 0, 80, 2, 9},
++ 	{'\0', (char *) NULL, 0L, 0, 0, (int (*) ()) 0, 0, 0, 0}
++ };
++ #endif /* AUX */
++ 
+  #ifdef DELL
+  struct device devices[] = {
+  	{'A', "/dev/rdsk/f0d9dt", 0L, 12, 0, (int (*) ()) 0, 40, 2, 9},

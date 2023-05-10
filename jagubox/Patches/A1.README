@@ -1,0 +1,64 @@
+This file contains the most recent listing of available files in Patches
+as well as a short description of each. Most are GNUzipped (.gz) tar files.
+You will need the '../GNU_stuff/gzip_*.bin.tar.Z' file (which contains the
+GNUzip utility 'gzip|gunzip') to decompress these.
+
+Diff-files can be applied by using 'patch' which is available precompiled
+as '../Utilities/patch.bin.tar.gz'
+
+A1.README::
+	A text file description of all files in this directory.
+
+Mosaic-2.2.diffs.aux.tar.gz::
+	Port of the latest version of Mosiac (2.2) for A/UX. Provided by Eric
+	Rosen (eric@cse.ucsc.edu). Be sure to read README.AUX.
+
+
+NNs-aux3-0.h::
+	A/UX 3.0.x conf file for nn.
+
+Patches.MacTCP.tar.gz::
+	Patch to MacTCP that allows it to choose which ethernet interface
+	to use. Very helpful for C/SLIP connections. By Ron Flax at Apple.
+
+StrataVision3DCachePatch.hqx::
+	Patch for StrataVision 3D to allow it to work under A/UX
+
+X11R6-AUX-shlib-patches.tar.gz::
+	Provided by Martin Friedrich, here are the patches for X11R6
+	shared libs for A/UX. If you use X at _all_, get this!!
+
+gated-2.1.aux.patches::
+	Patches that add support to the official gated v2.1 (patchlevel 3)
+	distribution for A/UX. Tested under A/UX 2.0.1 but will most
+	probably work with later versions.
+
+gopher2.016-diffs::
+	Patch file for gopher/gopherd 2.016 to compile and run under A/UX.
+
+lemacs-19.10.aux.diffs.gz::
+	Just the diffs required to get lemacs v19.10 to compile and
+	run under A/UX. From Nisai Wanakule <nisai@seborgia.eardc.swt.edu>.
+
+lynx2-3.diffs::
+	Diffs to get lynx2-3 to compile correctly for A/UX. Requires 'gcc'.
+
+ncftp.diffs::
+	Short patch file to get ncftp (from cse.unl.edu:/pub/mgleason/ncftp)
+	to compile and run under A/UX. Requires 'gcc' and 'libUTIL'.
+
+sendmail-8.6.12.patches::
+	Patches for sendmail 8.6.12 (and earlier and later) that allow
+	for sendmail to determine the load average on the system.
+
+--
+===========================================================================
+#include <std/disclaimer.h>
+                                 =:^)
+           Jim Jagielski                    NASA/GSFC, Code 734.4
+     jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+        Voice: 301-286-5964                   FAX: 301-286-1719
+
+"If we increase the size of the penguin until it is the same height as a man
+ and then compare the relative brain size, we now find that the penguin's
+ brain is still smaller. But, and this is the point, it is larger than it WAS!"

@@ -1,0 +1,77 @@
+This is the A/UX directory, which contains _loads_ of neat, useful, and
+needed A/UX stuff.
+
+For better organization, this directory is further divided into sub-
+directories as follows:
+
+A1.README::
+	A text file description of all files in this directory.
+
+AA.new_files::
+	This directory contains links to all the newest and latest files
+	available here on jagubox.
+
+FAQ.aux::
+	The Frequently Asked Questions list for A/UX. Always found here, in
+	AA.new_files and in Info.
+
+Apple.fixes::
+	This directory contains some Apple-supplied fixes for various
+	3.0(.x) binaries. This directory contains both supported and
+	unsupported patches.
+
+Daemons::
+	This directory contains patched or new daemons for use
+	under A/UX.
+
+GNU_stuff::
+	The directory holds all the various GNU-stuff that's been ported
+	for A/UX. It contains everything from simple patches to complete
+	ports.
+
+Info::
+	A directory that contains useful information about and for A/UX.
+	This includes the FAQ as well as hints on how to get packages
+	to compile, etc...
+
+Misc_stuff::
+	Basically, if stuff doesn't fit in other of the other directories,
+	it'll get dropped here. Note that the stuff in here is _very_
+	useful!
+
+Patches::
+	A collection of patches and diffs for various packages to enable
+	them to compile/run under A/UX.
+
+Security::
+	A directory of important security-related issues, programs and
+	fixes for A/UX. Look inside there to get a listing and info.
+	This is an _important_ directory!!
+
+Sys_stuff::
+	This directory contains fixes and replacement for A/UX-UNIX
+	system-related items. Kinda a fuzzy term, but basically it'll
+	include things like replacement header files, device drivers,
+	stuff like that.
+
+Tech-notes::
+	Apple tech-notes for A/UX. In MS-Word format.
+
+Utilities::
+	Helpful utilities for use under A/UX.
+
+Web_stuff::
+	This directory contains diffs and ports of various WWW/Web
+	packages...
+
+--
+===========================================================================
+#include <std/disclaimer.h>
+                                 =:^)
+           Jim Jagielski                    NASA/GSFC, Code 734.4
+     jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+        Voice: 301-286-5964                   FAX: 301-286-1719
+
+"If we increase the size of the penguin until it is the same height as a man
+ and then compare the relative brain size, we now find that the penguin's
+ brain is still smaller. But, and this is the point, it is larger than it WAS!"

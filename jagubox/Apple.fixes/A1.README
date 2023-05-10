@@ -1,0 +1,73 @@
+This directory contains some Apple-supplied fixes for various
+3.x(.x) binaries. This directory contains both supported and
+unsupported patches.
+
+supported/aws-tuneup-2.0::
+	DiskCopy images of the fixes and patches for A/UX 3.1.
+	Updates 3.1 to 3.1.1 !
+
+supported/aws-tuneup-1.0::
+	DiskCopy images of the fixes and patches for A/UX 3.0.1.
+	Updates 3.0.1 to 3.0.2 !
+
+supported/3.1::
+	Collection of supported patches for 3.1.
+
+supported/3.1/sendmail.gz::
+	Version 8.6.4.1 of sendmail, to fix some security holes in
+	the original version supplied with A/UX 3.1.
+
+supported/3.1/sendmail.README::
+	Short README file for sendmail.gz
+
+unsupported::
+	Although written and supplied by Apple, they are unsupported, simply
+	because they haven't gone through the whole test suite. However,
+	they have been tested before dropped here, so you shouldn't worry
+	too much. Fixes for 3.0 only are found in 3.0; for 3.0.1 only are in
+	3.0.1; for 3.0, 3.0.1, 3.0.2 are in 3.0.x; for 3.0, 3.0.1, 3.0.2 and
+	3.1 in 3.x.x.  Present files include:
+
+unsupported/3.0/rpc.rstatd.gz::
+	Now provides correct load average info. Only for 3.0!
+
+pstat.gz::
+	Now releases memory as required. Only for 3.0!
+
+Patch.tar.gz::
+	Drop-in replacements for Patch.0178 and Patch.067C
+	found in /mac/lib/Patches. These files fix the A/UX-
+	MacOS System heap expansion problems that prevent
+	you from loading lots of memory hungry Extensions and
+	CDEVs. This is fixed under 3.0.1 so do NOT install
+	these under 3.0.1 !!!
+
+unsupported/3.0.x/SCSItlbx.tar.gz::
+	A super-nice (and welcome!) extension that "implements"
+	the Mac SCSI Manager under A/UX 3.0.x. This allows you to
+	run applications and drivers that need to talk to the
+	SCSI Manager to run. The main feature of this is that
+	it allows you to listen to audio CDs under A/UX!
+	Version 1.0b4 by Kelly King and Andrew Kass @ Apple.
+
+unsupported/3.x.x/sh.tar.gz::
+	Replacement for /bin/sh that fixes a few security holes,
+	in SUID programs that use 'system()' or 'popen()', by
+	resetting IFS before a script is executed.
+	** A MUST HAVE !! **
+
+unsupported/3.x.x/telnet.tar.gz::
+	Replacements for in.telnetd and telnet. Fixes some
+	problems with the distribution copies as well as
+	providing additional capabilities.
+
+--
+===========================================================================
+#include <std/disclaimer.h>
+=:^)
+Jim Jagielski                    NASA/GSFC, Code 734.4
+jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+
+"If we increase the size of the penguin until it is the same height as a man
+and then compare the relative brain size, we now find that the penguin's
+brain is still smaller. But, and this is the point, it is larger than it WAS!"

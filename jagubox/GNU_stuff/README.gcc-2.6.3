@@ -1,0 +1,73 @@
+Here are the diffs to get gcc 2.6.3 to compile and run under A/UX. To upgrade
+to gcc 2.6.3 you'll need to use gcc to compile gcc. To do this, grab a
+pre-compiled version of gcc and install it. When you've done that, you're
+ready to recreate gcc.
+
+First of all, you'll need to grab the source for gcc 2.6.3 from your
+favorite site. Then apply the A/UX-patches:
+
+	% patch < Ngcc4aux.diffs
+
+At this point, copy 'gas' (from the gcc distribution) over to the source
+directory for gcc 2.6.3 as 'as'. This is an important step; don't forget it.
+
+Finally, type:
+
+	% ./configure aux
+
+At this point, look through Makefile and make sure things are located where
+you will want them to go. By default, gcc will expect to be placed in
+/usr/local/Gnu and all it's supplemental files, such as cc1, to be located
+in /usr/local/Gnu/lib/gcc/aux/2.6.3. Once you've done this, you are ready
+to start building gcc. Type:
+
+	% make CC=<<gcc>>
+
+where <<gcc>> is the full pathname to your "old" copy of gcc... and wait.
+
+When that's done, you will want to (well,... I recommend it, at least :) )
+make a stage2 build. This is done by typing:
+
+	% make stage1
+	% ln as stage1/as
+	% make CC="stage1/xgcc -Bstage1/"
+
+Wait for this to complete... When this is done, you can either continue to
+build a stage3 compiler, or install gcc. To make the stage3 compiler:
+
+	% make stage2
+	% ln as stage2/as
+	% make CC="stage2/xgcc -Bstage2/"
+
+Then finally type:
+
+	% make CC="stage2/xgcc -Bstage2/" compare
+
+At long last, you are ready to install 2.6.3... This is accomplished by
+typing, easily enough:
+
+	% make CC="stage2/xgcc -Bstage2/" install
+
+To make and install the Objective C stuff; do:
+
+	% make CC="stage2/xgcc -Bstage2/" objc-runtime
+	% make CC="stage2/xgcc -Bstage2/" install-libobjc
+
+Finally, do:
+
+	% chmod 755 fixcrts
+	% ./fixcrts
+
+--
+
+The diffs are _heavily_ based on those provided by John Coolidge @ Apple
+for gcc 2.5.7... John's been busy with work (and getting married :) ) so
+I've made these diffs available until John can re-take-over the gcc stuff.
+
+Enjoy!
+--
+#include <std/disclaimer.h>
+  |     Jim Jagielski      |  jim@jagubox.gsfc.nasa.gov  |  V: 301 286-5964  |
+  | NASA/GSFC, Code 734.4  |     Greenbelt, MD 20771     |  F: 301 286-1719  |
+                       <<  I want my TWO DOLLARS !!  >>
+                                   --   The paperboy

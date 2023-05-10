@@ -1,0 +1,368 @@
+# System V line printer spooler model for PostScript/TranScript printer
+# Copyright (c) 1985 Adobe Systems Incorporated
+# PostScript and TranScript are trademarks of Adobe Systems Incorporated
+# Modified from RCSID: $Header: psinterface,v 2.1 85/11/24 12:20:16 shore Rel $
+#
+# "@(#)at_interface: 2.0, 2.1; 9/25/89; Copyright 1988-89, Apple Computer, Inc."
+
+# This interface program accepts the following option args passed in via 
+# lp -o[option] -o["option string"]
+#
+#	-h - No Banner Page
+#	-r - Don't reverse the pages
+#	-o - object, passed to at_printer for AppleTalk NBP lookup, any object is "="
+#	-l - Output is giong to a laserwriter, run through Postscript utilities
+#	-t - Type, used to specify the type of printer, "LaserWriter" is the 
+#	     only special type recognized at this point.  If user specifies
+#	     "LaserWriter" the output is piped through the PS utils.  This option is
+#	     also pased to the at_printer prog for use in the AppleTalk NBP lookup.
+#	-z - Zone to look in for printer, passed to at_printer
+# 	     Remember that the appletalk "this zone" id is the char '*',
+#	     any printer, any type is the char '='.
+
+# Set DEBUG non-zero for debug information
+
+DEBUG=0
+
+set -f
+
+# This interface program is ment to adapt the System V LP Spooler to the
+# Appletalk network / LaserWriter world. It's not a perfect match.
+# You may wish to modify this file to your own special needs.
+
+# Location of the directory containing the Adobe Systems PostScript (ps) tools
+
+PSLIBDIR=/usr/lib/ps
+PSLOGDIR=transcript
+PSTEMPDIR=/tmp
+
+# Location of the binary the does the actual transfer over appletalk 
+
+atprinter=/usr/bin/at_printer
+
+# Some useful vars
+
+pstmp=$PSTEMPDIR/pstmp$$
+psrtmp=$PSTEMPDIR/psrtmp$$
+psfinal=$PSTEMPDIR/psfinal$$
+prog=$0
+pr=`basename $prog`
+cwd=`pwd`
+ptime=`date`
+
+# This logging is not part of the "normal" lp spooler software but
+# is supplied by Adobe.
+
+log=$cwd/${PSLOGDIR}/${pr}-log
+if [ ! -w "$log" ] ; then
+	if [ $DEBUG != 0 ] ; then
+		echo "Creating adobe log file $log."
+	fi
+	cp /dev/null $log
+	if [ $? != 0 ] ; then
+		disable -r"can't access log file $log" $pr 1>/dev/console 2>&1
+		exit 1
+	fi
+	chmod 644 $log
+fi
+
+# These are the Adobe PostScript tools necessary to convert standard ascii to
+# PostScript format. Set psrv to null if you don't want page (order) reversal.
+
+banner=$PSLIBDIR/psbanner
+psrv=$PSLIBDIR/psrv
+format=$PSLIBDIR/pstext
+BANNERPRO=$PSLIBDIR/banner.pro
+# Pick one or the other
+BANNERFIRST=1
+BANNERLAST=0
+REVERSE=0
+export BANNERPRO BANNERFIRST BANNERLAST PSTEMPDIR REVERSE PSLIBDIR
+
+# printer-specific options file (can change any of the above)
+
+test -r ./${PSLOGDIR}/${pr}.opt && . ./${PSLOGDIR}/${pr}.opt
+
+if [ "$REVERSE" != "1" ] ; then
+	psrv=
+fi
+
+# lpsched invokes us the following command line:
+
+#	argv[0] is the interface program: interface/PRINTERNAME
+#	argv[1] is the request id:	  PRINTERNAME-#id
+#	argv[2] is the requesters id:	  USERNAME
+#	argv[3] is the number of copys:	  #COPYS
+#	argv[4] is the list of options:	  -OPTIONS 
+#	argv[5] is the list of files:	  /usr/spool/lp/request/PRINTERNAME/d0-#id
+
+# Now parse it.
+
+if [ $DEBUG != 0 ] ; then
+	echo "$*"
+fi
+ 
+seqid=$1
+name=$2
+title="$3"
+copies=$4
+options="$5"
+shift; shift; shift; shift; shift
+files="$*"
+
+if [ $DEBUG != 0 ] ; then
+	echo "seqid = $seqid, title = $title, copies = $copies"
+	echo "options = $options, files = $files"
+fi
+
+if [ -z "$title" ] ; then
+	title=`basename $1`
+fi
+
+# parse remaining user options
+#
+# NOTE: There are two kind of options:
+# 1. Style options for the PS utilities
+# 2. Appletalk routing information used by at_printer.
+#    In addition the LaserWriter flag "-l" signals use of the Adobe PS tools.
+
+# set $1 = output of getopt[1]
+
+set -- `getopt hmro:lt:z:f: $options` ;
+if [ $? != 0 ] ; then
+	echo "$pr: $seqid bad user options $options [hmr]" >> $log
+	exit 2
+fi
+
+# Adobe PostScript filters, which do we use and how?
+
+Hflag="" Mflag="" Rflag="" ATopt="" DashL="" Tflag=""
+
+while [ ! -z   `getopt hmro:lt:z:f: $options`  ]
+do
+	if [ $DEBUG != 0 ] ; then
+		echo $1
+	fi
+	case $1 in
+
+	-h|h)	Hflag=$1; shift;;		# no banner page
+	-m|m)	Mflag=$1; shift;;		# mail stream output if any
+	-r|r)	Rflag=$1; shift;;		# Don't reverse page order
+						# Handle postscript for laserwriter
+	-t)	Tflag=$1; Type=$2; shift; ATopt="$ATopt $Tflag";;
+	-l)	DoPS="True";DashL="True"; shift;;
+	--)	break;;				# Do not move this option
+	 *)	ATopt="$ATopt $1"; shift;;	# These must be for at_printer
+	esac
+done
+
+if [ $DEBUG != 0 ] ; then
+    echo ""
+    echo "PS flags - $Hflag  $Mflag  $Rflag"
+    echo "AT flags - $ATopt"
+fi
+
+# If user has not indicated -l option, but has choosen a printer
+# which is a laserwriter, or have specified -t LaserWriter on the
+# command line, set DoPs to true, and -l option.
+
+if [ -z "$DoPS" ]; then
+	if [ ! -z "$Tflag" ] ; then
+		if [ "$Type" = "LaserWriter" ] ; then
+			DoPS="true"
+			if [ -z "$DashL" ] ; then
+				ATopt="$ATopt -l"
+			fi
+		fi
+		 	
+	else 
+		Pchoice=`atstatus | grep LaserWriter`
+		if [ ! -z "$Pchoice" ] ; then
+			DoPS="true"  
+			ATopt="$ATopt -l"
+		fi
+	fi
+fi
+
+# set up to send the job
+
+if [ ! -x $atprinter ] ; then
+	disable -r "can't find $atprinter program" $pr
+	exit 1
+fi
+
+# If this request is for a LaserWriter, run Adobe PostScript tools
+
+if [ ! -z "$DoPS" ] ; then
+
+# Adobe log of transaction start.
+
+	echo "$pr: $seqid $name "$title" start - $ptime" >> $log
+
+# Generate banner page, but don't add it in till later.
+
+	if [ -z "$Hflag" -a \( "$BANNERFIRST" = "1" -o "$BANNERLAST" = "1" \) ] ; then
+		if [ ! -x $banner ] ; then
+			disable -r "can't exec $banner program" $pr
+			exit 1
+		fi
+		bannerf=$PSTEMPDIR/b$seqid.$$
+		if [ ! -r $BANNERPRO ] ; then
+			disable -r "can't access banner prolog" $pr
+			exit 1
+		fi
+		$banner $pr $seqid $name "$title" "$ptime" > $bannerf
+	fi
+
+# Do we print banner page first? (or last?)
+
+	if [ -z "$Hflag" -a "$BANNERFIRST" = "1" ] ; then
+		if [ $DEBUG != 0 ] ; then
+			echo "Printing banner first"
+		fi
+		cat $bannerf > $psfinal
+	fi
+
+
+# Set up to mail job output if user flag set
+#
+# ***** MAKE THIS FUNCTION CORRECTLY *****
+#
+# if [ -n "$Mflag" ] ; then
+# 	JOBOUTPUT=${PSTEMPDIR}/o$seqid.$$
+# 	export JOBOUTPUT
+# fi
+
+
+# Now process the print files.
+#
+# IMPORTANT: Remember that the request must be batched with
+# only one call to function at_printer.
+
+	for f in $files
+	do
+		echo "$pr: $seqid `basename $f` - `date`"		>> $log
+		cop=$copies
+		if [ $DEBUG != 0 ] ; then
+			echo "Printing $copies copy(s) of file $f"
+		fi
+
+# check for magic number and format if plain text
+
+		magic=`line <$f | cut -c1-11`
+		rev= 
+		case "$magic" in
+			%!PS-Adobe-*)
+				cat $f > $pstmp ; rev=1 ;;
+			*)
+				$format <$f > $pstmp ; rev=1;;
+		esac
+
+# if multiple copies, reverse only once
+
+		if [ -n "$rev" -a -n "$psrv" -a -z "$Rflag" ] ; then
+			if [ $DEBUG != 0 ] ; then
+				echo "Reverse done"
+			fi
+			$psrv <$pstmp >$psrtmp
+		fi
+
+# print all the copies, reversing as necessary
+
+		while [ $cop -ge 1 ] 
+		do	
+			if [ -n "$rev" -a -n "$psrv" -a -z "$Rflag" ] ; then
+				if [ $DEBUG != 0 ] ; then
+					echo "Adding reverse"
+				fi
+				cat $psrtmp >> $psfinal
+			else
+				if [ $DEBUG != 0 ] ; then
+					echo "Adding copy"
+				fi
+				cat $pstmp >> $psfinal
+			fi 
+			cop=`expr $cop - 1`
+		done
+	done
+
+# Do we print the banner page last? (or first?)
+
+	if [ -z "$Hflag" -a "$BANNERLAST" = "1" ] ; then
+		if [ $DEBUG != 0 ] ; then
+			echo "Printing banner last"
+		fi
+		cat $bannerf >> $psfinal
+	fi
+else
+
+# This is not a Postscript printer,
+# we must supply our own banner function.
+
+x="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+	if [ -z "$Hflag" ] ; then		# print a banner?
+#		echo "\014\c"
+		echo "$x\n$x\n$x\n$x\n" > $psfinal
+		banner "$name" >> $psfinal
+		echo "\n" >> $psfinal
+		user=`grep "^$name:" /etc/passwd | line | cut -d: -f5` >> $psfinal
+		if [ -n "$user" ] ; then >> $psfinal
+			echo "User: $user\n" >> $psfinal
+		else
+			echo "\n" >> $psfinal
+		fi
+		echo "Request id: $seqid    Printer: $pr\n" >> $psfinal
+		date >> $psfinal
+		echo "\n" >> $psfinal
+		if [ -n "$title" ] ; then
+			banner "$title" >> $psfinal
+		fi
+		echo "\014\c" >> $psfinal
+	fi
+
+	for f in $files
+	do
+		cop=$copies
+		if [ $DEBUG != 0 ] ; then
+			echo "Printing $copies copy(s) of file $f"
+		fi
+		cat $f > $psfinal
+	done
+fi	
+
+# if [ ! -z "$DoPS" ] ; then
+# mail user the job ouput if flag set
+#
+# ****** THIS NEEDS WORK AS WELL ******
+#
+#	if [ -n "$Mflag" ] ; then
+#		if [ -s "$JOBOUTPUT" ] ; then
+#			(echo Subject: output from PostScript print job $seqid follows
+#			cat $JOBOUTPUT ) | mail $name
+#		fi
+#		rm -f $JOBOUTPUT
+#	fi
+# fi
+
+# Because appletalk cannot grant exclusive access to a printer,
+# send the entire job in one call.
+
+if [ $DEBUG != 0 ] ; then
+	echo "$atprinter $ATopt < $psfinal"
+	cat < $psfinal
+else
+	$atprinter $ATopt < $psfinal
+fi
+
+if [ ! -z "$DoPS" ] ; then
+# Adobe log of job finish
+
+	echo "$pr: $seqid end - `date`"		>> $log
+fi
+
+# clean up tmp files
+
+if [ $DEBUG = 0 ] ; then
+	rm -f $bannerf $pstmp $psrtmp $psfinal
+fi

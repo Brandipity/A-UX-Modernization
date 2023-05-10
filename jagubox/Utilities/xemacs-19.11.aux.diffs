@@ -1,0 +1,1374 @@
+*** ./lisp/paths.el.orig	Fri Jan 28 11:01:26 1994
+--- ./lisp/paths.el	Tue Sep 20 22:42:09 1994
+***************
+*** 105,111
+    (purecopy
+     (cond
+      ((memq system-type '(dgux-unix hpux usg-unix-v unisoft-unix rtu
+! 			 irix silicon-graphics-unix))
+       "/usr/mail/")
+      ((memq system-type '(netbsd))
+       "/var/mail/")
+
+--- 105,111 -----
+    (purecopy
+     (cond
+      ((memq system-type '(dgux-unix hpux usg-unix-v unisoft-unix rtu
+! 			 irix apple-unix silicon-graphics-unix))
+       "/usr/mail/")
+      ((memq system-type '(netbsd))
+       "/var/mail/")
+No differences encountered
+*** ./src/m/macII.h.orig	Tue Sep 20 22:42:10 1994
+--- ./src/m/macII.h	Tue Sep 20 22:42:10 1994
+***************
+*** 0
+
+--- 1,128 -----
++ /* machine description file template.
++    Copyright (C) 1985, 1986 Free Software Foundation, Inc.
++ 
++ This file is part of GNU Emacs.
++ 
++ GNU Emacs is free software; you can redistribute it and/or modify
++ it under the terms of the GNU General Public License as published by
++ the Free Software Foundation; either version 1, or (at your option)
++ any later version.
++ 
++ GNU Emacs is distributed in the hope that it will be useful,
++ but WITHOUT ANY WARRANTY; without even the implied warranty of
++ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ GNU General Public License for more details.
++ 
++ You should have received a copy of the GNU General Public License
++ along with GNU Emacs; see the file COPYING.  If not, write to
++ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
++ 
++ 
++ /* The following line tells the configuration script what sort of 
++    operating system this machine is likely to run.
++    USUAL-OPSYS="<name of system .h file here, without the s- or .h>"  */
++ 
++ /* The following three symbols give information on
++  the size of various data types.  */
++ 
++ #define SHORTBITS 16		/* Number of bits in a short */
++ 
++ #define INTBITS 32		/* Number of bits in an int */
++ 
++ #define LONGBITS 32		/* Number of bits in a long */
++ 
++ /* Define NO_ARG_ARRAY if you cannot take the address of the first of a
++  * group of arguments and treat it as an array of the arguments.  */
++ 
++ /* #define NO_ARG_ARRAY */
++ 
++ /* Define WORD_MACHINE if addresses and such have
++  * to be corrected before they can be used as byte counts.  */
++ 
++ /* #define WORD_MACHINE */
++ 
++ /* Now define a symbol for the cpu type, if your compiler
++    does not define it automatically:
++    Ones defined so far include vax, m68000, ns16000, pyramid,
++    orion, tahoe, APOLLO and many others */
++ 
++ #ifndef	m68k
++ #define	m68k 1
++ #endif
++ 
++ /* Use type int rather than a union, to represent Lisp_Object */
++ /* This is desirable for most machines.  */
++ 
++ #define NO_UNION_TYPE
++ 
++ /* Define EXPLICIT_SIGN_EXTEND if XINT must explicitly sign-extend
++    the 24-bit bit field into an int.  In other words, if bit fields
++    are always unsigned.
++ 
++    If you use NO_UNION_TYPE, this flag does not matter.  */
++ 
++ #define EXPLICIT_SIGN_EXTEND
++ 
++ /* Data type of load average, as read out of kmem.  */
++ 
++ #define	LOAD_AVE_TYPE struct lavnum { unsigned short hi; unsigned short lo; }
++ 
++ /* Convert that into an float that is 100 for a load average of 1.0  */
++ 
++ #define LDAV_CVT(E)  (E.hi + E.lo / 65535.0)
++ 
++ /* Define CANNOT_DUMP on machines where unexec does not work.
++    Then the function dump-emacs will not be defined
++    and temacs will do (load "loadup") automatically unless told otherwise.  */
++ 
++ /* #define CANNOT_DUMP */
++ 
++ /* Define VIRT_ADDR_VARIES if the virtual addresses of
++    pure and impure space as loaded can vary, and even their
++    relative order cannot be relied on.
++ 
++    Otherwise Emacs assumes that text space precedes data space,
++    numerically.  */
++ 
++ /* #define VIRT_ADDR_VARIES */
++ 
++ /* Define C_ALLOCA if this machine does not support a true alloca
++    and the one written in C should be used instead.
++    Define HAVE_ALLOCA to say that the system provides a properly
++    working alloca function and it should be used.
++    Define neither one if an assembler-language alloca
++    in the file alloca.s should be used.  */
++ 
++ #define C_ALLOCA
++ /* #define HAVE_ALLOCA */
++ 
++ /* Define NO_REMAP if memory segmentation makes it not work well
++    to change the boundary between the text section and data section
++    when Emacs is dumped.  If you define this, the preloaded Lisp
++    code will not be sharable; but that's better than failing completely.  */
++ 
++ #define NO_REMAP
++ 
++ /* Some really obscure 4.2-based systems (like Sequent DYNIX)
++  * do not support asynchronous I/O (using SIGIO) on sockets,
++  * even though it works fine on tty's.  If you have one of
++  * these systems, define the following, and then use it in
++  * config.h (or elsewhere) to decide when (not) to use SIGIO.
++  *
++  * You'd think this would go in an operating-system description file,
++  * but since it only occurs on some, but not all, BSD systems, the
++  * reasonable place to select for it is in the machine description
++  * file.
++  */
++ 
++ /* #define NO_SOCK_SIGIO */
++ 
++ 
++ /* After adding support for a new system, modify the large case
++    statement in the `configure' script to recognize reasonable
++    configuration names, and add a description of the system to
++    `etc/MACHINES'.
++ 
++    If you've just fixed a problem in an existing configuration file,
++    you should also check `etc/MACHINES' to make sure its descriptions
++    of known problems in that configuration should be updated.  */
+*** ./src/s/aux3-02.h.orig	Tue Sep 20 22:42:10 1994
+--- ./src/s/aux3-02.h	Tue Sep 20 22:42:10 1994
+***************
+*** 0
+
+--- 1,249 -----
++ 
++ /* Definitions file for GNU Emacs running on UniSoft's UniPlus 5.2
++    Copyright (C) 1985, 1986 Free Software Foundation, Inc.
++ 
++ This file is part of GNU Emacs.
++ 
++ GNU Emacs is free software; you can redistribute it and/or modify
++ it under the terms of the GNU General Public License as published by
++ the Free Software Foundation; either version 1, or (at your option)
++ any later version.
++ 
++ GNU Emacs is distributed in the hope that it will be useful,
++ but WITHOUT ANY WARRANTY; without even the implied warranty of
++ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ GNU General Public License for more details.
++ 
++ You should have received a copy of the GNU General Public License
++ along with GNU Emacs; see the file COPYING.  If not, write to
++ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
++ 
++ 
++ /*
++  *	Define symbols to identify the version of Unix this is.
++  *	Define all the symbols that apply correctly.
++  */
++ 
++ #define USG				/* System III, System V, etc */
++ #define USG5
++ #ifndef	AUX
++ #define	AUX
++ #endif
++ 
++ /* SYSTEM_TYPE should indicate the kind of system you are using.
++  It sets the Lisp variable system-type.  */
++ 
++ #define SYSTEM_TYPE "apple-unix"
++ 
++ /* nomultiplejobs should be defined if your system's shell
++  does not have "job control" (the ability to stop a program,
++  run some other program, then continue the first one).  */
++ 
++ /* #define NOMULTIPLEJOBS */
++ 
++ /* Default is to set interrupt_input to 0: don't do input buffering within Emacs */
++ 
++ #define INTERRUPT_INPUT
++ 
++ /* Letter to use in finding device name of first pty,
++   if system supports pty's.  'p' means it is /dev/ptyp0  */
++ 
++ #define FIRST_PTY_LETTER 'p'
++ 
++ /*
++  *	Define HAVE_TERMIO if the system provides sysV-style ioctls
++  *	for terminal control.
++  */
++ 
++ #define HAVE_TERMIO
++ 
++ /*
++  *	Define HAVE_TIMEVAL if the system supports the BSD style clock values.
++  *	Look in <sys/time.h> for a timeval structure.
++  */
++ 
++ #define HAVE_TIMEVAL
++  
++ /*
++  *	Define HAVE_SELECT if the system supports the `select' system call.
++  */
++ 
++ #define HAVE_SELECT
++ 
++ /*
++  *	Define HAVE_PTYS if the system supports pty devices.
++  */
++ 
++ #define HAVE_PTYS
++ 
++ /* Define this macro if system defines a type `union wait'.  */
++ 
++ #define HAVE_UNION_WAIT
++ 
++ /*
++  *	Define HAVE_MATH_68881_H if <math.h> includes <math-68881.h>.
++  */
++ #define HAVE_MATH_68881_H
++ 
++ /*	Define HAVE_INVERSE_HYPERBOLIC if you math library contains definitions
++  *	of acosh, asinh, and atanh.  Define HAVE_CBRT and HAVE_RINT if your 
++  *	math library contains cbrt and rint.  Otherwise, they will be
++  *	simulated.
++  */
++ /* #define HAVE_INVERSE_HYPERBOLIC */
++ /* #define HAVE_CBRT */
++ /* #define HAVE_RINT */
++ 
++ /*	Define FLOAT_CATCH_SIGILL if your floating point library routines
++  *	can generate SIGILL conditions.
++  */
++ #define FLOAT_CATCH_SIGILL
++ 
++ /*	Define FLOAT_CHECK_ERRNO if the float library routines set errno, as
++  *	the ANSI C spec requires.  (This has no effect on machines which use
++  *	the SysV `matherr' mechanism.)
++  */
++ /* #define FLOAT_CHECK_ERRNO */
++ 
++ /*	Define FLOAT_CHECK_DOMAIN if the float library doesn't handle errors by
++  *	either setting errno, or signalling SIGFPE/SIGILL (for example, some
++  *	systems write a message to stderr.)  Otherwise, domain and range
++  *	checking will happen before calling the float routines.  This has no
++  *	effect on machines which use the SysV `matherr' mechanism.
++  */
++ #define FLOAT_CHECK_DOMAIN
++ 
++ /* Define HAVE_SOCKETS if system supports 4.2-compatible sockets.  */
++ 
++ #define HAVE_SOCKETS
++ 
++ /*
++  *	Define NEED_REALPATH if the system doesn't have realpath()
++  */
++ 
++ #define NEED_REALPATH
++ 
++ /*
++  *	Define NONSYSTEM_DIR_LIBRARY to make Emacs emulate
++  *      The 4.2 opendir, etc., library functions.
++  */
++ 
++ /* #define NONSYSTEM_DIR_LIBRARY */
++ 
++ /* Define this symbol if your system has the functions bcopy, etc. */
++ 
++ #define BSTRING
++ 
++ /* subprocesses should be defined if you want to
++  have code for asynchronous subprocesses
++  (as used in M-x compile and M-x shell).
++  This is generally OS dependent, and not supported
++  under most USG systems.  It is supported under UniPlus
++  System V Release 2. */
++ 
++ #define subprocesses
++ 
++ /* If your system uses COFF (Common Object File Format) then define the
++    preprocessor symbol "COFF". */
++ 
++ #define COFF
++ 
++ /* define MAIL_USE_FLOCK if the mailer uses flock
++    to interlock access to /usr/spool/mail/$USER.
++    The alternative is that a lock file named
++    /usr/spool/mail/$USER.lock.  */
++ 
++ #define MAIL_USE_FLOCK
++ 
++ /* Define CLASH_DETECTION if you want lock files to be written
++    so that Emacs can tell instantly when you try to modify
++    a file that someone else has modified in his Emacs.  */
++ 
++ #define CLASH_DETECTION
++ 
++ /* Uniplus 5.2 supports long names in C */
++ 
++ /* #define SHORTNAMES */
++ 
++ /* We do NOT use the Berkeley (and usg5.2.2) interface to nlist.  */
++ 
++ /* #define NLIST_STRUCT */
++ 
++ /* The file containing the kernel's symbol table is called /unix.  */
++ 
++ #define KERNEL_FILE "/unix"
++ 
++ /* The symbol in the kernel where the load average is found
++    is named avenrun.  */
++ 
++ #define LDAV_SYMBOL "avenrun"
++ 
++ 
++ /* Special hacks needed to make Emacs run on this system.  */
++ 
++ /*
++  *	Make the sigsetmask function go away.  Don't know what the
++  *	ramifications of this are, but doesn't seem possible to
++  *	emulate it properly anyway at this point.
++  */
++ 
++ /* #define sigsetmask(mask)	/* Null expansion */
++ 
++ /* setjmp and longjmp can safely replace _setjmp and _longjmp,
++    but they will run slower.  */
++ 
++ #define _setjmp setjmp
++ #define _longjmp longjmp
++ 
++ /* On USG systems the system calls are interruptable by signals
++  that the user program has elected to catch.  Thus the system call
++  must be retried in these cases.  To handle this without massive
++  changes in the source code, we remap the standard system call names
++  to names for our own functions in sysdep.c that do the system call
++  with retries. */
++ 
++ #ifdef notdef		/* not necessary because of set42sig() */
++ #define read sys_read 
++ #define open sys_open
++ #define write sys_write
++ 
++ #define INTERRUPTIBLE_OPEN
++ #define INTERRUPTIBLE_IO
++ #endif
++ 
++ /* Compiler bug bites when default ADDR_CORRECT is used.  */
++ 
++ #define ADDR_CORRECT(x) (x)
++ 
++ /* A system-specific loader switch is needed.  */
++ 
++ /* #define LD_SWITCH_SYSTEM -N -L/lib/libg /usr/lib/unshared.ld */
++ 
++ #define	NBPC 4096
++ 
++ #define LIB_STANDARD /lib/crtn.o /usr/lib/shlib.ld /lib/libc.a
++ #define START_FILES pre-crt0.o /lib/crt1.o /lib/crt2.o
++ #define	memmove(d, s, l) memcpy(d, s, l)
++ 
++ #ifdef	__GNUC__
++ #define	C_SWITCH_SYSTEM -pipe -DmacII -DSYSV -DX_WCHAR -DX_LOCALE -D__STDC__=2
++ #endif
++ 
++ /* Define this if system V IPC is available.  */
++ #define HAVE_SYSVIPC
++ 
++ /* No <sys/sioctl.h> */
++ #define NO_SIOCTL_H
++ 
++ /* A/UX 3.0 has sound support. */
++ #define HAVE_NATIVE_SOUND
++ 
++ #define HAVE_WAIT_HEADER
++ #define USG_SYS_TIME
++ #define HAVE_TZSETWALL
++ #define USE_UTIME
++ 
++ #define USG_SHARED_LIBRARIES
++ 
++ #define C_OPTIMIZE_SWITCH -O2
++ #define C_DEBUG_SWITCH C_OPTIMIZE_SWITCH
+*** ./src/Makefile.in.in.orig	Mon Sep 12 17:58:56 1994
+--- ./src/Makefile.in.in	Tue Sep 20 23:15:48 1994
+***************
+*** 255,260
+  #    define SOUND_LIBS	-lAlib	
+  #    define SOUND_OBJS	hpplay.o
+  #   else /* ! hp9000s800 */
+    ERROR!!  HAVE_NATIVE_SOUND can only be defined on SparcStation, SGI, or hp9000s800
+  #   endif /* ! hp9000s800 */
+  #  endif /* ! sgi */
+
+--- 255,265 -----
+  #    define SOUND_LIBS	-lAlib	
+  #    define SOUND_OBJS	hpplay.o
+  #   else /* ! hp9000s800 */
++ #	ifdef macII
++ #   	define SOUND_CFLAGS
++ #   	define SOUND_LIBS
++ #   	define SOUND_OBJS	auxplay.o
++ #   else /* ! macII */
+    ERROR!!  HAVE_NATIVE_SOUND can only be defined on SparcStation, SGI, or hp9000s800
+  #	endif /* ! macII */
+  #   endif /* ! hp9000s800 */
+***************
+*** 256,261
+  #    define SOUND_OBJS	hpplay.o
+  #   else /* ! hp9000s800 */
+    ERROR!!  HAVE_NATIVE_SOUND can only be defined on SparcStation, SGI, or hp9000s800
+  #   endif /* ! hp9000s800 */
+  #  endif /* ! sgi */
+  # endif /* ! SPARC */
+
+--- 261,267 -----
+  #   	define SOUND_OBJS	auxplay.o
+  #   else /* ! macII */
+    ERROR!!  HAVE_NATIVE_SOUND can only be defined on SparcStation, SGI, or hp9000s800
++ #	endif /* ! macII */
+  #   endif /* ! hp9000s800 */
+  #  endif /* ! sgi */
+  # endif /* ! SPARC */
+***************
+*** 376,382
+  #ifdef THIS_IS_X11R6
+  LIBX=  $(LIBX11_LIBS) $(XMU_LIB) -lXt -lSM -lICE -lXext -lX11 LIBX11_MACHINE LIBX11_SYSTEM
+  #else
+! LIBX=  $(LIBX11_LIBS) $(XMU_LIB) -lXt -lXext -lX11 LIBX11_MACHINE LIBX11_SYSTEM
+  #endif
+  
+  #else
+
+--- 382,388 -----
+  #ifdef THIS_IS_X11R6
+  LIBX=  $(LIBX11_LIBS) $(XMU_LIB) -lXt -lSM -lICE -lXext -lX11 LIBX11_MACHINE LIBX11_SYSTEM
+  #else
+! LIBX=  $(LIBX11_LIBS) $(XMU_LIB) -lXt -lXext -lX11 LIBX11_MACHINE LIBX11_SYSTEM -lXdum
+  #endif
+  
+  #else
+***************
+*** 1025,1030
+  hpplay.o:
+  	$(CC) -c -Demacs $(ALL_CFLAGS) SOUND_CFLAGS ${srcdir}/$(@:.o=.c)
+  # endif /* hp9000s800 */
+  #endif /* HAVE_NATIVE_SOUND */
+  
+  #ifdef HAVE_NAS_SOUND
+
+--- 1031,1040 -----
+  hpplay.o:
+  	$(CC) -c -Demacs $(ALL_CFLAGS) SOUND_CFLAGS ${srcdir}/$(@:.o=.c)
+  # endif /* hp9000s800 */
++ # ifdef macII
++ auxplay.o:
++ 	$(CC) -c -Demacs $(ALL_CFLAGS) SOUND_CFLAGS ${srcdir}/$(@:.o=.c)
++ # endif /* macII */
+  #endif /* HAVE_NATIVE_SOUND */
+  
+  #ifdef HAVE_NAS_SOUND
+***************
+*** 1527,1532
+  strcpy.o: config.h
+  sunOS-fix.o: config.h
+  sunplay.o: config.h
+  symbols.o: config.h
+  symbols.o: buffer.h
+  symbols.o: bufslots.h
+
+--- 1537,1543 -----
+  strcpy.o: config.h
+  sunOS-fix.o: config.h
+  sunplay.o: config.h
++ auxplay.o: config.h
+  symbols.o: config.h
+  symbols.o: buffer.h
+  symbols.o: bufslots.h
+*** ./src/auxplay.c.orig	Tue Sep 20 22:42:12 1994
+--- ./src/auxplay.c	Tue Sep 20 22:42:12 1994
+***************
+*** 0
+
+--- 1,422 -----
++ /* auxplay.c - play a sound file on the speaker
++  **
++  ** Copyright (C) 1989 by Jef Poskanzer.
++  **
++  ** Modified 24-May-91 by Jamie Zawinski (for Lucid Emacs.)
++  ** Modified 17-Dec-92 by Jamie Zawinski (largely rewritten for SunOS 4.1.3.)
++  ** Severely hacked 7-Mar-93 by Thomas Eberhardt (for Apple's A/UX 3.0.)
++  **
++  ** Permission to use, copy, modify, and distribute this software and its
++  ** documentation for any purpose and without fee is hereby granted, provided
++  ** that the above copyright notice appear in all copies and that both that
++  ** copyright notice and this permission notice appear in supporting
++  ** documentation.  This software is provided "as is" without express or
++  ** implied warranty.
++  */
++ 
++ #if __STDC__
++ #include <stdlib.h>
++ #include <unistd.h>
++ #endif
++ 
++ #include <stdio.h>
++ #include <string.h>
++ #include <errno.h>
++ #include <fcntl.h>
++ #include <signal.h>
++ #include <sys/types.h>
++ #include <sys/ioctl.h>
++ #include <sys/file.h>
++ #include <sys/time.h>
++ #include <netinet/in.h>
++ 
++ #define pascal
++ #include <sys/sm_aux.h>
++ 
++ #ifndef min
++ #define min(a,b) ((a) < (b) ? (a) : (b))
++ #endif
++ 
++ typedef struct
++ {
++   unsigned magic;
++   unsigned hdr_size;
++   unsigned data_size;
++   unsigned encoding;
++   unsigned sample_rate;
++   unsigned channels;
++ } Audio_filehdr;
++ 
++ #define AUDIO_FILE_MAGIC		0x2e736e64
++ #define AUDIO_FILE_ENCODING_MULAW_8     1
++ 
++ /* Table to convert mu-law samples to linear */
++ unsigned char ulaw_to_mac[256] =
++ {
++   0x03, 0x07, 0x0b, 0x0f, 0x13, 0x17, 0x1b, 0x1f,
++   0x23, 0x27, 0x2b, 0x2f, 0x33, 0x37, 0x3b, 0x3f,
++   0x42, 0x44, 0x46, 0x48, 0x4a, 0x4c, 0x4e, 0x50,
++   0x52, 0x54, 0x56, 0x58, 0x5a, 0x5c, 0x5e, 0x60,
++   0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68,
++   0x69, 0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f, 0x70,
++   0x71, 0x71, 0x72, 0x72, 0x73, 0x73, 0x74, 0x74,
++   0x75, 0x75, 0x76, 0x76, 0x77, 0x77, 0x78, 0x78,
++   0x79, 0x79, 0x79, 0x79, 0x7a, 0x7a, 0x7a, 0x7a,
++   0x7b, 0x7b, 0x7b, 0x7b, 0x7c, 0x7c, 0x7c, 0x7c,
++   0x7d, 0x7d, 0x7d, 0x7d, 0x7d, 0x7d, 0x7d, 0x7d,
++   0x7e, 0x7e, 0x7e, 0x7e, 0x7e, 0x7e, 0x7e, 0x7e,
++   0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f,
++   0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f,
++   0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80,
++   0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80,
++   0xfd, 0xf9, 0xf5, 0xf1, 0xed, 0xe9, 0xe5, 0xe1,
++   0xdd, 0xd9, 0xd5, 0xd1, 0xcd, 0xc9, 0xc5, 0xc1,
++   0xbe, 0xbc, 0xba, 0xb8, 0xb6, 0xb4, 0xb2, 0xb0,
++   0xae, 0xac, 0xaa, 0xa8, 0xa6, 0xa4, 0xa2, 0xa0,
++   0x9f, 0x9e, 0x9d, 0x9c, 0x9b, 0x9a, 0x99, 0x98,
++   0x97, 0x96, 0x95, 0x94, 0x93, 0x92, 0x91, 0x90,
++   0x8f, 0x8f, 0x8e, 0x8e, 0x8d, 0x8d, 0x8c, 0x8c,
++   0x8b, 0x8b, 0x8a, 0x8a, 0x89, 0x89, 0x88, 0x88,
++   0x87, 0x87, 0x87, 0x87, 0x86, 0x86, 0x86, 0x86,
++   0x85, 0x85, 0x85, 0x85, 0x84, 0x84, 0x84, 0x84,
++   0x83, 0x83, 0x83, 0x83, 0x83, 0x83, 0x83, 0x83,
++   0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82,
++   0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81,
++   0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81,
++   0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80,
++   0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
++ };
++ 
++ #ifdef emacs
++ extern char *sys_errlist[];
++ extern int errno, sys_nerr;
++ extern void message ();
++ # define perror(string) \
++     message("audio: %s, %s ", string, \
++ 	    (errno < sys_nerr) ? sys_errlist[errno] : \
++ 	    "unknown")
++ # define warn(str) message ("audio: %s ", (str))
++ #else /* !emacs */
++ # define warn(str) fprintf (stderr, "%s\n", (str))
++ #endif /* emacs */
++ 
++ static void (*sighup_handler) ();
++ static void (*sigint_handler) ();
++ static void sighandler ();
++ 
++ static int audio_fd = -1;
++ static int file_fd = -1;
++ 
++ 
++ static void
++ audio_flush_play ()
++ {
++   int fd;
++ 
++   fd = open ("/dev/snd/reset", O_WRONLY);
++   if (fd < 0)
++     return;
++ 
++   write (fd, "r", 1);
++   close (fd);
++ }
++ 
++ 
++ static int
++ audio_write (data, length)
++      unsigned char *data;
++      int length;
++ {
++   int rtn, raw_length;
++   short i;
++   unsigned char *limit, *p;
++   unsigned char raw_buf[SND_CHUNK];
++ 
++   limit = data + length;
++   while (data < limit)
++     {
++       raw_length = min (limit - data, sizeof (raw_buf));
++ 
++       /* Use Duff's device to convert mu-law samples to linear */
++       p = raw_buf;
++       i = ((raw_length + 15) >> 4) - 1;
++       switch (raw_length & 15)
++ 	{
++ 	case  0: do { *p++ = ulaw_to_mac[*data++];
++ 	case 15:      *p++ = ulaw_to_mac[*data++];
++ 	case 14:      *p++ = ulaw_to_mac[*data++];
++ 	case 13:      *p++ = ulaw_to_mac[*data++];
++ 	case 12:      *p++ = ulaw_to_mac[*data++];
++ 	case 11:      *p++ = ulaw_to_mac[*data++];
++ 	case 10:      *p++ = ulaw_to_mac[*data++];
++ 	case  9:      *p++ = ulaw_to_mac[*data++];
++ 	case  8:      *p++ = ulaw_to_mac[*data++];
++ 	case  7:      *p++ = ulaw_to_mac[*data++];
++ 	case  6:      *p++ = ulaw_to_mac[*data++];
++ 	case  5:      *p++ = ulaw_to_mac[*data++];
++ 	case  4:      *p++ = ulaw_to_mac[*data++];
++ 	case  3:      *p++ = ulaw_to_mac[*data++];
++ 	case  2:      *p++ = ulaw_to_mac[*data++];
++ 	case  1:      *p++ = ulaw_to_mac[*data++];
++ 		 } while (i--);
++ 	}
++ 
++       rtn = write (audio_fd, raw_buf, raw_length);
++       if (rtn != raw_length)
++ 	{
++ 	  if (rtn <= 0)
++ 	    return rtn;
++ 	  else
++ 	    return rtn + (length - (limit - data));
++ 	}
++     }
++   return length;
++ }
++ 
++ 
++ static int
++ init_device (volume, data, fd, header_length)
++      int volume;
++      unsigned char *data;
++      int fd;
++      int *header_length;
++ {
++   Audio_filehdr file_hdr;
++   struct rawSndCtl raw_snd_ctl;
++ 
++   if (data && fd) abort (); /* one or the other */
++ 
++   if (data)
++     {
++       memcpy (&file_hdr, data, sizeof (file_hdr));
++       *header_length = ntohl (file_hdr.hdr_size);
++       if (ntohl (file_hdr.magic) != AUDIO_FILE_MAGIC)
++ 	{
++ 	  perror ("invalid audio data");
++ 	  return 1;
++ 	}
++     }
++   else
++     {
++       if (read (fd, &file_hdr, sizeof (file_hdr)) != sizeof (file_hdr)
++ 	  || ntohl (file_hdr.magic) != AUDIO_FILE_MAGIC
++ 	  || lseek (fd, file_hdr.hdr_size, SEEK_SET) < 0)
++ 	{
++ 	  perror ("invalid audio file");
++ 	  return 1;
++ 	}
++     }
++ 
++   if (ntohl (file_hdr.encoding) != AUDIO_FILE_ENCODING_MULAW_8)
++     {
++       perror ("unsupported audio encoding");
++       return 1;
++     }
++ 
++   if (volume < 0 || volume > 100)
++     {
++       char buf [255];
++       sprintf (buf, "volume must be between 0 and 100 (not %d)", volume);
++       warn (buf);
++       return 1;
++     }
++ 
++   audio_flush_play ();
++ 
++   audio_fd = open (DEV_RAW, O_WRONLY);
++   if (audio_fd < 0)
++     {
++       perror ("open /dev/snd/raw");
++       return 1;
++     }
++ 
++   {
++     /* set the volume; scale it to 0 - 7 */
++     char V = ((volume * 8) / 100);
++     if (V == 8)
++       V = 7;
++     ioctl (audio_fd, SND_VOL, &V);
++   }
++ 
++   raw_snd_ctl.sampleRate =
++     (int) (ntohl (file_hdr.sample_rate) * 65536.0 / 22254.54545);
++   raw_snd_ctl.flags = 0;
++   ioctl (audio_fd, SND_RAW_CTL, &raw_snd_ctl);
++ 
++   close (audio_fd);
++ 
++   audio_fd = open (DEV_RAW, O_WRONLY);
++   if (audio_fd < 0)
++     {
++       perror ("open /dev/snd/raw");
++       return 1;
++     }
++ 
++   return 0;
++ }
++ 
++ 
++ void
++ play_sound_file (sound_file, volume)
++     char *sound_file;
++     int volume;
++ {
++   int rrtn, wrtn;
++   unsigned char buf[SND_CHUNK];
++   
++   sighup_handler = signal (SIGHUP, sighandler);
++   sigint_handler = signal (SIGINT, sighandler);
++   
++   file_fd = open (sound_file, O_RDONLY);
++   if (file_fd < 0)
++     {
++       perror (sound_file);
++       goto END_OF_PLAY;
++     }
++ 
++   if (init_device (volume, 0, file_fd, 0))
++     goto END_OF_PLAY;
++     
++   while (1)
++     {
++       rrtn = read (file_fd, (char *) buf, sizeof (buf));
++       if (rrtn < 0)
++ 	{
++ 	  perror ("read");
++ 	  goto END_OF_PLAY;
++ 	}
++       if (rrtn == 0)
++ 	break;
++ 	
++       while (1)
++ 	{
++ 	  wrtn = audio_write (buf, rrtn);
++ 	  if (wrtn < 0)
++ 	    {
++ 	      perror ("write");
++ 	      goto END_OF_PLAY;
++ 	    }
++ 	  if (wrtn != 0)
++ 	    break;
++ 	  goto END_OF_PLAY;
++ 	}
++       if (wrtn != rrtn)
++ 	{
++ 	  char buf [255];
++ 	  sprintf (buf, "play: rrtn = %d, wrtn = %d", rrtn, wrtn);
++ 	  warn (buf);
++ 	  goto END_OF_PLAY;
++ 	}
++     }
++   
++  END_OF_PLAY:
++ 
++   if (file_fd > 0)
++     {
++       close (file_fd);
++       file_fd = -1;
++     }
++   if (audio_fd > 0)
++     {
++       close (audio_fd);
++       audio_fd = -1;
++     }
++ 
++   (void) signal (SIGHUP, sighup_handler);
++   (void) signal (SIGINT, sigint_handler);
++ }
++ 
++ 
++ void
++ play_sound_data (data, length, volume)
++      unsigned char *data;
++      int length, volume;
++ {
++   int wrtn, start = 0;
++   int hlen;
++ 
++   if (length == 0) return;
++ 
++   /* this is just to get a better error message */
++   if (strncmp (".snd\0", (char *) data, 4))
++     {
++       warn ("Not valid audio data (bad magic number)");
++       goto END_OF_PLAY;
++     }
++   if (length <= sizeof (Audio_filehdr))
++     {
++       warn ("Not valid audio data (too short)");
++       goto END_OF_PLAY;
++     }
++ 
++   sighup_handler = signal (SIGHUP, sighandler);
++   sigint_handler = signal (SIGINT, sighandler);
++     
++   if (init_device (volume, data, 0, &hlen))
++     goto END_OF_PLAY;
++       
++   data += hlen;
++   length -= hlen;
++   if (length <= 1)
++     goto END_OF_PLAY;
++     
++   while (1)
++     {
++       wrtn = audio_write (data+start, length-start);
++       if (wrtn < 0)
++ 	{
++ 	  perror ("write");
++ 	  goto END_OF_PLAY;
++ 	}
++       if (wrtn != 0)
++ 	{
++ 	  start += wrtn;
++ 	  break;
++ 	}
++       goto END_OF_PLAY;
++     }
++   if (wrtn != length)
++     {
++       char buf [255];
++       sprintf (buf, "play: rrtn = %d, wrtn = %d", length, wrtn);
++       warn (buf);
++       goto END_OF_PLAY;
++     }
++   
++  END_OF_PLAY:
++ 
++   if (audio_fd > 0)
++     {
++       close (audio_fd);
++       audio_fd = -1;
++     }
++ 
++   (void) signal (SIGHUP, sighup_handler);
++   (void) signal (SIGINT, sigint_handler);
++ }
++ 
++ 
++ static void
++ sighandler (sig, code, scp, addr)
++      int sig, code;
++      struct sigcontext *scp;
++      char *addr;
++ {
++   if (file_fd > 0)
++     {
++       close (file_fd);
++       file_fd = -1;
++     }
++   if (audio_fd > 0)
++     {
++       close (audio_fd);
++       audio_fd = -1;
++     }
++   audio_flush_play ();
++   if (sig == SIGHUP && sighup_handler)
++     sighup_handler (sig, code, scp, addr);
++   else if (sig == SIGINT && sigint_handler)
++     sigint_handler (sig, code, scp, addr);
++   else
++     exit (1);
++ }
+*** ./src/emacs.c.orig	Mon Jul 18 17:19:59 1994
+--- ./src/emacs.c	Tue Sep 20 22:42:13 1994
+***************
+*** 329,334
+  #ifdef FREE_CHECKING
+    init_free_hook ();
+  #endif
+  
+    /* Map in shared memory, if we are using that.  */
+  #ifdef HAVE_SHM
+
+--- 329,337 -----
+  #ifdef FREE_CHECKING
+    init_free_hook ();
+  #endif
++ #ifdef AUX
++   set42sig();
++ #endif
+  
+    /* Map in shared memory, if we are using that.  */
+  #ifdef HAVE_SHM
+*** ./src/fns.c.orig	Thu Sep  8 16:26:06 1994
+--- ./src/fns.c	Tue Sep 20 22:42:13 1994
+***************
+*** 65,72
+  #ifndef	random
+  extern long random ();
+  #endif
+! #ifndef srandom
+! extern void srandom ();
+  #endif
+  #endif
+  
+
+--- 65,72 -----
+  #ifndef	random
+  extern long random ();
+  #endif
+! #ifndef srand
+! extern void srand ();
+  #endif
+  #endif
+  
+***************
+*** 83,89
+    int val;
+  
+    if (EQ (limit, Qt))
+!     srandom (getpid () + time (0));
+    if (FIXNUMP (limit) && XINT (limit) > 0)
+      {
+        /* Try to take our random number from the higher bits of VAL,
+
+--- 83,89 -----
+    int val;
+  
+    if (EQ (limit, Qt))
+!     srand (getpid () + time (0));
+    if (FIXNUMP (limit) && XINT (limit) > 0)
+      {
+        /* Try to take our random number from the higher bits of VAL,
+*** ./src/process.c.orig	Mon Sep  5 11:46:55 1994
+--- ./src/process.c	Tue Sep 20 22:42:15 1994
+***************
+*** 1204,1210
+  
+    if (inchannel >= 0)
+      {
+! #ifndef USG
+        /* On USG systems it does not work to open the pty's tty here
+  	       and then close and reopen it in the child.  */
+  #ifdef O_NOCTTY
+
+--- 1204,1210 -----
+  
+    if (inchannel >= 0)
+      {
+! #if !defined(USG) || defined(AUX)
+        /* On USG systems it does not work to open the pty's tty here
+  	       and then close and reopen it in the child.  */
+  #ifdef O_NOCTTY
+***************
+*** 1284,1290
+  #ifdef BSD4_1
+    sighold (SIGCHLD);
+  #else /* not BSD4_1 */
+! #if defined (BSD) || defined (UNIPLUS) || defined (HPUX)
+    sigsetmask (sigmask (SIGCHLD));
+  #else /* ordinary USG */
+  #if 0
+
+--- 1284,1290 -----
+  #ifdef BSD4_1
+    sighold (SIGCHLD);
+  #else /* not BSD4_1 */
+! #if defined (BSD) || defined (UNIPLUS) || defined (HPUX) || defined(AUX)
+    sigsetmask (sigmask (SIGCHLD));
+  #else /* ordinary USG */
+  #if 0
+***************
+*** 1449,1455
+  #ifdef BSD4_1
+  	sigrelse (SIGCHLD);
+  #else /* not BSD4_1 */
+! #if defined (BSD) || defined (UNIPLUS) || defined (HPUX)
+  	sigsetmask (SIGEMPTYMASK);
+  #else /* ordinary USG */
+  #if 0
+
+--- 1449,1455 -----
+  #ifdef BSD4_1
+  	sigrelse (SIGCHLD);
+  #else /* not BSD4_1 */
+! #if defined (BSD) || defined (UNIPLUS) || defined (HPUX) || defined(AUX)
+  	sigsetmask (SIGEMPTYMASK);
+  #else /* ordinary USG */
+  #if 0
+***************
+*** 1510,1516
+  #ifdef BSD4_1
+    sigrelse (SIGCHLD);
+  #else /* not BSD4_1 */
+! #if defined (BSD) || defined (UNIPLUS) || defined (HPUX)
+    sigsetmask (SIGEMPTYMASK);
+  #else
+  #ifdef POSIX_SIGNALS	/* Lemacs change for Linux by Raymond L. Toy
+
+--- 1510,1516 -----
+  #ifdef BSD4_1
+    sigrelse (SIGCHLD);
+  #else /* not BSD4_1 */
+! #if defined (BSD) || defined (UNIPLUS) || defined (HPUX) || defined(AUX)
+    sigsetmask (SIGEMPTYMASK);
+  #else
+  #ifdef POSIX_SIGNALS	/* Lemacs change for Linux by Raymond L. Toy
+*** ./src/sysdep.c.orig	Thu Sep  1 11:39:59 1994
+--- ./src/sysdep.c	Tue Sep 20 22:42:17 1994
+***************
+*** 87,92
+  #define	MAXIOSIZE ( 32 * PAGESIZE )	/* Don't I/O more than 32 blocks at a time */
+  #endif /* VMS */
+  
+  #ifndef BSD4_1
+  #ifdef BSD /* this is done this way to avoid defined (BSD) || defined (USG)
+  	      because the vms compiler doesn't grok `defined' */
+
+--- 87,98 -----
+  #define	MAXIOSIZE ( 32 * PAGESIZE )	/* Don't I/O more than 32 blocks at a time */
+  #endif /* VMS */
+  
++ /* Added so sysdep.c can find FASYNC */
++ #ifdef AUX
++ #include <sys/file.h>
++ #endif
++ 
++ 
+  #ifndef BSD4_1
+  #ifdef BSD /* this is done this way to avoid defined (BSD) || defined (USG)
+  	      because the vms compiler doesn't grok `defined' */
+***************
+*** 868,874
+  }
+  
+  #else /* no FASYNC */
+! #if defined(LINUX) || defined(STRIDE) || defined(HPUX)	/* Stride doesn't have FASYNC - use FIOASYNC */
+  /* Linux added here by Raymond L. Toy <toy@alydar.crd.ge.com> for Lemacs. */
+  
+  void
+
+--- 874,881 -----
+  }
+  
+  #else /* no FASYNC */
+! #if defined(LINUX) || defined(STRIDE) || defined(HPUX) || defined(macII)
+! /* Stride doesn't have FASYNC - use FIOASYNC */
+  /* Linux added here by Raymond L. Toy <toy@alydar.crd.ge.com> for Lemacs. */
+  
+  void
+***************
+*** 1424,1431
+  #ifdef F_GETOWN		/* F_SETFL does not imply existence of F_GETOWN */
+        if (interrupt_input)
+  	{
+! 	  old_fcntl_owner = fcntl (input_fd, F_GETOWN, 0);
+! 	  fcntl (input_fd, F_SETOWN, getpid ());
+  	  init_sigio ();
+  	}
+  #endif /* F_GETOWN */
+
+--- 1431,1443 -----
+  #ifdef F_GETOWN		/* F_SETFL does not imply existence of F_GETOWN */
+        if (interrupt_input)
+  	{
+!       old_fcntl_owner = fcntl (0, F_GETOWN, 0);
+! #ifdef AUX 
+!     if (inhibit_window_system > 0) /* if not running windows we need to do this */ 
+!       fcntl (0, F_SETOWN, getpid ());
+! #else 
+!       fcntl (0, F_SETOWN, getpid ());
+! #endif 
+  	  init_sigio ();
+  	}
+  #endif /* F_GETOWN */
+***************
+*** 3160,3165
+      DEFER_GETTEXT ("user defined signal 2"),		/* 17 SIGUSR2 */
+      DEFER_GETTEXT ("death of a child"),			/* 18 SIGCLD */
+      DEFER_GETTEXT ("power-fail restart"),		/* 19 SIGPWR */
+  #ifdef sun
+      DEFER_GETTEXT ("window size change"),		/* 20 SIGWINCH */
+      DEFER_GETTEXT ("urgent socket condition"),		/* 21 SIGURG */
+
+--- 3172,3191 -----
+      DEFER_GETTEXT ("user defined signal 2"),		/* 17 SIGUSR2 */
+      DEFER_GETTEXT ("death of a child"),			/* 18 SIGCLD */
+      DEFER_GETTEXT ("power-fail restart"),		/* 19 SIGPWR */
++ #ifdef AUX
++     DEFER_GETTEXT ("stop signal from tty"),		/* 20 SIGTSTP */
++     DEFER_GETTEXT ("input necessary"),			/* 21 SIGTTIN */
++     DEFER_GETTEXT ("output necessary"),			/* 22 SIGTTOU */
++     DEFER_GETTEXT ("i/o possible"),			/* 23 SIGIO */
++     DEFER_GETTEXT ("exceeded CPU time limit"),		/* 24 SIGXCPU */
++     DEFER_GETTEXT ("exceeded file size limit"),		/* 25 SIGXFSZ */
++     DEFER_GETTEXT ("virtual time alarm"),		/* 26 SIGVTALRM */
++     DEFER_GETTEXT ("profiling time alarm"),		/* 27 SIGPROF */
++     DEFER_GETTEXT ("window size changes"),		/* 28 SIGWINCH */
++     DEFER_GETTEXT ("continue a stopped process"),	/* 29 SIGCONT */
++     DEFER_GETTEXT ("urgent condition on IO channel"),	/* 30 SIGURG */
++     DEFER_GETTEXT ("input/output possible signal"),	/* 31 SIGIO */
++ #endif
+  #ifdef sun
+      DEFER_GETTEXT ("window size change"),		/* 20 SIGWINCH */
+      DEFER_GETTEXT ("urgent socket condition"),		/* 21 SIGURG */
+*** ./src/sysdep.h.orig	Tue May 17 11:16:03 1994
+--- ./src/sysdep.h	Tue Sep 20 22:42:17 1994
+***************
+*** 142,147
+  extern int setpriority (int which, int who, int prio);
+  
+  #ifndef HAVE_VFORK
+  extern pid_t vfork (void);
+  #endif
+  
+
+--- 142,148 -----
+  extern int setpriority (int which, int who, int prio);
+  
+  #ifndef HAVE_VFORK
++ #include <sys/types.h>
+  extern pid_t vfork (void);
+  #endif
+  
+*** ./src/unexec.c.orig	Wed Jul  6 08:50:09 1994
+--- ./src/unexec.c	Tue Sep 20 22:42:18 1994
+***************
+*** 1128,1134
+  {
+    register int nsyms;
+    register int new;
+! #if defined (amdahl_uts) || defined (pfa)
+    SYMENT symentry;
+    AUXENT auxentry;
+  #else
+
+--- 1128,1134 -----
+  {
+    register int nsyms;
+    register int new;
+! #if defined (amdahl_uts) || defined (pfa) || defined(AUX)
+    SYMENT symentry;
+    AUXENT auxentry;
+  #else
+*** ./README.AUX.orig	Tue Sep 20 22:42:18 1994
+--- ./README.AUX	Tue Sep 20 22:42:18 1994
+***************
+*** 0
+
+--- 1,22 -----
++ This is the patch for xemacs-19.11 to work under A/UX.  It based on the
++ previous patch of AUX/lemacs-19.6 by Thomas Eberhardt and AUX/emacs-19.22 
++ on jagubox.
++ 
++ After apply the patch do
++ 
++ ./configure m68k-macII-aux \
++   --cflags='-O2 -pipe -fpcc-struct-return'\
++   --use-sound\
++   --with-motif\
++   --with-xpm
++ 
++ The last two options assume that you have motif and xpm.
++ Follow the INSTALL document for further details.
++ 
++ Check out features on
++ w3-mode     (you can get inline gif also but it is slow)
++ dir & info  (a lot easier than emacs)
++ Options & fonts menus and lots more.
++ 
++ Nisai.
++ nisai@eardc.swt.edu
+*** ./config.sub.orig	Thu Aug 25 20:02:47 1994
+--- ./config.sub	Tue Sep 20 23:00:15 1994
+***************
+*** 1,4
+! #!/bin/sh
+  # Configuration validation subroutine script, version 1.1.
+  #   Copyright (C) 1991, 1992, 1993, 1994 Free Software Foundation, Inc.
+  # This file is (in principle) common to ALL GNU software.
+
+--- 1,4 -----
+! #!/bin/ksh
+  # Configuration validation subroutine script, version 1.1.
+  #   Copyright (C) 1991, 1992, 1993, 1994 Free Software Foundation, Inc.
+  # This file is (in principle) common to ALL GNU software.
+***************
+*** 558,564
+  	      | -amigados* | -msdos* | -newsos* | -unicos* | -aos* \
+  	      | -nindy* | -vxworks* | -ebmon* | -hms* | -mvs* | -clix* \
+  	      | -riscos* | -linux* | -uniplus* | -iris* | -rtu* | -xenix* \
+! 	      | -hiux* | -386bsd* | -netbsd* | -freebsd* | -nextstep* \
+  	      | -riscix* | -lynxos* | -bosx* | -ns* | -cxux* | -aout* | -elf*)
+  		;;
+  	-sunos5*)
+
+--- 558,564 -----
+  	      | -amigados* | -msdos* | -newsos* | -unicos* | -aos* \
+  	      | -nindy* | -vxworks* | -ebmon* | -hms* | -mvs* | -clix* \
+  	      | -riscos* | -linux* | -uniplus* | -iris* | -rtu* | -xenix* \
+! 	      | -hiux* | -386bsd* | -netbsd* | -freebsd* | -nextstep* | -aux* \
+  	      | -riscix* | -lynxos* | -bosx* | -ns* | -cxux* | -aout* | -elf*)
+  		;;
+  	-sunos5*)
+***************
+*** 606,611
+  	-xenix)
+  		os=-xenix
+  		;;
+  	-none)
+  		;;
+  	*)
+
+--- 606,614 -----
+  	-xenix)
+  		os=-xenix
+  		;;
++ 	-aux*)
++ 		os=-aux
++ 		;;
+  	-none)
+  		;;
+  	*)
+***************
+*** 732,737
+  				;;
+  			-hpux*)
+  				vendor=hp
+  				;;
+  			-hiux*)
+  				vendor=hitachi
+
+--- 735,743 -----
+  				;;
+  			-hpux*)
+  				vendor=hp
++ 				;;
++ 			-aux*)
++ 				vendor=apple
+  				;;
+  			-hiux*)
+  				vendor=hitachi
+*** ./configure.orig	Fri Sep  9 14:02:45 1994
+--- ./configure	Tue Sep 20 23:01:51 1994
+***************
+*** 1,4
+! #!/bin/sh
+  #### Configuration script for XEmacs.
+  #### Copyright (C) 1994 Free Software Foundation, Inc.
+  
+
+--- 1,4 -----
+! #!/bin/ksh
+  #### Configuration script for XEmacs.
+  #### Copyright (C) 1994 Free Software Foundation, Inc.
+  
+***************
+*** 1157,1162
+      NON_GNU_CPP="/usr/ccs/lib/cpp" # cc -E tokenizes macro expansion.
+    ;;
+  
+    ## Masscomp machines
+    m68*-masscomp-rtu* )
+      machine=masscomp opsys=rtu
+
+--- 1157,1167 -----
+      NON_GNU_CPP="/usr/ccs/lib/cpp" # cc -E tokenizes macro expansion.
+    ;;
+  
++   ## Machintosh machines
++   m68k-macII-aux )
++     machine=macII opsys=aux3-02
++   ;;
++ 
+    ## Masscomp machines
+    m68*-masscomp-rtu* )
+      machine=masscomp opsys=rtu
+***************
+*** 3865,3871
+  echo creating config.status
+  rm -f config.status
+  cat > config.status <<EOF
+! #!/bin/sh
+  # Generated automatically by configure.
+  # Run this file to recreate the current configuration.
+  # This directory was configured as follows,
+
+--- 3870,3876 -----
+  echo creating config.status
+  rm -f config.status
+  cat > config.status <<EOF
+! #!/bin/ksh
+  # Generated automatically by configure.
+  # Run this file to recreate the current configuration.
+  # This directory was configured as follows,
+***************
+*** 4114,4120
+  EOF
+  chmod +x config.status
+  # Some shells look in PATH for config.status without the "./".
+! test -n "$no_create" || ${CONFIG_SHELL-/bin/sh} ./config.status
+   
+  # Build src/Makefile from ${srcdir}/src/Makefile.in and lwlib/Makefile
+  # from ${srcdir}/lwlib/Makefile.in.  This must be done after src/config.h
+
+--- 4119,4125 -----
+  EOF
+  chmod +x config.status
+  # Some shells look in PATH for config.status without the "./".
+! test -n "$no_create" || ${CONFIG_SHELL-/bin/ksh} ./config.status
+   
+  # Build src/Makefile from ${srcdir}/src/Makefile.in and lwlib/Makefile
+  # from ${srcdir}/lwlib/Makefile.in.  This must be done after src/config.h

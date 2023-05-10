@@ -1,0 +1,24 @@
+The file Patch.tar.gz includes drop-in replacements for the Patch.0178
+and Patch.067C files found in /mac/lib/Patches. These replacements are
+designed to fix the problem in A/UX 3.0 with the A/UX-MacOS System heap
+expansion capability which prevents you from loading several memory-hungry
+Extensions and cdevs (such as ATM, SuitCase, AfterCard, etc...). It also
+contains a replacement for macgetty which increases the amount of VM
+allocated for the Login screen.
+
+To install, copy the Patch.???? files to /mac/lib/Patches. Copy the file
+'macgetty' to /etc. Please be sure to backup the older versions of
+Patch.???? and macgetty first. Then log out and log back in.
+
+!!! *** DO NOT INSTALL THESE UNDER A/UX 3.0.1 *** !!!
+
+These Patches are courtesy of John Coolidge @ Apple. (coolidge@apple.com)
+
+--
+    Jim Jagielski               |  "Supreme executive power derives from
+    jim@jagubox.gsfc.nasa.gov   |   a mandate from the masses, not from
+    NASA/GSFC, Code 734.4       |   some farcical aquatic ceremony."
+    Greenbelt, MD 20771         |		- Dennis
+
++++John L. Coolidge++++++++++++++++coolidge@apple.com+++++++++++++++++++++++
+I speak for myself, not for Apple Computer. Copyright 1993 John L. Coolidge.

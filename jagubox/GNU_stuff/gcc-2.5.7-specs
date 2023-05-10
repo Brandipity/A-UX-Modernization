@@ -1,0 +1,39 @@
+*asm:
+
+
+*asm_final:
+
+
+*cpp:
+%{!msoft-float:%{!ansi:-Dmc68881 }-D__HAVE_68881__ }%{!mc68000:%{!m68000:-Dmc68020 }}%{!ansi:%{!traditional:-D__STDC__=2 }}%{sbsd:-D_BSD_SOURCE -DBSD }%{ZB:-D_BSD_SOURCE -DBSD }%{ssysv:-D_SYSV_SOURCE -DSYSV -DUSG }%{ZS:-D_SYSV_SOURCE -DSYSV -DUSG }%{sposix:-D_POSIX_SOURCE -DPOSIX }%{ZP:-D_POSIX_SOURCE -DPOSIX }%{saux:-D_AUX_SOURCE }%{ZA:-D_AUX_SOURCE }%{!sbsd:%{!ZB:%{!ssysv:%{!ZS:%{!sposix:%{!ZP:-D_BSD_SOURCE -D_AUX_SOURCE -D_SYSV_SOURCE }}}}}}
+
+*cc1:
+-fpcc-struct-return
+
+*cc1plus:
+-fpcc-struct-return
+
+*endfile:
+%{smac:low.ld%s }%{!smac:shlib.ld%s }
+
+*link:
+%{!nostdlib:-L/usr/local/lib -L/usr/local/Gnu/lib }
+
+*lib:
+%{smac:low.o%s }%{p:-L/lib/libp }%{pg:-L/lib/libp }%{sbsd:-lbsd }%{ZB:-lbsd }%{ssysv:-lsvid }%{ZS:-lsvid }%{sposix:-lposix }%{ZP:-lposix }%{static:%{smac:-lmac -lat -lld -lmr }-lc }%{!static:%{smac:-lmac_s -lat -lld -lmr }-lc_s } crtn.o%s
+
+*startfile:
+%{pg:gcrt0.o%s }%{!pg:%{p:mcrt0.o%s }%{!p:%{smac:maccrt0.o%s }%{!smac:crt1.o%s }}}crt2.o%s -u exit -u main libgcc.a%s
+
+*switches_need_spaces:
+
+
+*signed_char:
+%{funsigned-char:-D__CHAR_UNSIGNED__}
+
+*predefines:
+-Dunix -Dm68k -DAUX -DmacII
+
+*cross_compile:
+0
+

@@ -1,0 +1,90 @@
+#!/bin/sh
+#
+#	init devscsi
+#
+#       @(#)Copyright Apple Computer 1987-91
+#       Version 1.5 of devscsi on 93/01/15 16:50:41
+# 
+#
+# Build the /dev/scsi devices based upon minor number passed in via autoconfig.
+#
+
+PATH=/bin:/usr/bin:/etc:/usr/etc
+
+name=devscsi
+devdir=/dev/scsi
+
+#
+#       Parse "-k kernelfile" flag
+#
+
+KERNEL=""
+if [ "$1" = "-k" ]; then
+    shift
+    KERNEL=$1
+    shift
+fi;
+
+if [ "$1" = "-M" ]; then
+    if [ -d "$devdir" ]; then
+        /bin/rm -f $devdir/? $devdir/[1-4]0[0-6]
+    else
+        /bin/mkdir $devdir
+        /bin/chmod 755 $devdir
+    fi
+    cd $devdir
+
+
+#   devscsi minor device number  bus 1 : 0x10 - 0x16 or 16 - 22
+#                                bus 2 : 0x20 - 0x26 or 32 - 38
+#                                bus 3 : 0x30 - 0x36 or 48 - 54
+#                                bus 4 : 0x40 - 0x46 or 64 - 70
+#   old minor device number 0 - 7
+#
+    /etc/mknod 0 c $2 0
+    /etc/mknod 1 c $2 1
+    /etc/mknod 2 c $2 2
+    /etc/mknod 3 c $2 3
+    /etc/mknod 4 c $2 4
+    /etc/mknod 5 c $2 5
+    /etc/mknod 6 c $2 6
+
+#bus 1
+    /etc/mknod 100 c $2 16
+    /etc/mknod 101 c $2 17
+    /etc/mknod 102 c $2 18
+    /etc/mknod 103 c $2 19
+    /etc/mknod 104 c $2 20
+    /etc/mknod 105 c $2 21
+    /etc/mknod 106 c $2 22
+
+#bus 2
+    /etc/mknod 200 c $2 32
+    /etc/mknod 201 c $2 33
+    /etc/mknod 202 c $2 34
+    /etc/mknod 203 c $2 35
+    /etc/mknod 204 c $2 36
+    /etc/mknod 205 c $2 37
+    /etc/mknod 206 c $2 38
+
+#bus 3
+    /etc/mknod 300 c $2 48
+    /etc/mknod 301 c $2 49
+    /etc/mknod 302 c $2 50
+    /etc/mknod 303 c $2 51
+    /etc/mknod 304 c $2 52
+    /etc/mknod 305 c $2 53
+    /etc/mknod 306 c $2 54
+
+#bus 4
+    /etc/mknod 400 c $2 64
+    /etc/mknod 401 c $2 65
+    /etc/mknod 402 c $2 66
+    /etc/mknod 403 c $2 67
+    /etc/mknod 404 c $2 68
+    /etc/mknod 405 c $2 69
+    /etc/mknod 406 c $2 70
+
+    /bin/chmod 600 [0-6]
+    /bin/chmod 600 [1-4]0[0-6]
+fi

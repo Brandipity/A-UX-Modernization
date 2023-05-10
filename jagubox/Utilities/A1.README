@@ -1,0 +1,183 @@
+This file contains the most recent listing of available files in Utilities
+as well as a short description of each. Most are GNUzipped (.gz) tar files.
+You will need the '../GNU_stuff/gzip_*.bin.tar.Z' file (which contains the
+GNUzip utility 'gzip|gunzip') to decompress these.
+
+Diff-files can be applied by using 'patch' which is available precompiled
+as 'patch.bin.tar.gz'
+
+A1.README::
+	A text file description of all files in this directory.
+
+AUX_Installation_Boot_Disk.img:
+AUX_Installation_Boot_Disk.img.bin:
+	The A/UX 3.0.1 Installation boot disk images. These are
+	in Apple's DiskCopy format. Use these if you have the
+	A/UX Installation CD but not the floppies!
+
+3270v3.6.aux.tar.gz::
+	A 3270 emulator for A/UX... Now you can connect to your favorite
+	IBM mainframe. From Eric Hagberg.
+
+aub.2.0.5.shar.gz::
+	The Assemble Usenet Binaries package. It'll collect and assemble
+	Usenet binaries that you specify.
+
+bbs2.2.aux.0.tar.gz::
+	Make your A/UX box a BBS server. Use the bbs v2.2 utility! Fully
+	ported for A/UX. Provided by Jon Stevens (root@dolphin.csudh.edu)
+
+berk-make.tar.gz::
+	Port of the Berkeley make package as well as the additional
+	'tmac' macros needed by it. Provided by Phillip P. Porch
+	(root@theporch.com).
+
+berk-man.tar.gz::
+	The Berkeley 'mandoc' package. Works very well with the above
+	Berkeley 'make' package. Ported and provided by Phillip Porch
+	(root@theporch.theporch.com)
+
+ctwm.bin.tar.gz::
+	Binary of the 'ctwm' window manager for A/UX's X environment. Provided
+	by Trond Kandal (Trond.Kandal@ifi.unit.no).
+
+ctwm.lib.tar.gz::
+	Libraries of the 'ctwm' window manager for A/UX's X environment.
+	Provided by Trond Kandal (Trond.Kandal@ifi.unit.no).
+
+ctwm.man.tar.gz::
+	Manuals for the 'ctwm' window manager for A/UX's X environment.
+	Provided by Trond Kandal (Trond.Kandal@ifi.unit.no).
+
+fortune.tar.gz::
+	Snappier version of fortune for A/UX. Contains fortunes from
+	'startrek', 'simpsons' and 'zippy'. Very nice. Provided by
+	Phillip P. Porch.
+
+gzip-124.bin.tar.Z::
+	Tar archive of the GNU zip compression package. Includes all
+	binaries and man pages for A/UX. Needed to decompression '*.gz' files.
+
+joe1.0.11.aux.bin.tar.gz::
+	Port of the JOE (a nice text editor: Joe's Own Editor) for A/UX.
+	Requires a little fiddling with 'stty' and the fixed in.telnetd
+	for it to work 100%. Ported by Michael Trent (trentmd@stu.beloit.edu).
+
+kermit.bin.tar.gz::
+	Port of the latest version of kermit (5A(189)) for A/UX. Better
+	and faster than the version provided with A/UX. Includes man page.
+
+layers_unix_1.30.tar.gz::
+	"Latest" version of layers, ported for A/UX. Kudos to Matthew
+	Martini (martini@nynexst.com).
+
+lc.tar.gz::
+	A nice alternative to 'ls'.
+
+mpeg_play-2.0.bin.tar.gz::
+	Complete binaries of mpeg_play v2.0 for A/UX. Ported by Matthew Martini
+	(martini@nynexst.com)
+
+mpeg_play-2.0.src.tar.gz::
+	Complete source for mpeg_play v2.0 for A/UX. Ported by Matthew Martini
+	(martini@nynexst.com)
+
+msgs.tar.gz::
+	'msgs' ported for A/UX. Includes binary and source. From
+	Phillip Porch.
+
+mush.724.tar.gz::
+	I guess this is version 724(??) of mush...??
+
+nethack-3.1.3-aux.tar.gz::
+	Ahhh... the port of NetHack (very nice!) for A/UX. Includes a nice
+	README that you really should read :). Thanks to Rich Ewing
+	(ewing@vhp.vanderbilt.edu) for providing this.
+
+netlist.tar.gz::
+	A neat little utility from John Dundas (dundas@salt.jpl.nasa.gov)
+	that is useful for looking at AppleTalk networks. Check it out!
+
+p2c.tar.gz::
+	Thanks to Matt Martini (martini@nynexst.com), we now have a
+	way of "writing" Pascal for A/UX. 'p2c' changes Pascal source
+	to C source, so we can then compile with 'gcc'.
+
+patch.bin.tar.gz::
+	Ported copy of the 'patch' program. Included is it's man page.
+
+perl-4.036.bin.tar.gz::
+	Binary exucutable of perl v4.036 for A/UX.
+
+perl-4.036.tar.gz::
+	Full source distribution of perl v4.036 to compile for A/UX
+
+perl5.00401-aux.tar.gz::
+	Complete binary package of perl 5.00401 for A/UX 3.1(.1). Includes
+	binaries, libraries and man-pages. This compile of Perl5 contains
+	ALL Perl extensions.
+
+pine*:
+	The pine package.
+
+procmail-aux.tar.gz::
+	Procmail 3.10 compiled for A/UX. Full source.
+
+pstree.bin.tar.gz::
+	Port of 'pstree' version 1.4 which generates 'ps' output in a
+	tree-like format. With man-page and source.
+
+scsiprobe.tar.gz::
+	Neat little program that prints out useful info (like vendor,
+	product, etc...)about your attached SCSI devices.
+
+set-aux-bin.hqx::
+	A useful utility, by Bill Johnston (johnston@me.udel.edu), that
+	changes the type/creator of files to "BIN ", "A/UX". Supports drag-
+	and-drop.
+
+showaudio.tar.gz::
+	Port of the 'showaudio' external viewer for users who run Mosaic
+	under X in A/UX. Provided by Eric Rosen (eric@cse.ucsc.edu).
+
+term112.aux.bin.tar.gz::
+	For A/UX, here is version 1.12 of 'term', already ported.
+
+unzip.tar.gz::
+	Package to unarchive *.zip files.
+
+upsl0.tar.gz::
+	Neat little program that maintains SLIP connections for you.
+
+vtwm.tar.gz::
+	Ported copy of Virtual TWM (5.1) for A/UX. Provided by
+	Dennis Govoni (dennis.govoni@East.Sun.COM).
+
+xemacs-19.11.aux.diffs::
+	If you like, you can use these patches to compiled xemacs-19.11
+	yourself.
+
+xmeter-auxbin.tar.gz::
+	Binary release of the xmeter utility for A/UX. Pretty cool! Thanks
+	to Eric Rosen for providing this useful tool.
+
+xrn6-17.bin.tar.gz::
+	Binary executable for xrn v6.17 for A/UX.
+
+xv-3.0.bin.tar.gz::
+	The X-windows graphics viewer, v3.0, already ported for A/UX.
+
+zmodem.aux.bin.tar.gz::
+	Binary of the zmodem communication package, compiled for A/UX.
+	Provided by Jon Stevens.
+--
+===========================================================================
+#include <std/disclaimer.h>
+                                 =:^)
+           Jim Jagielski                    NASA/GSFC, Code 734.4
+     jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+        Voice: 301-286-5964                   FAX: 301-286-1719
+
+"If we increase the size of the penguin until it is the same height as a man
+ and then compare the relative brain size, we now find that the penguin's
+ brain is still smaller. But, and this is the point, it is larger than it WAS!"

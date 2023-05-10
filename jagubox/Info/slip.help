@@ -1,0 +1,359 @@
+==============================================================================
+
+From: paul@hal.COM (Paul Sander)
+Subject: Initiating SL/IP connection
+
+Here is a little Expect script that I use to initiate a SL/IP connection.
+It requires version 3.24 of the Expect program, which is somewhat dated
+(though it is available from the Gnu project).
+
+It basically follows the procedure outlined in the admin doc set:  Use
+cu to dial a remote system, then escape out of cu and invoke slattconf.
+It also provides a means to determine if a connection is already active.
+It does not notice if a connection dies, because there are no reliable
+hooks for this.
+
+It accepts on its command line a single parameter:  The path to a
+configuration file.  This file has the following format:
+
+keyword value
+
+The keyword is one of the following:
+
+remote    - Name of server system, must be contained in Systems file
+login     - Login ID on server system
+password  - Password on server system
+localIP   - Client (local) IP address
+remoteIP  - Remove (server) IP address
+
+Blank lines and lines where the first non-whitespace character is a # sign
+are ignored.  This file should be owned by the user who runs the script
+(preferably root), and its mode should be 600, but this is not enforced.
+
+Exit value 0 indicates that slattconf was successfully invoked.  Exit
+value 3 indicates that the desired connection is already up.  Other
+exit values indicate serious failures.  Due to the implementation of
+slattconf, there is no way for this script to verify that a connection
+came up successfully without coding a race condition.  I decided that
+any wait loops or time-outs should be handled by other scripts that
+invoke this one.
+
+The name of the server system must be correctly configured in the
+/usr/lib/uucp/Systems file, and cu must be properly configured for
+dialout operation.
+
+It is best to disable getty on the port that is dialing out, because
+cu is killed after slattconf is invoked, to save a few resources.  There
+is no telling what getty might do with IP traffic, so it's best to play
+it safe.  This script should also be run by a user that is not likely
+to invoke cu for other purposes, because cu will contend with slattconf
+if they both want the same port.
+
+I tried writing this in Perl at one time, but found that cu's habit of
+forking a process and closing file descriptors didn't work too well with
+the chat2.pl library.  Expect seems to tolerate it better.
+
+
+
+#! /usr/local/bin/expect --
+
+# Set paths to needed programs
+set cu /usr/bin/cu
+set slattconf /etc/slattconf
+set route /usr/etc/route
+set ifconfig /etc/ifconfig
+
+# Maximum number of simultaneously supported SL/IP connections
+set maxslip 2
+
+# Check path of configuration file
+if { [ llength argv ] < 2 } {
+	set conf [ lindex $argv 1 ]
+} else {
+	puts stdout "No configuration file given on command line"
+	exit 1
+}
+
+# set parameters
+set patt "^\[ 	]*(\[^ 	]\[^ 	]*)(\[ 	]\[ 	]*(.*))?\$"
+set fail 0
+set comment 0
+if { [ file readable $conf ] } {
+	set file [ open $conf "r" ]
+	gets $file line
+	while { ! [ eof $file ] } {
+		set key ""
+		set val ""
+		regexp $patt $line all key dummy val
+		case $key in {
+		""		{ }
+		#*		{ set comment 1 }
+		remote		{ set remote $val }
+		login		{ set login $val }
+		password	{ set password $val }
+		localIP		{ set localIP $val }
+		remoteIP	{ set remoteIP $val }
+		default		{ puts stdout "Unknown keyword $key"
+				  set fail 1
+				}
+		}
+		gets $file line
+	}
+	close $file
+	set patt "^\[0-9]\[0-9]*\.\[0-9]\[0-9]*\.\[0-9]\[0-9]*\.\[0-9]\[0-9]*$"
+	if { ! [ regexp $patt $localIP ] } {
+		puts stdout [ format "Local IP address (localIP %s) invalid" \
+		                     $localIP ]
+		set fail 1
+	}
+	if { ! [ regexp $patt $remoteIP ] } {
+		puts stdout [ format "Remote IP address (remoteIP %s) invalid" \
+		                     $remoteIP ]
+		set fail 1
+	}
+} else {
+	puts stdout [ format "Cannot read configuration file %s" $conf ]
+	set fail 1
+}
+if { $fail } {
+	puts stdout "Configuration file is invalid"
+	exit 2
+}
+
+# Verify that the SL/IP connection is not already up.
+for { set conn 0 } { $conn < $maxslip } { incr conn } {
+	set interface [ format "sl%d" $conn ]
+	set status [ exec $ifconfig $interface ]
+	if { [ regexp $localIP\ -->\ $remoteIP $status ] } {
+		if { [ string first UP $status ] >= 0 } {
+			puts stdout "Connection is already up"
+			exit 3
+		}
+	}
+}
+puts stdout "Connection is not up"
+
+# Kill the cu process.  The termination of cu appears to cause the line to
+# drop, which in turn sends a SIGHUP to slattconf.  But that's only theory;
+# slattconf vanishes, in any case.
+proc endcu { pid sid cur_id } {
+	if { $pid != "" } {
+		if { $sid != $cur_id } {
+			set spawn_id $sid
+		}
+		puts stdout [ concat Killing process $pid ]
+		exec kill -15 $pid
+		puts stdout [ concat Flushing process $pid ]
+		send "exit\r"
+		expect eof;
+		if { $sid != $cur_id } {
+			set spawn_id $cur_id
+		}
+		puts stdout [ concat Waiting on process $pid ]
+		wait -i $sid
+		puts stdout [ concat Process $pid is dead ]
+	}
+}
+
+# Dial the remote system, wait for connection, or for UUCP to fail
+log_user 0
+puts stdout [ concat Dialing remote system $remote ]
+set pidcu [ spawn $cu -b7 -e -x5 $remote ]
+set sidcu $spawn_id
+trap { endcu $pidcu $sidcu $spawn_id; exit 4 } { 1 2 3 15 }
+puts stdout [ format "Pid of cu is %d" $pidcu ]
+set timeout -1
+set speed 0
+set dev ""
+expect {
+	"\n"				{ continue -expect }
+	eof				{ set result "Failed" }
+	-re "Connect failed: .*\n"	{ set result "Failed" }
+	Connected			{ set result "Connected" }
+	-re "opening serial line '(/dev/\[^'\]*)'" {
+						set dev $expect_out(1,string)
+						continue -expect
+					    }
+	-re "setting line for (\[0-9\]+) baud" {
+						set speed $expect_out(1,string)
+						continue -expect
+					     }
+}
+if { $speed == "" } {
+	puts stdout "cu did not report the speed"
+	set result "Failed"
+}
+if { $dev == "" } {
+	puts stdout "cu did not report the device"
+	set result "Failed"
+}
+if { $result != "Connected" } {
+	puts stdout "cu failed to connect"
+	endcu $pidcu $sidcu $spawn_id
+	exit 5
+}
+puts stdout "cu connected"
+puts stdout [ concat device is $dev ]
+puts stdout [ concat speed is $speed ]
+
+# Loop up to three times to send login ID and password
+set timeout 5
+set attempts 1
+set result ""
+set cRem ""
+set cLoc ""
+while { $attempts <= 3 && $result != "Startup" } {
+	# Send up to 3 CR's at 5 second intervals until the login prompt
+	#appears
+	set cnt 0
+	expect {
+		eof		{ set result "Failed" }
+		timeout		{ incr cnt;
+				  if { $cnt <= 3 } {
+					send "\r"
+					continue -expect
+				  } else {
+					set result "Timeout"
+				  }
+				}
+		-re "ogin: *"	{ set result "Login" }
+	}
+	if { $result != "Login" } {
+		endcu $pidcu $sidcu $spawn_id
+		puts stdout "cu failed to get login prompt"
+		exit 6
+	}
+
+	# Send the login ID and wait for password prompt
+	set timeout 60
+	send $login
+	send "\r"
+	expect {
+		-re "assword: *"	{ set result "Password" }
+		default			{ set result "Failed" }
+	}
+	if { $result != "Password" } {
+		endcu $pidcu $sidcu $spawn_id
+		puts stdout "cu failed to get password prompt"
+		exit 7
+	}
+
+	# Send the password and wait for SL/IP startup message
+	send $password
+	send "\r"
+	expect {
+		-re "from \\(?(\[0-9.\]+)\\)? "	{ set cRem $expect_out(1,string)
+						  continue -expect
+						}
+		-re "to \\(?(\[0-9.\]+)\\)? "	{ set cLoc $expect_out(1,string)
+						  continue -expect
+						}
+		"beginning...."			{ set result "Startup" }
+		default				{ set result "Failed" }
+	}
+}
+if { $result != "Startup" } {
+	endcu $pidcu $sidcu $spawn_id
+	puts stdout "cu failed to start SL/IP server"
+	exit 8
+}
+
+# Verify that the server and client agree on their expected IP numbers.
+set fail 0
+if { $localIP != $cLoc } {
+	puts stdout [ format "Local %s and expected %s addresses differ" \
+	                     $localIP $cLoc ]
+	set fail 1
+}
+if { $remoteIP != $cRem } {
+	puts stdout [ format "Remote %s and expected %s addresses differ" \
+	                     $remoteIP $cRem ]
+	set fail 1
+}
+if { $fail != 0 } {
+	puts stdout [ concat SL/IP connection is not properly configured ]
+	endcu $pidcu $sidcu $spawn_id
+	exit 9
+}
+puts stdout "Logged in, SL/IP server started"
+
+# Escape cu and start up slattconf.  cu isn't left running because we don't
+# want it reading data intended for SL/IP.
+send "~!\r"
+expect {
+	"created Shell process 0"	{ set result "Escaped" }
+	default				{ set result "Failed" }
+}
+if { $result != "Escaped" } {
+	puts stdout "cu failed to escape to shell"
+	endcu $pidcu $sidcu $spawn_id
+	exit 10
+}
+puts stdout "Starting up SL/IP client"
+set cmd [ list $slattconf +c $dev $speed $localIP $remoteIP -arp ]
+puts stdout $cmd
+eval [ system [ concat $cmd "2>&1" ">/dev/null" "&" ] ]
+puts stdout "SL/IP client is up"
+endcu $pidcu $sidcu $spawn_id
+
+exit 0
+
+-- 
+Paul M. Sander  (408) 379-7000  |  "If everything were easy, where would be
+HaL Computer Systems, Inc.      |   the challenge?"
+1315 Dell Avenue                |
+Campbell, CA  95008  USA        |
+
+==============================================================================
+
+From: eric@cse.ucsc.edu (Eric C. Rosen)
+Subject: Re: SL/IP question cont'd
+
+To get SL/IP running, you need to do the following:
+
+1. Reconfigure your kernel to include the cslip package and reboot.
+
+2. Assuming your modem is on the modem port (tty0), edit /etc/inittab
+   and turn off the getty on tty0 unless you want to allow dialup 
+   access when SL/IP is not running. I recommend turning it off
+   initially.
+
+3. Use cu, tip, kermit or something equivalent to dialup your SL/IP
+   server and login to your SL/IP account. Without dropping DTR,
+   exit your communication program.
+
+4. Assuming your SL/IP server understands CSL/IP, the speed at
+   which you connected to your modem is 19200 baud, your modem is
+   on tty0 as in (2), your local host is called sapphire and your
+   SL/IP server is called slip-server, run the following command
+   as root:
+
+   slattconf +c tty0 19200 sapphire slip-server -arp
+
+   If your local host and the SL/IP server are not registered
+   in /etc/hosts, you'll have to use the IP addresses of the
+   machine(s) on the command line.
+
+5. You should now be connected. Use 'ping slip-server' to
+   confirm this.
+
+6. If you want to use a remote nameserver, edit /etc/resolv.conf
+   appropriately.
+
+7. If you want to talk to the world beyond slip-server, you'll
+   need to adjust your local routing tables. The simplest way to
+   do this that should work with most setups is to run the
+   following command:
+
+   route add default slip-server 32
+
+   Use the command 'netstat -r' to examine your routing table.
+
+You will probably want to automate steps 3, 4, and 7. As you can
+tell, I've only given the general details of how to get SL/IP
+operating. This basic procedure is common to all UNIX SL/IP
+setups I've seen. If you need help with a specific task, post
+a followup. 
+
+--Eric
+

@@ -1,0 +1,168 @@
+This file contains the most recent listing of available files in Sys_stuff
+as well as a short description of each. Most are GNUzipped (.gz) tar files.
+You will need the '../GNU_stuff/gzip_*.bin.tar.Z' file (which contains the
+GNUzip utility 'gzip|gunzip') to decompress these.
+
+Diff-files can be applied by using 'patch' which is available precompiled
+as '../Utilities/patch.bin.tar.gz'
+
+A1.README::
+	A text file description of all files in this directory.
+
+BNET-somax.tar.gz::
+	A short shell script that uses 'adb' to change the value
+	of SOMAXCONN, the size of listen()s backlog queue limit, from
+	5 to 32.
+
+EPIIdr.tar.gz::
+	These are the drivers for the "old" EtherPortII card (full-length
+	NuBus, based on the Intel controller). This was written for A/UX 1.1
+	but WILL work under 2.0.x as long as the card is used ONLY for TCP/IP
+	communication (NO EtherTalk). Please note that there have been MANY
+	reports of compatibility problems with the old EPII cards, this driver
+	and the IIfx... It seems that if you have a IIfx, you really should
+	upgrade to a different ethernet card.
+
+GNUfile.h::
+        Slightly hacked version of ../gcc/aux/?.?.?/include/sys/file.h for
+        'gcc' that makes it "fcntl.h" aware and prevents "redefine" warning
+        messages when both header files are included. Also see 'file.h'
+	below.
+
+NEWtc3.34.tar.gz::
+	A replacement for A/UX 3.x.x's 'tc' tape device driver. Fixes some
+	bugs, adds some capabilities and support for other tape drives
+	(such as WangDAT, WangTEK, HP and TEACs). Included is a replacement
+	for 'mt' to support new 'tc' as well as 'tbb' to speed up backups.
+	Version 3.34.
+
+ORIGtc.gz::
+	Apple's 'tc' version 1.14 for A/UX 3.0.1... just in case you lose
+	yours when installing NEWtc :)
+
+at_interface::
+	Replacement for ~lp/model/at_interface, which fixes the little bug
+	that causes multiple copies of files (at times) to be printed. For
+	example, 'lp file.1 file.2' would print two copies of file.1 and
+	one of file.2. Entries in ~lp/interface based on at_interface should
+	also be patched as well.
+
+bind-4.9.3.tar.gz::
+	Port of the latest version of BIND/DNS (4.9.3-REL1) for A/UX.
+	Includes precompiled binaries for A/UX 3.1.1 as well as the complete
+	source.
+
+bsd-cut-paste.tar.gz::
+	Replacement version of A/UX's 'cut' and 'paste' utilities. Provided
+	by Ken Whang.
+
+bsd-last.tar.gz::
+	Replacement version of A/UX's 'last' utility. Main advantage is that
+	it also prints out the hostname of the user process. Port by Jim
+	Jagielski and Ken Whang.
+
+devscsi::
+	Corrected version of /etc/install.d/init.d/devscsi which ensures
+	that files in /dev/scsi have the correct permissions. All files
+	in /dev/scsi should be mode '600' with owner|group 'root'|'sys'.
+	Make sure your setup is correct. This script will keep things
+	correct next time you rebuild the kernel.
+
+dir.h::
+	Slightly hacked version of dir.h to correctly define rewinddir()
+	when _not_ using POSIX.
+
+disktab::
+	Compiled list of /etc/disktab entries... if you have one that isn't
+	included here, E-mail it to jim@jagubox.gsfc.nasa.gov.
+
+dp.tar.gz::
+	Drivers for the newer (half-length, National controller) EtherPortII
+	card... When Dayna sold the EPII card, they wrote these drivers for
+	A/UX 2.0.x. Now that Shiva sells the EPII card, Dayna no longer sells
+	the drivers and Shiva is still writing theirs... until that time,
+	use this, which is a copy of the Dayna drivers. There have been
+	only a FEW reports of incompatibility with the new EPII card and
+	the IIfx.
+
+file.h::
+	Slightly hacked version of /usr/include/sys/file.h that makes it
+	"fcntl.h" aware and prevents "redefine" warning messages when both
+	header files are included.
+
+libUTIL-2.1.tar.gz::
+	Doing some porting but having trouble because you lack some
+	needed functions (like memmove(), strstr() or strerror())? Worry
+	no more! libUTIL.a is a collection of these "missing" functions,
+	available in one easy to use archive. Included are two additional
+	header (.h files), the archive itself, a README file, and various
+	man-pages.
+
+libdb-1.85.tar.gz::
+	Port of the latest version, 1.85, of the Berkeley DB database
+	package. Fixes some bugs (and improves performance) over
+	the one distributed with A/UX 3.1.x.
+
+man-utils.tar.gz::
+	A collection of programs and scripts that make viewing and
+	installing man pages easier. Includes a replacement for 'man',
+	'auxman' and 'mkwhatis' which generates a newer, up-to-date
+	whatis database.
+
+nhd1.5.tar.gz::
+	A new object-oriented hard disk driver based on the Gears SCSI
+	driver (GSD). It replaces Apple's Generic Disk Driver (GDISK)
+	and provides nice additions and capabilities, especially with
+	regards to CD-ROM drives. Written by Kristopher L. Tyra
+	(ktyra%saphire@concert.net).
+	*** I WOULD BE VERY SURPRISED IF THESE WORKED UNDER 3.0.1|2 ***
+
+poppassd.tar.gz::
+	Allows you to change your password from Eudora or other POP3
+	clients. Ported by Fred Condo (fred@lightside.net).
+
+port-tools.tar.gz::
+	A collection of useful porting tools for A/UX.
+
+shadow-aux-1.4.tar.gz::
+	Port of the shadow-password suite for A/UX. Using these programs,
+	A/UX can now use shadow passwords for increased security!!
+	Requires gcc and libUTIL to compile. Recommended!
+
+tbb.tar.gz::
+	A very nice, efficient double-buffering utility. Kinda like a
+	double-ended 'dd'. Written by Tony Cooper. Really recommended!
+
+teac.tar.gz::
+	Craig Ruff's "teac" device driver. Complete with sources and
+	instructions.
+
+telnet-aux.tar.gz::
+	Replacement versions (and source) for telnet and in.telnetd for
+	A/UX. Original ports by John Coolidge, updated by Jim Jagielski.
+
+traceroute-aux.tar.gz::
+	Complete 'traceroute' package for A/UX 3.1(.1). Includes the
+	updated 'bnet' driver to support traceroute, as well as _2_
+	versions of 'traceroute', pre-compiled to run under A/UX.
+
+uwrap.c::
+	A wrapper for /etc/init that protects it (and all other processes)
+	from SIGURG signals... A MUST GET !!!
+
+vif-1.3.tar.gz::
+	Just the ticket for multihomed/Virtual Web Servers: the Virtual
+	Interface kernel module for A/UX. With this module, you can
+	add virtual interfaces to your real Ethernet interface and have
+	your A/UX box answer to multiple IP addresses.
+--
+===========================================================================
+#include <std/disclaimer.h>
+                                 =:^)
+           Jim Jagielski                    NASA/GSFC, Code 734.4
+     jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+        Voice: 301-286-5964                   FAX: 301-286-1719
+
+"If we increase the size of the penguin until it is the same height as a man
+ and then compare the relative brain size, we now find that the penguin's
+ brain is still smaller. But, and this is the point, it is larger than it WAS!"

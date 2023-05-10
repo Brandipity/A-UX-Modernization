@@ -1,0 +1,91 @@
+*** /usr2/tmp/ncftp182/./Makefile	Thu Aug  4 20:48:54 1994
+--- ./Makefile	Thu Aug 18 09:07:45 1994
+***************
+*** 24,31 ****
+  # Choose your compiler and flags below.  Make sure you use an ANSI compiler
+  # that handles new style function declarations and prototypes (gcc should).
+  #--------------------------------------------------------------------------
+! CC = cc
+! #CC = gcc
+  
+  #CFLAGS = -O
+  CFLAGS = -O2
+--- 24,31 ----
+  # Choose your compiler and flags below.  Make sure you use an ANSI compiler
+  # that handles new style function declarations and prototypes (gcc should).
+  #--------------------------------------------------------------------------
+! #CC = cc
+! CC = gcc
+  
+  #CFLAGS = -O
+  CFLAGS = -O2
+***************
+*** 53,59 ****
+  # You'll need to know where the Rconnect.o object file is if you want
+  #   to use Socks.
+  #--------------------------------------------------------------------------
+! LIBS =
+  #LIBS = -ldbmalloc
+  #LIBS = -lgetline
+  #LIBS = -lreadline -lcurses
+--- 53,59 ----
+  # You'll need to know where the Rconnect.o object file is if you want
+  #   to use Socks.
+  #--------------------------------------------------------------------------
+! LIBS = -lcurses -ltermcap -lposix
+  #LIBS = -ldbmalloc
+  #LIBS = -lgetline
+  #LIBS = -lreadline -lcurses
+*** /usr2/tmp/ncftp182/./sys.h	Thu Aug  4 20:48:54 1994
+--- ./sys.h	Thu Aug 18 09:06:55 1994
+***************
+*** 156,168 ****
+  #	endif
+  #endif  /* ISC */
+  
+! #ifdef aux
+  #	define System "A/UX"
+  #	ifndef BROKEN_MEMCPY
+  #		define BROKEN_MEMCPY 1
+  #	endif
+  #	ifndef SYSV
+  #		define SYSV 1
+  #	endif
+  #endif
+  
+--- 156,173 ----
+  #	endif
+  #endif  /* ISC */
+  
+! #ifdef AUX
+  #	define System "A/UX"
++ #	define _POSIX_SOURCE
++ #	include <strings.h>
+  #	ifndef BROKEN_MEMCPY
+  #		define BROKEN_MEMCPY 1
+  #	endif
+  #	ifndef SYSV
+  #		define SYSV 1
++ #	endif
++ #	ifndef HAS_DOMAINNAME
++ #		define HAS_DOMAINNAME 1
+  #	endif
+  #endif
+  
+*** /dev/null	Thu Aug 18 08:49:01 1994
+--- ./README.aux	Thu Aug 18 09:16:11 1994
+***************
+*** 0 ****
+--- 1,12 ----
++ In order to compile and run 'ncftp' under A/UX, you'll need to apply these
++ patches (which you've already done, or else you wouldn't be reading this).
++ You'll also need 'gcc' as well as 'libUTIL', both of which are available
++ on jagubox.
++ 
++ Enjoy!
++ --
++ #include <std/disclaimer.h>
++   |     Jim Jagielski      |  jim@jagubox.gsfc.nasa.gov  |  V: 301 286-5964  |
++   | NASA/GSFC, Code 734.4  |     Greenbelt, MD 20771     |  F: 301 286-1719  |
++                        <<  I want my TWO DOLLARS !!  >>
++                                    --   The paperboy

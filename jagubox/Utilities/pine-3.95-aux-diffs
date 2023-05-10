@@ -1,0 +1,248 @@
+*** /usr/local/tmp/PINE/pine3.95/./pico/makefile.aux	Fri Apr  5 13:07:45 1996
+--- ./pico/makefile.aux	Tue Aug  6 11:14:23 1996
+***************
+*** 25,49 ****
+  #
+  # Makefile for A/UX 3.0 version of the PINE composer library and 
+  # stand-alone editor pico.
+  #
+  
+  #includes symbol info for debugging 
+! DASHO=		-g
+  #for normal build
+! #DASHO=		-O
+  
+  STDCFLAGS=	-DAUX -DJOB_CONTROL -D_POSIX_SOURCE -DPOSIX -DMOUSE
+! CFLAGS=		$(EXTRACFLAGS) $(DASHO) $(STDCFLAGS)
+  
+  # switches for library building
+  LIBCMD=		ar
+  LIBARGS=	-ru
+  RANLIB=		/bin/true
+  
+! LIBS=		$(EXTRALIBES) -ltermcap -lposix
+  
+  OFILES=		attach.o ansi.o basic.o bind.o browse.o buffer.o \
+  		composer.o display.o \
+  		file.o fileio.o line.o osdep.o \
+  		pico.o random.o region.o search.o \
+  		spell.o tcap.o window.o word.o
+--- 25,49 ----
+  #
+  # Makefile for A/UX 3.0 version of the PINE composer library and 
+  # stand-alone editor pico.
+  #
+  
+  #includes symbol info for debugging 
+! #DASHO=		-g
+  #for normal build
+! DASHO=		-O
+  
+  STDCFLAGS=	-DAUX -DJOB_CONTROL -D_POSIX_SOURCE -DPOSIX -DMOUSE
+! CFLAGS=		-A3 $(EXTRACFLAGS) $(DASHO) $(STDCFLAGS)
+  
+  # switches for library building
+  LIBCMD=		ar
+  LIBARGS=	-ru
+  RANLIB=		/bin/true
+  
+! LIBS=		$(EXTRALIBES) -ltermcap -lposix -lUTIL
+  
+  OFILES=		attach.o ansi.o basic.o bind.o browse.o buffer.o \
+  		composer.o display.o \
+  		file.o fileio.o line.o osdep.o \
+  		pico.o random.o region.o search.o \
+  		spell.o tcap.o window.o word.o
+*** /usr/local/tmp/PINE/pine3.95/./pine/mailindx.c	Thu Jul 11 18:48:37 1996
+--- ./pine/mailindx.c	Tue Aug  6 11:11:43 1996
+***************
+*** 2055,2066 ****
+--- 2055,2070 ----
+  	    switch(cdesc[i].ctype){
+  	      case iStatus:
+  		to_us = (cache->flagged) ? '*' : ' ';
+  		for(addr = envelope->to; addr && to_us == ' '; addr=addr->next)
+  		  if(address_is_us(addr, ps_global))
+  		    to_us = '+';
++ 	/* MERM 8/6/96 */	
++                 for(addr = envelope->cc; addr && to_us == ' '; addr=addr->next)
++ 		  if(address_is_us(addr, ps_global))
++ 		    to_us = '-';
+  
+  #ifdef	LATER
+      if(to_us == ' '){				/* look for reset-to */
+  	char    *fields[2], *resent, *p;
+  	ADDRESS *resent_addr = NULL;
+  
+***************
+*** 2093,2104 ****
+--- 2097,2112 ----
+  	       {char new, answered, deleted, flagged;
+  
+  		to_us = ' ';
+  		for(addr = envelope->to; addr && to_us == ' '; addr=addr->next)
+  		  if(address_is_us(addr, ps_global))
+  		    to_us = '+';
++          /* MERM 8/6/96 */
++ 		for(addr = envelope->cc; addr && to_us == ' '; addr=addr->next)
++ 		  if(address_is_us(addr, ps_global))
++ 		    to_us = '-';
+  		new = answered = deleted = flagged = ' ';
+  		if(cache && !ps_global->nr_mode){
+  		    if(!cache->seen &&
+  		      (!stream
+  		       || !IS_NEWS(stream)
+  		       || (cache->recent&&F_ON(F_FAKE_NEW_IN_NEWS,ps_global))))
+*** /usr/local/tmp/PINE/pine3.95/./pine/makefile.aux	Fri Mar 15 02:14:51 1996
+--- ./pine/makefile.aux	Tue Aug  6 11:13:17 1996
+***************
+*** 42,66 ****
+  #   Most commonly fiddled flags for compiler.
+  #   Uncomment the setttings desired here
+  #
+  RM=          rm -f
+  LN=          ln -s
+  MAKE=        make
+! OPTIMIZE=    # -O
+  PROFILE=     # -pg
+! DEBUG=       -g 
+  
+  IMAPDIR=     ../c-client
+  PICODIR=     ../pico
+  
+  STDLIBES=    -ltermcap -lc -lposix
+  LOCLIBES=    $(PICODIR)/libpico.a $(IMAPDIR)/c-client.a
+! LIBES=       $(EXTRALIBES) $(LOCLIBES) $(STDLIBES)
+  
+  STDCFLAGS=   -Dconst= -DSYSTYPE=\"AUX\" -DMOUSE
+! CFLAGS=      $(OPTIMIZE) $(PROFILE) $(DEBUG) $(EXTRACFLAGS) $(STDCFLAGS)
+  
+  obj=    addrbook.o adrbklib.o args.o context.o filter.o \
+  	folder.o help.o helptext.o imap.o init.o mailcap.o mailcmd.o \
+  	mailindx.o mailpart.o mailview.o newmail.o other.o pine.o \
+  	reply.o screen.o send.o signals.o status.o strings.o ttyin.o \
+  	ttyout.o os.o
+--- 42,66 ----
+  #   Most commonly fiddled flags for compiler.
+  #   Uncomment the setttings desired here
+  #
+  RM=          rm -f
+  LN=          ln -s
+  MAKE=        make
+! OPTIMIZE=     -O
+  PROFILE=     # -pg
+! DEBUG=       # -g 
+  
+  IMAPDIR=     ../c-client
+  PICODIR=     ../pico
+  
+  STDLIBES=    -ltermcap -lc -lposix
+  LOCLIBES=    $(PICODIR)/libpico.a $(IMAPDIR)/c-client.a
+! LIBES=       $(EXTRALIBES) $(LOCLIBES) $(STDLIBES) -lUTIL
+  
+  STDCFLAGS=   -Dconst= -DSYSTYPE=\"AUX\" -DMOUSE
+! CFLAGS=      -A4 $(OPTIMIZE) $(PROFILE) $(DEBUG) $(EXTRACFLAGS) $(STDCFLAGS)
+  
+  obj=    addrbook.o adrbklib.o args.o context.o filter.o \
+  	folder.o help.o helptext.o imap.o init.o mailcap.o mailcmd.o \
+  	mailindx.o mailpart.o mailview.o newmail.o other.o pine.o \
+  	reply.o screen.o send.o signals.o status.o strings.o ttyin.o \
+  	ttyout.o os.o
+*** /dev/null	Mon Sep 16 18:24:51 1996
+--- ./pine/date.c	Tue Aug  6 11:40:07 1996
+***************
+*** 0 ****
+--- 1,2 ----
++ char datestamp[]="Tue Aug 6 11:40:07 EDT 1996";
++ char hoststamp[]="tigana";
+*** /usr/local/tmp/PINE/pine3.95/./imap/non-ANSI/c-client/Makefile	Fri Jun 21 17:26:12 1996
+--- ./imap/non-ANSI/c-client/Makefile	Tue Aug  6 11:15:24 1996
+***************
+*** 101,113 ****
+  		RANLIB=true LDFLAGS="-lsocket -lrpc -lgen -lcrypt -lxenix"
+  
+  aux:	# A/UX
+  	$(MAKE) mtest OS=$@ EXTRADRIVERS="$(EXTRADRIVERS)" \
+  		STDPROTO=bezerkproto MAILSPOOL=/usr/mail \
+  		ACTIVEFILE=/usr/lib/news/active NEWSSPOOL=/usr/spool/news \
+! 		CFLAGS="-g -B/usr/lib/big/ -Dconst= -DNFSKLUDGE $(EXTRACFLAGS)" \
+  		ARRC="ar -rc" RANLIB=true
+  
+  bsd:	# BSD UNIX
+  	$(MAKE) mtest OS=$@ EXTRADRIVERS="$(EXTRADRIVERS)" \
+  		STDPROTO=bezerkproto MAILSPOOL=/usr/spool/mail \
+  		ACTIVEFILE=/usr/lib/news/active NEWSSPOOL=/usr/spool/news \
+--- 101,113 ----
+  		RANLIB=true LDFLAGS="-lsocket -lrpc -lgen -lcrypt -lxenix"
+  
+  aux:	# A/UX
+  	$(MAKE) mtest OS=$@ EXTRADRIVERS="$(EXTRADRIVERS)" \
+  		STDPROTO=bezerkproto MAILSPOOL=/usr/mail \
+  		ACTIVEFILE=/usr/lib/news/active NEWSSPOOL=/usr/spool/news \
+! 		CFLAGS="-A2 -O -B/usr/lib/big/ -Dconst= -DNFSKLUDGE $(EXTRACFLAGS)" \
+  		ARRC="ar -rc" RANLIB=true
+  
+  bsd:	# BSD UNIX
+  	$(MAKE) mtest OS=$@ EXTRADRIVERS="$(EXTRADRIVERS)" \
+  		STDPROTO=bezerkproto MAILSPOOL=/usr/spool/mail \
+  		ACTIVEFILE=/usr/lib/news/active NEWSSPOOL=/usr/spool/news \
+*** /dev/null	Mon Sep 16 18:24:51 1996
+--- ./imap/OSTYPE	Tue Aug  6 11:19:06 1996
+***************
+*** 0 ****
+--- 1 ----
++ aux
+*** /dev/null	Mon Sep 16 18:24:51 1996
+--- ./.bld.hlp	Mon Sep 16 18:20:20 1996
+***************
+*** 0 ****
+--- 1,49 ----
++ Usage: build <make-options> <target-platform>
++ 
++ <target-platform> may be one of the following:
++     ult   Works on DECStations with Ultrix 4.1 or 4.2
++     nxt   Works on NeXT 68030's and 68040's running Next Mach 2.0     
++     sun   Works on SPARCs running SunOS 4.1
++     ptx   Works on Sequent Symmetry running Dynix/PTX
++     a32   Works on IBM RS/6000 running AIX 3.2
++     ...   Others are available, see doc/pine-ports
++   clean   Clean up object files and such.
++           Also, a good way to rebuild Pine/Pico from scratch.
++ 
++ See the document doc/pine-ports for a list of other platforms that
++ Pine has been ported to and for details about these and other ports.
++ 
++ <make-options> are generally not needed. They are flags (anything
++ beginning with -) and are passed to make. "-n" is probably the most
++ useful, as it tells make to just print out what it is going to do and
++ not actually do it.
++ 
++ To build Pine and Pico the command "build xxx" should work where xxx
++ is one of the targets. For example "build ult" to build Pine for Ultrix.
++ 
++ 
++ The executables built by this are:
++ 
++  pine   The Pine mailer. Once compiled this should work just fine on
++         your system with no other files than this binary, and no
++         modifications to your system. Optionally you may create two
++         configuration files, /usr/local/lib/pine.conf and 
++         /usr/local/lib/pine.info. See the documentation for details.
++  
++  pico   The standalone editor similar to the Pine message composer.
++         This is a very simple straight forward text editor.
++  
++  pilot  The standalone file system navigator.
++  
++  imapd  The IMAP daemon. If you want to run Pine in client/server mode,
++         this is the daemon to run on the server. Installing this
++         requires system privileges and modifications to /etc/services.
++         See doc/tech-notes for more details.
++  
++  mtest  The test IMAP client, an absolutely minimal mail client, useful
++         for debugging.
++ 
++ In general you should be able to just copy the Pine and Pico binaries
++ to the place you keep your other local binaries. /usr/local/bin is a
++ likely place.
++   

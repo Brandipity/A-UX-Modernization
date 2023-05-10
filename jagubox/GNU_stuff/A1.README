@@ -1,0 +1,144 @@
+This file contains the most recent listing of available files in GNU_stuff
+as well as a short description of each. Most are GNUzipped (.gz) tar files.
+You will need the 'gzip_*.bin.tar.Z' file (which contains the GNUzip utility
+'gzip|gunzip') to decompress these.
+
+Diff-files can be applied by using 'patch' which is available precompiled
+as '../Utilities/patch.bin.tar.gz'
+
+A1.README::
+	A text file description of all files in this directory.
+
+GNUgrep.gz::
+	Precompiled binary of GNUgrep v2.0 for A/UX.
+
+GNUman.tar.gz::
+	Port of GNUman for A/UX... I don't use it, but you may find it
+	useful.
+
+GNUplot-aux-3.5.tar.gz::
+	Binary release of GNUplot v3.5 for A/UX. Works _very_ nicely and
+	is good to have around! Kudos to Eric Rosen for providing this!
+
+GNUtar-1.11.2.tar.gz::
+	The binaries, diffs and sources for GNUtar v1.11.2 for A/UX. From
+	Dennis Govoni (dennis.govoni@East.Sun.COM).
+
+README.gcc-2.5.7.aux::
+	Short little README file for gcc-2.5.7 for A/UX
+
+README.gcc-2.6.3::
+	Short little README file for gcc-2.6.3 for A/UX
+
+README.libg++-2.5.3.aux::
+	Short little README file for libg++-2.5.3 for A/UX
+
+bash-aux.bin.tar.gz::
+	A tarchive that contains not only the diffs required for bash-1.14.2
+	(and later?) to compile under A/UX, but also a precompiled version
+	that was created under A/UX 3.1.1.
+
+emacs-19.19-19.22.diffs.tar.gz::
+	A collection of diffs and patches to compile emacs version 19.19 thru
+	19.22 under A/UX. Contributed byPaul Traina (pst@cisco.com) and
+	Dennis Govoni (dennis.govoni@East.Sun.COM).
+
+emacs-19.7.patch.gz::
+	Patches from Phillip P. Porch <root@theporch.raider.net> for
+	emacs 19.7 for A/UX.
+
+emacs19.28.aux.tar.gz::
+	Port of emacs 19.28 for A/UX 3.1(.1).
+
+gcc-2.5.7.aux.tar.gz::
+	The 2.5.7 version of GNU C compiler (gcc) for A/UX, ported by John
+	Coolidge @ Apple. This is the full source with A/UX diffs already
+	applied.
+
+gcc-2.5.7a.bin.tar.gz::
+	The 2.5.7 version of GNU C compiler (gcc) for A/UX, ported by John
+	Coolidge @ Apple.  This is the already compiled binaries for use
+	under A/UX 3.0.x|3.1.
+
+gcc-2.5.7-specs::
+	The "original" version of the 'specs' file for gcc-2.5.7 had a
+	slight bug in it, such that __STDC__ was still defined even if
+	'-traditional' was used. This 'fix' corrects that problem. The
+	above distribution already has this fix in there, but if yours
+	doesn't, then please rename this file 'specs' and copy it over
+	to .../lib/gcc/aux/2.5.7.
+
+gcc-2.6.3v2.bin.tar.gz::
+	Complete binary package of gcc 2.6.3 for A/UX. It requires that
+	it be installed in /usr/local/Gnu for it to work. Based on the
+	work done by John Coolidge.
+
+gcc-2.6.3.aux.diffs.tar.gz::
+	Diffs required to get gcc 2.6.3 to compile, run and work under
+	A/UX. You need gcc to compile gcc, so snag one of the binaries
+	if you want to recompile it.
+
+gcc-2.7.2.bin.tar.gz::
+	Complete binary package of gcc 2.7.2 for A/UX. It requires that
+	it be installed in /usr/local/Gnu for it to work. Based on the
+	work done by John Coolidge.
+
+gcc-2.7.2.aux.diffs.gz::
+	Diffs required to get gcc 2.7.2 to compile, run and work under
+	A/UX. You need gcc to compile gcc, so snag one of the binaries
+	if you want to recompile it.
+
+gdb-4.12.gz::
+	Binary executable of gdb (v4.12) for A/UX. Kudos to John Coolidge.
+
+gdb-4.12.aux.tar.gz::
+	Full source distribution of gdb 4.12 for A/UX.
+
+gdb-4.12.diffs::
+	Diffs (patches) to apply to the original source of gdb 4.12 to
+	allow you to compile and run it under A/UX.
+
+gmake-3.74.tar.gz::
+	Complete source and executable binary for GNUmake-3.74 for
+	A/UX. Many packages require/expect either GNUmake or Berkmake.
+
+gzip-124.bin.tar.Z::
+	Tar archive of the GNU zip compression package. Includes all
+	binaries and man pages for A/UX. Needed to decompression '*.gz' files.
+
+libg++-2.5.3.bin.tar.gz::
+	Ported by John Coolidge, the full g++ package for use with gcc.
+
+libgmalloc.a.gz::
+	Ported GNUmalloc library for A/UX.
+
+mtools_src::
+	A directory containing the source, binaries and diffs for
+	the mtools package, which provide DOS floppy disk access
+	utilities.
+
+tcsh-6.03.bin.gz::
+	"Latest" version of the 'tcsh' shell, ported for A/UX
+
+tex.bin.tar.gz::
+	The precompiled binaries for Tex. Has a README file to help is setting
+	it up. Provided by Peter Epsen (peter@norge.bbx.basis.com)
+
+texinfo-3.1.bin.tar.gz::
+	Precompiled binaries of texinfo v3.1 for A/UX. Provided by Phillip
+	Porch (root@theporch.raider.net)
+
+texinfo-3.1.diff::
+	Small patch to allow you to compile texinfo 3.1 under A/UX. In
+	case you want to do it yourself :)
+--
+===========================================================================
+#include <std/disclaimer.h>
+                                 =:^)
+           Jim Jagielski                    NASA/GSFC, Code 734.4
+     jim@jagubox.gsfc.nasa.gov               Greenbelt, MD 20771
+        Voice: 301-286-5964                   FAX: 301-286-1719
+
+"If we increase the size of the penguin until it is the same height as a man
+ and then compare the relative brain size, we now find that the penguin's
+ brain is still smaller. But, and this is the point, it is larger than it WAS!"

@@ -1,0 +1,274 @@
+
+ABOUT THE APPLE WORKGROUP SERVER 95 TUNE-UP
+																											
+The Apple Workgroup Server 95 Tune-Up is a set of enhancements to the A/UX
+operating system and AppleShare Pro. The tune-up software includes the System 7
+Tune-Up, which upgrades the Macintosh system software running in the A/UX
+environment. (The System 7 Tune-Up file is called "System 7 Tuner.") 
+
+Together, these enhancements improve the performance of your server in a number
+of ways:
+
+- File-management features work more smoothly, resulting in fewer problems with 
+  time-stamping, name changes to files and folders, and file locking.
+- Error handling and recovery are improved.
+- Security is more effective; for example, the system checks UNIX¨ permissions 
+  of target files with symbolic links.
+- Hardware support is enhanced, including improved support for the AppleCD 300 
+  CD-ROM Drive, on-board video, and the Apple Hard Disk 230SC.
+
+To get the maximum performance and minimize problems with your server, it is
+important to install the Apple Workgroup Server 95 Tune-Up. This update tells
+you how to install the tune-up software, lists the files affected by the
+changes to the server software, describes in more detail the improvements
+provided by the tune-up, and lists changes of interest to developers.
+
+
+TUNE-UP INSTALLATION PROCEDURE
+
+The tune-up Installer automatically installs the software that you need to
+take advantage of the enhancements. On all configurations of the AWS 95, it
+also automatically installs the System 7 Tune-Up.
+
+The Apple Workgroup Server 95 Tune-Up updates the A/UX operating system from
+version 3.0.1 to 3.0.2, and updates AppleShare Pro (if present on your server)
+from 1.0 to 1.0.1. The installation process doesn't affect any of the current
+kernel parameter settings. 
+
+If AppleShare Pro is NOT installed on your server, you will only need Disk1.
+
+
+Before You Begin
+
+Before you begin the installation, be sure to back up all files and notify
+users that you will be shutting down the server in order to install the
+tune-up software. During the installation process, the system quits all
+programs running on the server; you must restart the server to complete the
+installation. 
+
+To perform the installation, you must be logged in to the server as "root".
+If your server is set up with the default configuration for file and print
+services, and the Autologin feature is enabled, you should be logged in as
+"root" automatically when you start the server. If your server is configured
+as a database server, you must log in as "root" by means of the Login dialog
+box.
+
+
+Installing the Tune-Up Software
+
+Make sure that you are logged in as "root" and then follow these steps:
+
+1. Insert the disk labeled "AppleShare Workgroup Server 95 Tune-Up Disk 1." 
+
+If the CommandShell application is the active application, the system
+displays this message: "This is a Macintosh disk. What do you want to use it
+as?" If this message appears, click the button labeled "Macintosh."
+
+2. Double-click the Installer icon.
+
+This message appears: "You can only install the AWS 95 Tune-Up on the root
+volume, '/.' Please click Switch Disk to choose this disk."
+
+3. Click Switch Disk until '/' is selected.
+
+4. Click the Install button.
+
+5. Click Continue to automatically quit all other running applications.
+
+The tune-up installation begins, and the system displays a progress bar and
+status messages during the process.
+
+6. If AppleShare Pro is installed on your server, the system prompts you to
+insert Disk 2, then to re-insert Disk 1.
+
+The kernel is reconfigured; this process may take several minutes. After
+your server has loaded all of the appropriate tune-up software, the message
+"Installation successful" appears. 
+
+7. Click the Restart button to complete the installation.
+
+NOTE: If you routinely back up the server's system files (for example, to
+tape), you should make a new backup after performing the installation, as
+the system files will have been upgraded.
+
+
+Re-Installing Appleshare Pro
+
+If you use version 1.0 of the AppleShare Installer to re-install AppleShare
+Pro after installing the tune-up, your server displays the message "You
+must be running A/UX version 3.0.1 when performing this installation." To
+perform the AppleShare Pro installation, click the Customize button, select
+all the items listed in the Customize dialog box, then click Install (not
+Easy Install). Then re-install the tune-up in order to update your system
+with the latest version of AppleShare Pro.
+
+For details on installing AppleShare Pro, see "AppleShare Pro
+Administrator's Guide."
+
+
+FILES AFFECTED BY THE TUNE-UP
+																							
+The file "System 7 Tuner" has been upgraded to version 1.1.1. The
+following files have also been updated in the tune-up software.
+
+- A/UX files:
+
+adsp
+Autologin.4.Z
+catsearchd
+disktab
+fidd
+fsck
+newfs
+newunix
+Patch.067C
+rcp
+rdist
+RELEASE_ID
+svfs
+tip
+ufs
+
+- AppleShare files:
+
+AppleShare Pro Admin
+AppleShare Pro File Server
+File Server Extension
+
+
+CHANGES AND ENHANCEMENTS
+
+The tune-up software differs from the software originally shipped with the AWS
+95 in the following ways.
+
+A/UX Changes
+
+- The tune-up installs A/UX version 3.0.2 on the system.
+
+- The system maintains the modification date and time on folders and files 
+  correctly.
+
+- You can change the case of a Macintosh filename--for example, from "filename" 
+  to "FILENAME".
+
+- The tune-up provides improved security when the utilities "rcp", "rdist", and 
+  "tip" are used.
+
+- Files and folders that are unlocked remain unlocked unless a user 
+  deliberately locks them.
+
+- The system maintains the modification date for files manipulated by means of 
+  Adobe Illustrator 3.2. 
+
+- Users who do not have "root" privileges can no longer gain write access to 
+  files pointed to by symbolic links, UNLESS the UNIX permissions on the target 
+  file grant write access to the entire world. 
+
+- Symbolic links to a directory are also intercepted if the target directory 
+  does not have read/write permission for the world.  As a side effect, in this 
+  case, users will not be able to remove the symbolic link by dragging it to 
+  the trash.
+
+- If the Desktop database becomes corrupted because of a crash, it will 
+  automatically be rebuilt the next time the system is started. 
+
+- The Alias Manager correctly resolves the pathname for files or folders that 
+  are created on the desktop.
+
+- Read and Write commands are issued asynchronously for files opened by means 
+  of the extended FCB mechanism, which is used by AppleShare to support more 
+  than 348 concurrently open files.  As a result, server performance is 
+  improved.
+
+- The file Autologin.4.Z provides the correct manual ("man") page for 
+  Autologin, replacing the page shipped with A/UX 3.0.1. This file is updated 
+  only if the UNIX manual pages are installed on the system.
+
+- File IDs are persistent across a system crash.  The file ID daemon ("fidd") 
+  now flushes its database (which contains the file-ID-to-UNIX-pathname 
+  mappings) to the disk within 30 seconds of the addition of a new entry.  
+
+- Date searches around Jan 1, 1977 are performed correctly.  Dates are now 
+  stored as signed longs.
+
+- A problem with accessing the system parameter RAM, which could cause on-board 
+  video to be nonfunctional at system startup, has been corrected.  
+
+- The driver for the AppleCD 300 CD-ROM Drive provides improved support for all 
+  versions of the drive-unit ROMs. However, it is recommended that old ROMs be 
+  upgraded, since they can cause the SCSI bus to hang. The system will notify 
+  you if it encounters an old AppleCD 300 drive-unit ROM. 
+
+- The size of each internal system cache has been increased to improve system 
+  performance.
+
+- Users can start up the system whether or not a keyboard or mouse is attached.
+
+- Drive entries for the Apple Hard Disk 230SC and the Hard Disk 400SC have been 
+  added to the "disktab" database.
+
+
+AppleShare Pro Changes
+
+- The tune-up installs version 1.0.1 of AppleShare Pro on the system.
+
+- The amount of free space available on a disk is now returned correctly to the 
+  AppleShare client.
+
+- The write algorithm for the AppleShare Pro Server has been fixed so that it 
+  no longer schedules a write operation as a deferred task to a deferred task. 
+  As a result, server performance is improved.
+
+- Users can perform searches of the Desktop database without risk of running 
+  out of stack space and crashing the system.
+
+- The number of shareable items is no longer limited.
+
+- PC clients get a correct directory listing when the user types the "dir" 
+  command.
+
+- Files can be read nonsequentially without risk of the return of an erroneous 
+  EOF.
+
+- The "Copy to" function of AppleShare Pro Admin uses the mount point that was 
+  the intended target.  (In the original version, the free space available on 
+  the "/" partition was sometimes, incorrectly, used instead.)
+
+
+CHANGES OF INTEREST TO DEVELOPERS
+
+- The PPCWrite function (or trap) no longer sends out duplicate ADSP packets.
+
+- The "exchangeFiles" trap correctly preserves the fork lengths in all cases 
+  (UNIX file system only).  
+
+- The Time Manager returns accurately the unexpired time for a "RmvTime" trap. 
+  As a result, write performance to servers on busy networks is improved.
+
+- The "Rename" trap functions correctly when subpaths containing folders are 
+  specified (that is, when the pathname is not absolute or just a simple
+  filename).
+
+- The PBHDelete function (or trap) performs correctly even if no file or folder 
+  name is specified (that is, if only a dirID is set in the parameter block).   
+
+- The ADSP driver on the server correctly reports an error condition if a 
+  client crashes.
+
+- The performance of "catsearch" by dirID (that is, return all files and 
+  folders whose parent dirID matches the specified dirID) has been improved by 
+  at least a factor of 2.  
+
+- The  handling of "eofErr" at the end of a search performed by a call to 
+  "catsearch" has been corrected.  When the "eofErr" is encountered, the system 
+  returns the last block of matches.
+
+
+© Apple Computer, Inc., 1993.
+
+Apple, the Apple logo, AppleShare, A/UX, and Macintosh are trademarks of Apple
+Computer, Inc., registered in the United States and other countries. AppleCD
+is a trademark of Apple Computer, Inc. Adobe and Adobe Illustrator are
+trademarks of Adobe Systems Incorporated, which may be registered in certain
+jurisdictions. UNIX is a registered trademark of UNIX System Laboratories, Inc.
+
