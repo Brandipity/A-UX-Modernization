@@ -1,2 +1,2 @@
-# A-UX-Modernization
+# AUX-Modernization
 Porting modern UNIX utilities to A/UX 3.x
