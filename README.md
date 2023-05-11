@@ -15,7 +15,7 @@ For detailed information on installing A/UX, please refer to the guide available
 As a personal addendum to the guide referenced above, be aware that many CD drives just aren't going to work for installing A/UX. My Apple CD 600i wasn't recognized by the installation program, and I had to swap over to a Matsushita CR-504-L to complete my installation.
 
 ## Emulation
-Emulating A/UX can be a viable alternative if you don't have access to physical hardware. However, note that emulators need to accurately replicate the low-level functions of the SWIM, PMMU, and FPU in order to work properly. Only two emulators known to meet these requirements are:
+Emulating A/UX can be a viable alternative if you don't have access to physical hardware. However, note that emulators need to accurately replicate the low-level functions of the SWIM, PMMU, and FPU in order to work properly. The only two emulators known to meet these requirements are:
 
 1. **Shoebill**: [https://github.com/pruten/shoebill](https://github.com/pruten/shoebill)
    - Please be aware that Shoebill is no longer actively maintained, and any bugs or quirks you encounter will be your responsibility.
