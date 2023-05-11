@@ -3,7 +3,7 @@
 This repository contains software written by myself and many other contributors.
 
 ## Contents
-The repository includes the following components:
+The repository (currently) includes the following components:
 
 - **/jagubox folder:** This folder contains a complete mirror of the (now defunct) Jagubox FTP server that was originally hosted at jagubox.gsfc.nasa.gov. It includes several useful utilities that were maintained long after A/UX's discontinuation, courtesy of Jim Jagielski.
 
